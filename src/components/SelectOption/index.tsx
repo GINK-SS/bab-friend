@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
-import { FormData } from '../../types/createPost';
+import { FormDataType } from '../../types/createPost';
 
 const SelectOption = () => {
-  const [formData, setFormData] = useState<FormData>({
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState<FormDataType>({
     foodType: '',
     menu: '',
     store: '',
@@ -29,7 +31,7 @@ const SelectOption = () => {
           onChange={(e) => handleChange('foodType', e.target.value)}
           value={formData.foodType}
         >
-          <S.FoodTypeSelectOption value="" selected>
+          <S.FoodTypeSelectOption value="">
             음식 카테고리
           </S.FoodTypeSelectOption>
           <S.FoodTypeSelectOption value="korea">한식</S.FoodTypeSelectOption>
@@ -81,9 +83,7 @@ const SelectOption = () => {
           onChange={(e) => handleChange('peopleNum', e.target.value)}
           value={formData.peopleNum}
         >
-          <S.PeopleNumSelectOption value="" selected>
-            최대 5명
-          </S.PeopleNumSelectOption>
+          <S.PeopleNumSelectOption value="">최대 5명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value="1person">1명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value="2person">2명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value="3person">3명</S.PeopleNumSelectOption>
@@ -157,7 +157,15 @@ const SelectOption = () => {
         </S.SexRadio>
       </S.Sex>
       <S.NextBtnWrap>
-        <S.NextBtn>다음</S.NextBtn>
+        <S.NextBtn
+          onClick={() => {
+            navigate('/createcontent', {
+              state: { ...formData },
+            });
+          }}
+        >
+          다음
+        </S.NextBtn>
       </S.NextBtnWrap>
     </S.SelectOptionContainer>
   );

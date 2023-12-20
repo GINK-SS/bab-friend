@@ -1,4 +1,4 @@
-export interface FormData {
+export interface FormDataType {
   foodType: string;
   menu: string;
   store: string;
@@ -7,4 +7,9 @@ export interface FormData {
   peopleNum: string;
   alchol: string;
   sex: string;
+}
+export interface ContentDataType {
+  title: string;
+  content: string;
+  link: string;
 }
