@@ -6,7 +6,7 @@ export type FormDataType = {
   time: string;
   peopleNum: string;
   alchol: string;
-  sex: string;
+  gender: string;
 };
 export type ContentDataType = {
   title: string;

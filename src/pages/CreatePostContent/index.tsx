@@ -20,8 +20,6 @@ const CreatePostContent = () => {
       [name]: value,
     }));
   };
-  console.log('location.state', location.state);
-  console.log('contentData', contentData);
   return (
     <S.CreateContentContainer>
       <S.TextBox>

@@ -13,7 +13,7 @@ const SelectOption = () => {
     time: '',
     peopleNum: '',
     alchol: '',
-    sex: '',
+    gender: '',
   });
 
   const handleChange = (name: string, value: string) => {
@@ -118,44 +118,44 @@ const SelectOption = () => {
           </S.AlcholRadioLabel>
         </S.AlcholRadio>
       </S.Alchol>
-      <S.Sex>
-        <S.SexText>성별</S.SexText>
-        <S.SexRadio>
-          <S.SexRadioLabel htmlFor="male">
+      <S.gender>
+        <S.genderText>성별</S.genderText>
+        <S.genderRadio>
+          <S.genderRadioLabel htmlFor="male">
             남자만
-            <S.SexInput
+            <S.genderInput
               type="radio"
               id="male"
-              name="sex"
-              onChange={() => handleChange('sex', 'male')}
-              checked={formData.sex === 'male'}
-            ></S.SexInput>
-            <S.SexCustomRadio></S.SexCustomRadio>
-          </S.SexRadioLabel>
-          <S.SexRadioLabel htmlFor="female">
+              name="gender"
+              onChange={() => handleChange('gender', 'male')}
+              checked={formData.gender === 'male'}
+            ></S.genderInput>
+            <S.genderCustomRadio></S.genderCustomRadio>
+          </S.genderRadioLabel>
+          <S.genderRadioLabel htmlFor="female">
             여자만
-            <S.SexInput
+            <S.genderInput
               type="radio"
               id="female"
-              name="sex"
-              onChange={() => handleChange('sex', 'female')}
-              checked={formData.sex === 'female'}
-            ></S.SexInput>
-            <S.SexCustomRadio></S.SexCustomRadio>
-          </S.SexRadioLabel>
-          <S.SexRadioLabel htmlFor="mix">
+              name="gender"
+              onChange={() => handleChange('gender', 'female')}
+              checked={formData.gender === 'female'}
+            ></S.genderInput>
+            <S.genderCustomRadio></S.genderCustomRadio>
+          </S.genderRadioLabel>
+          <S.genderRadioLabel htmlFor="mix">
             상관없음
-            <S.SexInput
+            <S.genderInput
               type="radio"
               id="mix"
-              name="sex"
-              onChange={() => handleChange('sex', 'mix')}
-              checked={formData.sex === 'mix'}
-            ></S.SexInput>
-            <S.SexCustomRadio></S.SexCustomRadio>
-          </S.SexRadioLabel>
-        </S.SexRadio>
-      </S.Sex>
+              name="gender"
+              onChange={() => handleChange('gender', 'mix')}
+              checked={formData.gender === 'mix'}
+            ></S.genderInput>
+            <S.genderCustomRadio></S.genderCustomRadio>
+          </S.genderRadioLabel>
+        </S.genderRadio>
+      </S.gender>
       <S.NextBtnWrap>
         <S.NextBtn
           onClick={() => {

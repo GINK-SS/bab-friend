@@ -101,22 +101,22 @@ export const AlcholCustomRadio = styled.span`
     background: white;
   }
 `;
-export const Sex = styled.div``;
-export const SexText = styled.p`
+export const gender = styled.div``;
+export const genderText = styled.p`
   padding-bottom: -20px;
 `;
-export const SexRadioLabel = styled.label`
+export const genderRadioLabel = styled.label`
   cursor: pointer;
   position: relative;
   padding-left: 30px;
 `;
-export const SexRadio = styled.div`
+export const genderRadio = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
   padding-left: -20px;
 `;
-export const SexInput = styled.input`
+export const genderInput = styled.input`
   position: absolute;
   opacity: 0;
   height: 0;
@@ -128,7 +128,7 @@ export const SexInput = styled.input`
     display: block;
   }
 `;
-export const SexCustomRadio = styled.span`
+export const genderCustomRadio = styled.span`
   position: absolute;
   top: 0;
   left: 0;
