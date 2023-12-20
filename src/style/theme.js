@@ -1,16 +1,16 @@
 const size = {
-  mobile: "450px",
-  tablet: "900px",
-  laptop: "1290px",
-  desktop: "1920px",
+  mobileL: '576px',
+  tablet: '768px',
+  laptop: '992px',
 };
 
 const theme = {
-  mainColor: "#0a4297",
-  mobile: `(min-width: ${size.mobile})`,
+  mainColor: '#f39c12',
+  subColor: '#fa983a',
+  blackColor: '#222',
+  mobileL: `(min-width: ${size.mobileL})`,
   tablet: `(min-width: ${size.tablet})`,
   laptop: `(min-width: ${size.laptop})`,
-  desktop: `(min-width: ${size.desktop})`,
 };
 
 export default theme;
