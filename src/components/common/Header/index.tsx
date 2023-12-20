@@ -24,12 +24,12 @@ const Header = () => {
         <S.HeaderLogo>BAB-FRIEND</S.HeaderLogo>
       )}
       {isLoggedIn ? (
-        <S.HedaerLogin>로그인</S.HedaerLogin>
-      ) : (
         <S.HeaderContentBox>
           <S.HedaerAlert src={bell} alt="bellimage" />
           <S.HeaderMenu src={menu} alt="menuimage" />
         </S.HeaderContentBox>
+      ) : (
+        <S.HedaerLogin>로그인</S.HedaerLogin>
       )}
     </S.HeaderContainer>
   );
