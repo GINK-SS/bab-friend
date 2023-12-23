@@ -15,6 +15,7 @@ export const Backdrop = styled.div`
 `;
 
 export const Container = styled.div<{ isFullScreen: boolean }>`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -46,4 +47,12 @@ export const Content = styled.div<{
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+export const CloseBtn = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.2rem;
+  font-size: 2rem;
 `;

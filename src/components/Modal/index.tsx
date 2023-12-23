@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { IoCloseOutline } from 'react-icons/io5';
 import * as S from './styles';
 
 type ModalProps = {
@@ -19,6 +20,12 @@ const Modal = ({
   return (
     <S.Backdrop>
       <S.Container isFullScreen={isFullScreen}>
+        {isFullScreen ? (
+          <S.CloseBtn>
+            <IoCloseOutline />
+          </S.CloseBtn>
+        ) : null}
+
         <S.Content isFullScreen={isFullScreen} contentPadding={contentPadding}>
           {children}
         </S.Content>
