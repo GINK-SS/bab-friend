@@ -4,29 +4,25 @@ import * as S from './styles';
 
 type ModalProps = {
   children: ReactNode;
-  isFullScreen?: boolean;
+  fullScreen?: boolean;
   contentPadding?: string;
 };
 
 /**
- * @param isFullScreen 전체 페이지를 덮는 모달인지
+ * @param fullScreen 전체 페이지를 덮는 모달인지
  * @param contentPadding 콘텐츠 영역 패딩값 (default: 1rem)
  */
-const Modal = ({
-  children,
-  isFullScreen = false,
-  contentPadding,
-}: ModalProps) => {
+const Modal = ({ children, fullScreen, contentPadding }: ModalProps) => {
   return (
     <S.Backdrop>
-      <S.Container isFullScreen={isFullScreen}>
-        {isFullScreen ? (
+      <S.Container $isFullScreen={fullScreen}>
+        {fullScreen ? (
           <S.CloseBtn>
             <IoCloseOutline />
           </S.CloseBtn>
         ) : null}
 
-        <S.Content isFullScreen={isFullScreen} contentPadding={contentPadding}>
+        <S.Content $isFullScreen={fullScreen} contentPadding={contentPadding}>
           {children}
         </S.Content>
       </S.Container>
