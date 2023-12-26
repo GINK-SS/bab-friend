@@ -30,8 +30,9 @@ const SelectOption = () => {
           name="foodType"
           onChange={(e) => handleChange('foodType', e.target.value)}
           value={formData.foodType}
+          required
         >
-          <S.FoodTypeSelectOption value="">
+          <S.FoodTypeSelectOption value="" disabled>
             음식 카테고리
           </S.FoodTypeSelectOption>
           <S.FoodTypeSelectOption value="korea">한식</S.FoodTypeSelectOption>
@@ -47,6 +48,7 @@ const SelectOption = () => {
           placeholder="메뉴를 입력해주세요."
           onChange={(e) => handleChange('menu', e.target.value)}
           value={formData.menu}
+          required
         ></S.MenuInput>
       </S.Menu>
       <S.Store>
@@ -56,6 +58,7 @@ const SelectOption = () => {
           placeholder="가게명을 입력해주세요."
           onChange={(e) => handleChange('store', e.target.value)}
           value={formData.store}
+          required
         ></S.StoreInput>
       </S.Store>
       <S.Region>
@@ -65,6 +68,7 @@ const SelectOption = () => {
           placeholder="지역을 입력해주세요."
           onChange={(e) => handleChange('region', e.target.value)}
           value={formData.region}
+          required
         ></S.RegoinInput>
       </S.Region>
       <S.Time>
@@ -74,6 +78,7 @@ const SelectOption = () => {
           placeholder="식사 시간을 입력해주세요."
           onChange={(e) => handleChange('time', e.target.value)}
           value={formData.time}
+          required
         ></S.TimeInput>
       </S.Time>
       <S.PeopleNum>
@@ -82,8 +87,11 @@ const SelectOption = () => {
           name="peopleNum"
           onChange={(e) => handleChange('peopleNum', e.target.value)}
           value={formData.peopleNum}
+          required
         >
-          <S.PeopleNumSelectOption value="">최대 5명</S.PeopleNumSelectOption>
+          <S.PeopleNumSelectOption value="" disabled>
+            최대 5명
+          </S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value="1person">1명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value="2person">2명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value="3person">3명</S.PeopleNumSelectOption>
@@ -95,67 +103,72 @@ const SelectOption = () => {
         <S.AlcholText>술 여부</S.AlcholText>
         <S.AlcholRadio>
           <S.AlcholRadioLabel htmlFor="alcholOk">
-            술 ok
+            음주 가능
             <S.AlcholInput
               type="radio"
               id="alcholOk"
               name="alchol"
               onChange={() => handleChange('alchol', 'ok')}
               checked={formData.alchol === 'ok'}
+              required
             ></S.AlcholInput>
             <S.AlcholCustomRadio></S.AlcholCustomRadio>
           </S.AlcholRadioLabel>
           <S.AlcholRadioLabel htmlFor="alcholNo">
-            술 nope
+            음주 불가능
             <S.AlcholInput
               type="radio"
               id="alcholNo"
               name="alchol"
               onChange={() => handleChange('alchol', 'nope')}
               checked={formData.alchol === 'nope'}
+              required
             ></S.AlcholInput>
             <S.AlcholCustomRadio></S.AlcholCustomRadio>
           </S.AlcholRadioLabel>
         </S.AlcholRadio>
       </S.Alchol>
-      <S.gender>
-        <S.genderText>성별</S.genderText>
-        <S.genderRadio>
-          <S.genderRadioLabel htmlFor="male">
+      <S.Gender>
+        <S.GenderText>성별</S.GenderText>
+        <S.GenderRadio>
+          <S.GenderRadioLabel htmlFor="male">
             남자만
-            <S.genderInput
+            <S.GenderInput
               type="radio"
               id="male"
               name="gender"
               onChange={() => handleChange('gender', 'male')}
               checked={formData.gender === 'male'}
-            ></S.genderInput>
-            <S.genderCustomRadio></S.genderCustomRadio>
-          </S.genderRadioLabel>
-          <S.genderRadioLabel htmlFor="female">
+              required
+            ></S.GenderInput>
+            <S.GenderCustomRadio></S.GenderCustomRadio>
+          </S.GenderRadioLabel>
+          <S.GenderRadioLabel htmlFor="female">
             여자만
-            <S.genderInput
+            <S.GenderInput
               type="radio"
               id="female"
               name="gender"
               onChange={() => handleChange('gender', 'female')}
               checked={formData.gender === 'female'}
-            ></S.genderInput>
-            <S.genderCustomRadio></S.genderCustomRadio>
-          </S.genderRadioLabel>
-          <S.genderRadioLabel htmlFor="mix">
+              required
+            ></S.GenderInput>
+            <S.GenderCustomRadio></S.GenderCustomRadio>
+          </S.GenderRadioLabel>
+          <S.GenderRadioLabel htmlFor="mix">
             상관없음
-            <S.genderInput
+            <S.GenderInput
               type="radio"
               id="mix"
               name="gender"
               onChange={() => handleChange('gender', 'mix')}
               checked={formData.gender === 'mix'}
-            ></S.genderInput>
-            <S.genderCustomRadio></S.genderCustomRadio>
-          </S.genderRadioLabel>
-        </S.genderRadio>
-      </S.gender>
+              required
+            ></S.GenderInput>
+            <S.GenderCustomRadio></S.GenderCustomRadio>
+          </S.GenderRadioLabel>
+        </S.GenderRadio>
+      </S.Gender>
       <S.NextBtnWrap>
         <S.NextBtn
           onClick={() => {
