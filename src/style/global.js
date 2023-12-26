@@ -1,10 +1,11 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
     font: inherit;
+    font-family: "Pretendard-Regular";
     color: inherit;
     box-sizing: border-box;
   }
