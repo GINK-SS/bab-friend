@@ -35,6 +35,7 @@ const CreatePostContent = () => {
           placeholder="글 제목을 입력해주세요.."
           onChange={(e) => handleChange('content', e.target.value)}
           value={contentData.content}
+          required
         ></S.TitleInput>
       </S.Title>
       <S.Content>
@@ -43,6 +44,7 @@ const CreatePostContent = () => {
           placeholder="글 내용을 입력해주세요.."
           onChange={(e) => handleChange('title', e.target.value)}
           value={contentData.title}
+          required
         ></S.ContentInput>
       </S.Content>
       <S.Link>

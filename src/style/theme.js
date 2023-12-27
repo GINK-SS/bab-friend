@@ -6,7 +6,7 @@ const size = {
 
 const theme = {
   mainColor: '#f39c12',
-  subColor: '#fa983a',
+  subColor: '#30336b',
   blackColor: '#222',
   mobileL: `(min-width: ${size.mobileL})`,
   tablet: `(min-width: ${size.tablet})`,

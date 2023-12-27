@@ -9,16 +9,23 @@ export const SelectOptionContainer = styled.div`
   p {
     margin-bottom: 15px;
     font-size: 16px;
+    font-family: 'Pretendard-SemiBold';
+    color: ${({ theme }) => theme.blackColor};
   }
   input {
     width: 100%;
-    border: 1px gray solid;
+    border: 1px solid #d5d4dc;
     border-radius: 5px;
     padding: 5px 10px;
     background: none;
     outline: none;
     &::placeholder {
-      font-size: 10px;
+      font-size: 12px;
+      opacity: 0.7;
+      font-family: 'Pretendard-ExtraLight';
+    }
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.mainColor};
     }
   }
   select {
@@ -26,7 +33,10 @@ export const SelectOptionContainer = styled.div`
     outline: none;
     padding: 5px 10px;
     border-radius: 5px;
-    border: 1px gray solid;
+    border: 1px solid #d5d4dc;
+    &::placeholder {
+      font-size: 12px;
+    }
     -webkit-appearance: none; /* 크롬 화살표 없애기 */
     -moz-appearance: none; /* 파이어폭스 화살표 없애기 */
     appearance: none; /* 화살표 없애기 */
@@ -73,7 +83,7 @@ export const AlcholInput = styled.input`
   height: 0;
   width: 0;
   &:checked + span {
-    background-color: #000;
+    background-color: ${({ theme }) => theme.mainColor};
   }
   &:checked + span::after {
     display: block;
@@ -90,7 +100,6 @@ export const AlcholCustomRadio = styled.span`
   &::after {
     content: '';
     position: absolute;
-    /* 최초 display none */
     display: none;
     top: 50%;
     left: 50%;
@@ -101,34 +110,34 @@ export const AlcholCustomRadio = styled.span`
     background: white;
   }
 `;
-export const gender = styled.div``;
-export const genderText = styled.p`
+export const Gender = styled.div``;
+export const GenderText = styled.p`
   padding-bottom: -20px;
 `;
-export const genderRadioLabel = styled.label`
+export const GenderRadioLabel = styled.label`
   cursor: pointer;
   position: relative;
   padding-left: 30px;
 `;
-export const genderRadio = styled.div`
+export const GenderRadio = styled.div`
   display: flex;
   align-items: center;
   gap: 14px;
   padding-left: -20px;
 `;
-export const genderInput = styled.input`
+export const GenderInput = styled.input`
   position: absolute;
   opacity: 0;
   height: 0;
   width: 0;
   &:checked + span {
-    background-color: #000;
+    background-color: ${({ theme }) => theme.mainColor};
   }
   &:checked + span::after {
     display: block;
   }
 `;
-export const genderCustomRadio = styled.span`
+export const GenderCustomRadio = styled.span`
   position: absolute;
   top: 0;
   left: 0;
@@ -139,7 +148,6 @@ export const genderCustomRadio = styled.span`
   &::after {
     content: '';
     position: absolute;
-    /* 최초 display none */
     display: none;
     top: 50%;
     left: 50%;
@@ -156,7 +164,7 @@ export const NextBtnWrap = styled.div`
 export const NextBtn = styled.button`
   padding: 6px 30px;
   border-radius: 10px;
-  background-color: black;
+  background-color: ${({ theme }) => theme.subColor};
   color: white;
   width: 100%;
   cursor: pointer;
