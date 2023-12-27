@@ -37,7 +37,7 @@ const Header = () => {
         )}
         {isLoggedIn ? (
           <S.HeaderContentBox>
-            <S.HedaerAlert src={bell} alt="bellimage" />
+            <S.HeaderAlert src={bell} alt="bellimage" />
             <S.HeaderMenu
               src={menu}
               alt="menuimage"
@@ -47,7 +47,7 @@ const Header = () => {
             />
           </S.HeaderContentBox>
         ) : (
-          <S.HedaerLogin onClick={handleLoginBtnClick}>로그인</S.HedaerLogin>
+          <S.HeaderLogin onClick={handleLoginBtnClick}>로그인</S.HeaderLogin>
         )}
       </S.HeaderContainer>
       {sidebarOpen && (

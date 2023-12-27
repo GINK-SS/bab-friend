@@ -3,6 +3,10 @@ import kakaoLoginImg from '../../../assets/images/png/kakao_login_large_wide.png
 import { Link } from 'react-router-dom';
 
 const Login = () => {
+  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+  const notionURL =
+    'https://buttery-editor-146.notion.site/64ec05c62f754148905cacc7ce838f31?pvs=4';
+
   return (
     <>
       <S.TitleWrapper>
@@ -13,9 +17,7 @@ const Login = () => {
 
       <S.ButtonWrapper>
         <S.Button>
-          <Link
-            to={`https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`}
-          >
+          <Link to={kakaoURL}>
             <img src={kakaoLoginImg} alt="카카오 로그인" />
           </Link>
         </S.Button>
@@ -23,10 +25,7 @@ const Login = () => {
 
       <S.DescWrapper>
         <p>밥 프렌즈에 대해 궁금하다면?</p>
-        <Link
-          to="https://buttery-editor-146.notion.site/64ec05c62f754148905cacc7ce838f31?pvs=4"
-          target="_blank"
-        >
+        <Link to={notionURL} target="_blank">
           <S.DescLink>상세정보</S.DescLink>
         </Link>
       </S.DescWrapper>
