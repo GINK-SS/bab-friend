@@ -1,12 +1,16 @@
 import { useEffect } from 'react';
 import * as S from './styles';
-import { SideBarPropsType } from '../../types/sidebar';
 import close from '../../assets/images/svg/cancle.svg';
 import arrow from '../../assets/images/svg/arrow.svg';
 import square from '../../assets/images/svg/square.svg';
 import page from '../../assets/images/svg/page.svg';
 
 import { useNavigate } from 'react-router-dom';
+
+export type SideBarPropsType = {
+  sidebarOpen: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const SideBar = ({ setSidebarOpen, sidebarOpen }: SideBarPropsType) => {
   const navigate = useNavigate();

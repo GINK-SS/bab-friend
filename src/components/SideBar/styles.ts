@@ -1,10 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import {
-  SidebarContainerProps,
-  SidebarBackgroundProps,
-} from '../../types/sidebar';
 
-export const SideMenuBackground = styled.div<SidebarBackgroundProps>`
+export const SideMenuBackground = styled.div<{ sidebarOpen: boolean }>`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -14,7 +10,7 @@ export const SideMenuBackground = styled.div<SidebarBackgroundProps>`
     ease-in-out forwards;
   z-index: 1;
 `;
-export const SideBarContainer = styled.div<SidebarContainerProps>`
+export const SideBarContainer = styled.div<{ sidebarOpen: boolean }>`
   position: absolute;
   top: 0;
   right: 0;
