@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import * as S from './styles';
+import { useSetRecoilState } from 'recoil';
+import { modalState } from '../../recoil/atoms/modal';
 
 type ModalProps = {
   children: ReactNode;
@@ -13,11 +15,25 @@ type ModalProps = {
  * @param contentPadding 콘텐츠 영역 패딩값 (default: 1rem)
  */
 const Modal = ({ children, fullScreen, contentPadding }: ModalProps) => {
+  const setModal = useSetRecoilState(modalState);
+
+  const closeModal = () => {
+    setModal({ isActive: false });
+  };
+
+  const handleOuterClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (!fullScreen && e.target === e.currentTarget.firstChild) {
+      closeModal();
+    }
+  };
+
   return (
-    <S.Backdrop>
+    <S.Backdrop onClick={handleOuterClick}>
       <S.Container $isFullScreen={fullScreen}>
         {fullScreen ? (
-          <S.CloseBtn>
+          <S.CloseBtn onClick={closeModal}>
             <IoCloseOutline />
           </S.CloseBtn>
         ) : null}

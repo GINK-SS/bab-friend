@@ -5,6 +5,8 @@ import arrowLeft from '../../../assets/images/svg/arrow-left.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SideBar from '../../SideBar';
 import { useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { modalState } from '../../../recoil/atoms/modal';
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -12,6 +14,12 @@ const Header = () => {
   let isLoggedIn = true;
   const location = useLocation();
   const navigate = useNavigate();
+  const setModal = useSetRecoilState(modalState);
+
+  const handleLoginBtnClick = () => {
+    setModal({ isActive: true });
+  };
+
   return (
     <>
       <S.HeaderContainer>
@@ -39,7 +47,7 @@ const Header = () => {
             />
           </S.HeaderContentBox>
         ) : (
-          <S.HedaerLogin>로그인</S.HedaerLogin>
+          <S.HedaerLogin onClick={handleLoginBtnClick}>로그인</S.HedaerLogin>
         )}
       </S.HeaderContainer>
       {sidebarOpen && (
