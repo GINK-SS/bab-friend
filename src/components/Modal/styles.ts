@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import animations from '../../style/animations';
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -12,6 +13,7 @@ export const Backdrop = styled.div`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(1px);
+  animation: ${animations.fadeInTop} 0.3s cubic-bezier(0.25, 0.75, 0.5, 1.25);
 `;
 
 export const Container = styled.div<{ $isFullScreen?: boolean }>`
