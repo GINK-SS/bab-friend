@@ -1,30 +1,26 @@
 import { useEffect } from 'react';
+
 import * as S from './styles';
+import SideBarContent from '../SideBarContent';
+import { SideBarPropsType } from '../../types/sideBar';
+
 import close from '../../assets/images/svg/cancle.svg';
 import arrow from '../../assets/images/svg/arrow.svg';
-import square from '../../assets/images/svg/square.svg';
-import page from '../../assets/images/svg/page.svg';
 
-import { useNavigate } from 'react-router-dom';
-
-export type SideBarPropsType = {
-  sidebarOpen: boolean;
-  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const SideBar = ({ setSidebarOpen, sidebarOpen }: SideBarPropsType) => {
-  const navigate = useNavigate();
-  const handleScroll = () => {
-    if (sidebarOpen) {
-      setSidebarOpen(false);
-    }
-  };
+const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   useEffect(() => {
     document.addEventListener('scroll', handleScroll);
     return () => {
       document.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [sidebarOpen]);
+
+  const handleScroll = () => {
+    if (sidebarOpen) {
+      setSidebarOpen(false);
+    }
+  };
+
   return (
     <>
       <S.SideMenuBackground
@@ -60,21 +56,8 @@ const SideBar = ({ setSidebarOpen, sidebarOpen }: SideBarPropsType) => {
             </S.ProgressBar>
           </S.Temperature>
         </S.TemperatureWrap>
-        <S.SideBarContent>
-          <S.WritePost
-            onClick={() => {
-              navigate('./createPost');
-              setSidebarOpen(false);
-            }}
-          >
-            <S.WritePostImg src={square}></S.WritePostImg>
-            <S.WritePostText>새 글 작성하기</S.WritePostText>
-          </S.WritePost>
-          <S.MyPost>
-            <S.MyPostImg src={page}></S.MyPostImg>
-            <S.MyPostText>내가 만든 식사</S.MyPostText>
-          </S.MyPost>
-        </S.SideBarContent>
+        <SideBarContent setSidebarOpen={setSidebarOpen} />
+        <S.Logout>로그아웃</S.Logout>
       </S.SideBarContainer>
     </>
   );

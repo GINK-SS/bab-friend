@@ -98,30 +98,16 @@ export const Progress = styled.div`
   border-radius: 12px;
   color: #111;
 `;
-export const SideBarContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
 
-  div {
-    width: 200px;
-    display: flex;
-    gap: 14px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  img {
-    width: 20px;
-  }
+export const Logout = styled.div`
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  font-size: 14px;
+  font-family: 'Pretendard-Bold';
+
+  cursor: pointer;
 `;
-export const WritePost = styled.div``;
-export const WritePostImg = styled.img``;
-export const WritePostText = styled.p``;
-export const MyPost = styled.div``;
-export const MyPostImg = styled.img``;
-export const MyPostText = styled.p``;
 
 const showUp = keyframes`
   0% {
