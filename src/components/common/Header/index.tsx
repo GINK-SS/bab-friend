@@ -5,13 +5,13 @@ import arrowLeft from '../../../assets/images/svg/arrow-left.svg';
 import { useNavigate, useLocation } from 'react-router-dom';
 import SideBar from '../../SideBar';
 import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { modalState } from '../../../recoil/atoms/modal';
+import { userState } from '../../../recoil/atoms/user';
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  //TODO: 유저 로그인 상태를 가져와 true, false값으로 반환
-  let isLoggedIn = true;
+  const { accessToken } = useRecoilValue(userState);
   const location = useLocation();
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);
@@ -35,7 +35,7 @@ const Header = () => {
         ) : (
           <S.HeaderLogo>BAB-FRIEND</S.HeaderLogo>
         )}
-        {isLoggedIn ? (
+        {accessToken ? (
           <S.HeaderContentBox>
             <S.HeaderAlert src={bell} alt="bellimage" />
             <S.HeaderMenu
