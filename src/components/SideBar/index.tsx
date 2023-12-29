@@ -21,20 +21,18 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
     }
   };
 
+  const handleCloseSidebar = () => {
+    setSidebarOpen(false);
+  };
   return (
     <>
       <S.SideMenuBackground
-        sidebarOpen={sidebarOpen}
-        onClick={() => setSidebarOpen(false)}
+        $sidebarOpen={sidebarOpen}
+        onClick={handleCloseSidebar}
       />
-      <S.SideBarContainer sidebarOpen={sidebarOpen}>
+      <S.SideBarContainer $sidebarOpen={sidebarOpen}>
         <S.CloseBtnWrap>
-          <S.CloseBtn
-            src={close}
-            onClick={() => {
-              setSidebarOpen(!sidebarOpen);
-            }}
-          />
+          <S.CloseBtn src={close} onClick={handleCloseSidebar} />
         </S.CloseBtnWrap>
         <S.Profile>
           <S.ProfileImg
