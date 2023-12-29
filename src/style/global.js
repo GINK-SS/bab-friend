@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import '../assets/fonts/font.css';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -40,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
     max-width: 100%;
   }
 
-  button {
+  button {    
     background: none;
     border: 0;
     cursor: pointer;
