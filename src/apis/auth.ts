@@ -1,4 +1,4 @@
-import { TokensResponse, UserInfoResponse } from '../types/auth';
+import { TokensResponse, UserInfoResponse } from '../types/api';
 import { request } from './axios';
 
 /**
