@@ -30,11 +30,7 @@ const Auth = () => {
     }
   }, [code, navigate, setUserInfo]);
 
-  return (
-    <div>
-      <Spinner />
-    </div>
-  );
+  return <Spinner />;
 };
 
 export default Auth;
