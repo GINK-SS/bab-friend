@@ -62,6 +62,15 @@ const fadeOutBottom = keyframes`
 	}
 `;
 
+const rotation = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
 const animations = {
   fadeIn,
   fadeOut,
@@ -69,6 +78,7 @@ const animations = {
   fadeOutTop,
   fadeInBottom,
   fadeOutBottom,
+  rotation,
 };
 
 export default animations;

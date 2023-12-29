@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import authApi from '../apis/auth';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../recoil/atoms/user';
+import Spinner from '../components/common/Spinner';
 
 const Auth = () => {
   const code = new URL(document.URL).searchParams.get('code') as string;
@@ -29,7 +30,11 @@ const Auth = () => {
     }
   }, [code, navigate, setUserInfo]);
 
-  return <div>리다이렉션</div>;
+  return (
+    <div>
+      <Spinner />
+    </div>
+  );
 };
 
 export default Auth;
