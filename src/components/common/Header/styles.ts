@@ -26,7 +26,7 @@ export const HeaderContentBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-export const HedaerLogin = styled.div`
+export const HeaderLogin = styled.div`
   width: 72px;
   height: 32px;
   cursor: pointer;
@@ -38,7 +38,7 @@ export const HedaerLogin = styled.div`
   color: white;
   border-radius: 10px;
 `;
-export const HedaerAlert = styled.img`
+export const HeaderAlert = styled.img`
   width: 30px;
   height: 30px;
   cursor: pointer;
