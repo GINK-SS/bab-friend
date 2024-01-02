@@ -4,6 +4,8 @@ import { UserState } from '@_types/auth';
 
 const { persistAtom } = recoilPersist();
 
+const { persistAtom } = recoilPersist();
+
 export const userState = atom({
   key: 'userState',
   default: {
