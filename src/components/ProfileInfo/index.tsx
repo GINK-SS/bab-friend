@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import * as S from './styles';
 
 type EditDataType = {
@@ -6,7 +7,40 @@ type EditDataType = {
   profileImageUrl: string;
 };
 
+type EditDataType = {
+  nickName: string;
+  profileImageUrl: string;
+};
+
 const ProfileInfo = () => {
+  const [editSet, setEditSet] = useState(false);
+  const [editData, setEditData] = useState<EditDataType>({
+    nickName: '밥심 한국인',
+    profileImageUrl:
+      'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  });
+  const imgRef = useRef<HTMLInputElement>(null);
+
+  const handleEditState = () => {
+    setEditSet(!editSet);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditData((prevData) => ({ ...prevData, nickName: e.target.value }));
+  };
+
+  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files;
+    if (file && file[0]) {
+      const imageUrl = URL.createObjectURL(file[0]);
+      setEditData((prevData) => ({ ...prevData, profileImageUrl: imageUrl }));
+    }
+  };
+  const onClickFileBtn = () => {
+    if (imgRef.current) {
+      imgRef.current.click();
+    }
+  };
   const [editSet, setEditSet] = useState(false);
   const [editData, setEditData] = useState<EditDataType>({
     nickName: '밥심 한국인',
