@@ -1,21 +1,41 @@
 import styled from 'styled-components';
 
+import editImage from '../../assets/images/svg/image.svg';
+
 export const ProfileInfoContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 30px 20px;
   border-top: 1px solid lightgray;
   border-bottom: 1px solid lightgray;
 `;
+export const ProfileImgWrap = styled.div<{ $editSet: boolean }>`
+  position: relative;
+  min-width: 60px;
+  cursor: ${(props) => (props.$editSet ? 'pointer' : '')};
+  &::after {
+    content: ${(props) => (props.$editSet ? `url(${editImage})` : '')};
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: whitesmoke;
+    background-size: cover;
+  }
+`;
 export const ProfileImg = styled.img`
-  margin-right: 20px;
   width: 60px;
   height: 60px;
   object-fit: cover;
   border-radius: 50%;
 `;
-export const UserInfoWrapper = styled.div`
+
+export const UserInfoWrap = styled.div`
   width: 100%;
+  padding-left: 20px;
 `;
 export const Nickname = styled.p`
   position: relative;
@@ -42,4 +62,27 @@ export const EditWrap = styled.div`
 export const EditText = styled.p`
   font-size: 12px;
   color: ${({ theme }) => theme.mainColor};
+`;
+export const EditingWrap = styled.div`
+  width: 100%;
+  padding-left: 20px;
+`;
+export const EditingText = styled.p`
+  margin-bottom: 10px;
+`;
+export const EditingInput = styled.input`
+  width: 60%;
+  border: 1px solid #d5d4dc;
+  border-radius: 5px;
+  padding: 2px 10px;
+  background: none;
+  outline: none;
+  &::placeholder {
+    font-size: 12px;
+    opacity: 0.7;
+    font-family: 'Pretendard-ExtraLight';
+  }
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.mainColor};
+  }
 `;
