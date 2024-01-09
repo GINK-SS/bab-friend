@@ -1,19 +1,36 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import * as S from './styles';
 import { useState } from 'react';
-import { ContentDataType } from '@_types/createPost';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+
+import * as S from './styles';
+import { ContentDataType } from '../../types/createPost';
+import { userState } from '../../recoil/atoms/user';
+import { postsBoards } from '../../apis/posts';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
 const CreatePostContent = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const user = useRecoilValue(userState);
   const [contentData, setContentDate] = useState<ContentDataType>({
     title: '',
     content: '',
     linkUrl: '',
   });
+
+  const mutation = useMutation({
+    mutationFn: () => postsBoards(user.accessToken, { ...contentData, ...location.state }),
+    onSuccess: (data) => {
+      console.log('게시글 등록 성공:', data);
+    },
+    onError: (error) => {
+      console.error('게시글 등록 실패:', error);
+    },
+  });
   const handleChange = (name: string, value: string) => {
+    console.log(user);
     setContentDate((prevData) => ({
       ...prevData,
       [name]: value,
@@ -63,7 +80,7 @@ const CreatePostContent = () => {
         >
           이전
         </S.PrevBtn>
-        <S.registrationBtn>등록</S.registrationBtn>
+        <S.registrationBtn onClick={() => mutation.mutate()}>등록</S.registrationBtn>
       </S.BtnWrap>
     </S.CreateContentContainer>
   );
