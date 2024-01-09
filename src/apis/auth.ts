@@ -7,7 +7,7 @@ import { request } from './axios';
  * @returns statusCode, 유저 accessToken와 refreshToken
  */
 const requestTokens = async (code: string): Promise<TokensResponse> => {
-  const { data } = await request.get('/login/oauth2/code/kakao', {
+  const { data } = await request.get('/kakao/callback', {
     params: {
       code: code,
     },
@@ -36,3 +36,14 @@ const requestUserInfo = async (
 const authApi = { requestTokens, requestUserInfo };
 
 export default authApi;
+
+export const fetchUserInfoDetail = async (
+  accessToken: string
+): Promise<UserInfoResponse> => {
+  const response = await request.get('/users/info/detail', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
