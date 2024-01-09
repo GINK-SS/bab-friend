@@ -4,9 +4,9 @@ import group from '../../assets/images/svg/user-group.svg';
 
 import * as S from './styles';
 
-const MannerTemp = () => {
+const BabTemp = () => {
   return (
-    <S.MannerTempContainer>
+    <S.BabTempContainer>
       <ProgressBar temp={36.5} />
       <S.BabReviewWrap>
         <S.EachReviewWrap>
@@ -37,8 +37,8 @@ const MannerTemp = () => {
           </S.ReviewTextBox>
         </S.EachReviewWrap>
       </S.BabReviewWrap>
-    </S.MannerTempContainer>
+    </S.BabTempContainer>
   );
 };
 
-export default MannerTemp;
+export default BabTemp;

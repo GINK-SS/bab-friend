@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import editImage from '../../assets/images/svg/image.svg';
+import editImage from '../../assets/images/svg/pencil.svg';
 
 export const ProfileInfoContainer = styled.div`
   display: flex;

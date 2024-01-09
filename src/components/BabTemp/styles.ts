@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MannerTempContainer = styled.div`
+export const BabTempContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
