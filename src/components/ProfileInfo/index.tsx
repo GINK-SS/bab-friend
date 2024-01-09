@@ -40,26 +40,18 @@ const ProfileInfo = () => {
       <S.ProfileInfoContainer>
         <S.ProfileImgWrap $editSet={editSet}>
           {editSet ? (
-            <S.ProfileImg
-              src={editData.profileImageUrl}
-              onClick={onClickFileBtn}
-            />
+            <S.ProfileImg src={editData.profileImageUrl} onClick={onClickFileBtn} />
           ) : (
             <S.ProfileImg src={editData.profileImageUrl} />
           )}
-          <input
-            type="file"
-            onChange={handleChangeImage}
-            ref={imgRef}
-            style={{ display: 'none' }}
-          />
+          <input type='file' onChange={handleChangeImage} ref={imgRef} style={{ display: 'none' }} />
         </S.ProfileImgWrap>
         {editSet ? (
           <S.EditingWrap>
             <S.EditingText>닉네임</S.EditingText>
             <S.EditingInput
-              type="text"
-              placeholder="변경하실 닉네임을 입력하세요."
+              type='text'
+              placeholder='변경하실 닉네임을 입력하세요.'
               value={editData?.nickName}
               onChange={handleChange}
             ></S.EditingInput>

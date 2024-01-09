@@ -1,4 +1,4 @@
-import { TokensResponse, UserInfoResponse } from '../types/api';
+import { TokensResponse, UserInfoResponse } from '@_types/api';
 import { request } from './axios';
 
 /**
@@ -7,7 +7,7 @@ import { request } from './axios';
  * @returns statusCode, 유저 accessToken와 refreshToken
  */
 const requestTokens = async (code: string): Promise<TokensResponse> => {
-  const { data } = await request.get('/login/oauth2/code/kakao', {
+  const { data } = await request.get('/kakao/callback', {
     params: {
       code: code,
     },
@@ -21,9 +21,7 @@ const requestTokens = async (code: string): Promise<TokensResponse> => {
  * @param accessToken 유저 엑세스 토큰
  * @returns 유저 정보
  */
-const requestUserInfo = async (
-  accessToken: string
-): Promise<UserInfoResponse> => {
+const requestUserInfo = async (accessToken: string): Promise<UserInfoResponse> => {
   const { data } = await request.get('/users/info', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -33,9 +31,7 @@ const requestUserInfo = async (
   return data;
 };
 
-export const fetchUserInfoDetail = async (
-  accessToken: string
-): Promise<UserInfoResponse> => {
+export const fetchUserInfoDetail = async (accessToken: string): Promise<UserInfoResponse> => {
   const response = await request.get('/users/info/detail', {
     headers: {
       Authorization: `Bearer ${accessToken}`,

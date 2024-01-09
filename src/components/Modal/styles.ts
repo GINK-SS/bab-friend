@@ -24,8 +24,7 @@ export const Container = styled.div<{ $isFullScreen?: boolean }>`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: ${({ $isFullScreen }) =>
-    $isFullScreen ? '#FFF' : 'transparent'};
+  background-color: ${({ $isFullScreen }) => ($isFullScreen ? '#FFF' : 'transparent')};
   user-select: none;
 `;
 
@@ -38,12 +37,10 @@ export const Content = styled.div<{
   align-items: center;
   gap: 2rem;
   padding: ${({ contentPadding }) => contentPadding ?? '1rem'};
-  border: ${({ $isFullScreen }) =>
-    $isFullScreen ? '0' : '1px solid rgba(0, 0, 0, 0.3)'};
+  border: ${({ $isFullScreen }) => ($isFullScreen ? '0' : '1px solid rgba(0, 0, 0, 0.3)')};
   border-radius: 10px;
   background-color: #fff;
-  box-shadow: ${({ $isFullScreen }) =>
-    $isFullScreen ? '0' : '0 25px 50px -12px rgba(0, 0, 0, 0.25)'};
+  box-shadow: ${({ $isFullScreen }) => ($isFullScreen ? '0' : '0 25px 50px -12px rgba(0, 0, 0, 0.25)')};
   overflow-y: scroll;
   scrollbar-width: none;
   &::-webkit-scrollbar {

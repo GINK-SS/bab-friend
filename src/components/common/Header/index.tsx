@@ -1,13 +1,13 @@
 import * as S from './styles';
-import bell from '../../../assets/images/svg/bell.svg';
-import menu from '../../../assets/images/svg/menu.svg';
-import arrowLeft from '../../../assets/images/svg/arrow-left.svg';
-import { useNavigate, useLocation } from 'react-router-dom';
-import SideBar from '../../SideBar';
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { modalState } from '../../../recoil/atoms/modal';
-import { userState } from '../../../recoil/atoms/user';
+import bell from '@_assets/images/svg/bell.svg';
+import menu from '@_assets/images/svg/menu.svg';
+import arrowLeft from '@_assets/images/svg/arrow-left.svg';
+import { modalState } from '@_recoil/atoms/modal';
+import { userState } from '@_recoil/atoms/user';
+import SideBar from '@_components/SideBar';
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,11 +23,10 @@ const Header = () => {
   return (
     <>
       <S.HeaderContainer>
-        {location.pathname === '/createcontent' ||
-        location.pathname === '/createPost' ? (
+        {location.pathname === '/createcontent' || location.pathname === '/createPost' ? (
           <S.HeaderBackImg
             src={arrowLeft}
-            alt="backBtn"
+            alt='backBtn'
             onClick={() => {
               navigate(-1);
             }}
@@ -37,10 +36,10 @@ const Header = () => {
         )}
         {accessToken ? (
           <S.HeaderContentBox>
-            <S.HeaderAlert src={bell} alt="bellimage" />
+            <S.HeaderAlert src={bell} alt='bellimage' />
             <S.HeaderMenu
               src={menu}
-              alt="menuimage"
+              alt='menuimage'
               onClick={() => {
                 setSidebarOpen(true);
               }}
@@ -50,9 +49,7 @@ const Header = () => {
           <S.HeaderLogin onClick={handleLoginBtnClick}>로그인</S.HeaderLogin>
         )}
       </S.HeaderContainer>
-      {sidebarOpen && (
-        <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-      )}
+      {sidebarOpen && <SideBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />}
     </>
   );
 };

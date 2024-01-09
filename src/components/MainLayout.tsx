@@ -1,9 +1,9 @@
 import { Outlet } from 'react-router-dom';
-import Header from './common/Header';
-import Modal from './Modal';
-import Login from './Modal/Login';
 import { useRecoilValue } from 'recoil';
 import { modalState } from '../recoil/atoms/modal';
+import Modal from '@_components/Modal';
+import Login from '@_components/Modal/Login';
+import Header from '@_components/common/Header';
 
 const MainLayout = () => {
   const modal = useRecoilValue(modalState);

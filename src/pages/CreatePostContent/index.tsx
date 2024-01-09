@@ -1,9 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import { useState } from 'react';
-import { ContentDataType } from '../../types/createPost';
+import { ContentDataType } from '@_types/createPost';
 
-import infoCircle from '../../assets/images/svg/alert-circle.svg';
+import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
 const CreatePostContent = () => {
   const location = useLocation();
@@ -31,8 +31,8 @@ const CreatePostContent = () => {
       <S.Title>
         <S.TitleText>제목</S.TitleText>
         <S.TitleInput
-          type="text"
-          placeholder="글 제목을 입력해주세요.."
+          type='text'
+          placeholder='글 제목을 입력해주세요..'
           onChange={(e) => handleChange('content', e.target.value)}
           value={contentData.content}
           required
@@ -41,7 +41,7 @@ const CreatePostContent = () => {
       <S.Content>
         <S.ContentText>내용</S.ContentText>
         <S.ContentInput
-          placeholder="글 내용을 입력해주세요.."
+          placeholder='글 내용을 입력해주세요..'
           onChange={(e) => handleChange('title', e.target.value)}
           value={contentData.title}
           required
@@ -50,8 +50,8 @@ const CreatePostContent = () => {
       <S.Link>
         <S.LinkText>링크</S.LinkText>
         <S.LinkInput
-          placeholder="링크(오픈채팅방)을 입력해주세요.."
-          type="text"
+          placeholder='링크(오픈채팅방)을 입력해주세요..'
+          type='text'
           onChange={(e) => handleChange('link', e.target.value)}
           value={contentData.link}
         ></S.LinkInput>
