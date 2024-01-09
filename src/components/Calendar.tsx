@@ -3,12 +3,17 @@ import { format, setHours, setMinutes } from 'date-fns';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
+import { FormDataType } from '../types/createPost';
 
-const Calendar = () => {
+export type CalendarPropsType = {
+  formData: FormDataType;
+  setFormData: React.Dispatch<React.SetStateAction<FormDataType>>;
+};
+
+const Calendar = ({ formData, setFormData }: CalendarPropsType) => {
   const [startDate, setStartDate] = useState<Date | null>(
     setHours(setMinutes(new Date(), 0), 9)
   );
-  const [dateData, setDateData] = useState<string | undefined>();
 
   const filterPassedTime = (time: any) => {
     const currentDate = new Date();
@@ -22,7 +27,7 @@ const Calendar = () => {
       date || new Date(),
       "yyyy-MM-dd'T'HH:mm:ss.SSSxxx"
     );
-    setDateData(formattedDate);
+    setFormData((prevData) => ({ ...prevData, eatTime: formattedDate }));
   };
 
   return (
