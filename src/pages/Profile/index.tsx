@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../recoil/atoms/user';
-import { fetchUserInfoDetail } from '../../apis/userDetail';
+import { fetchUserInfoDetail } from '../../apis/auth';
 
 import * as S from './styles';
 import ProfileInfo from '../../components/ProfileInfo';
