@@ -20,9 +20,7 @@ const BabReview = () => {
         <S.MoreBtn src={more} />
       </S.ProfileWrap>
       <S.ReviewContentWrap>
-        <S.ReviewContent>
-          약속장소까지 시간 정확하게 오셨습니다. 정말 재밌었어요!! 쵝오!!!!!!!
-        </S.ReviewContent>
+        <S.ReviewContent>약속장소까지 시간 정확하게 오셨습니다. 정말 재밌었어요!! 쵝오!!!!!!!</S.ReviewContent>
       </S.ReviewContentWrap>
     </S.BabReviewContainer>
   );
