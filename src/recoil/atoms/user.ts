@@ -1,5 +1,8 @@
+import { recoilPersist } from 'recoil-persist';
 import { atom } from 'recoil';
 import { UserState } from '../../types/auth';
+
+const { persistAtom } = recoilPersist();
 
 export const userState = atom({
   key: 'userState',
@@ -12,4 +15,5 @@ export const userState = atom({
     birthYear: 0,
     profileImageUrl: '',
   } as UserState,
+  effects_UNSTABLE: [persistAtom],
 });

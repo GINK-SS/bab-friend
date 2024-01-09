@@ -6,6 +6,7 @@ import { SideBarPropsType } from '../../types/sideBar';
 
 import close from '../../assets/images/svg/cancle.svg';
 import arrow from '../../assets/images/svg/arrow.svg';
+import ProgressBar from '../common/ProgressBar';
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   useEffect(() => {
@@ -43,17 +44,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
           <S.ProfileNickname>밥프렌즈 님</S.ProfileNickname>
           <S.ProfileArrow src={arrow} />
         </S.Profile>
-        <S.TemperatureWrap>
-          <S.Temperature>
-            <S.TemperatureStatus>
-              <S.TemperatureText>밥 온도</S.TemperatureText>
-              <S.TemperatureNum>39.5°C</S.TemperatureNum>
-            </S.TemperatureStatus>
-            <S.ProgressBar>
-              <S.Progress />
-            </S.ProgressBar>
-          </S.Temperature>
-        </S.TemperatureWrap>
+        <ProgressBar temp={36.5} />
         <SideBarContent setSidebarOpen={setSidebarOpen} />
         <S.Logout>로그아웃</S.Logout>
       </S.SideBarContainer>

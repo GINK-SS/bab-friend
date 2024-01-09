@@ -33,6 +33,17 @@ const requestUserInfo = async (
   return data;
 };
 
-const authApi = { requestTokens, requestUserInfo };
+export const fetchUserInfoDetail = async (
+  accessToken: string
+): Promise<UserInfoResponse> => {
+  const response = await request.get('/users/info/detail', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  return response.data;
+};
+
+const authApi = { requestTokens, requestUserInfo, fetchUserInfoDetail };
 
 export default authApi;
