@@ -1,4 +1,4 @@
-import { TokensResponse, UserInfoResponse } from '../types/api';
+import { TokensResponse, UserInfoResponse } from '@_types/api';
 import { request } from './axios';
 
 /**
@@ -21,9 +21,7 @@ const requestTokens = async (code: string): Promise<TokensResponse> => {
  * @param accessToken 유저 엑세스 토큰
  * @returns 유저 정보
  */
-const requestUserInfo = async (
-  accessToken: string
-): Promise<UserInfoResponse> => {
+const requestUserInfo = async (accessToken: string): Promise<UserInfoResponse> => {
   const { data } = await request.get('/users/info', {
     headers: {
       Authorization: `Bearer ${accessToken}`,

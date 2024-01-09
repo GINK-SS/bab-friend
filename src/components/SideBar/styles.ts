@@ -6,8 +6,7 @@ export const SideMenuBackground = styled.div<{ $sidebarOpen: boolean }>`
   height: 100%;
   top: 0;
   left: 0;
-  animation: ${({ $sidebarOpen }) => ($sidebarOpen ? blurIn : blurOut)} 0.3s
-    ease-in-out forwards;
+  animation: ${({ $sidebarOpen }) => ($sidebarOpen ? blurIn : blurOut)} 0.3s ease-in-out forwards;
   z-index: 1;
 `;
 export const SideBarContainer = styled.div<{ $sidebarOpen: boolean }>`
@@ -17,8 +16,7 @@ export const SideBarContainer = styled.div<{ $sidebarOpen: boolean }>`
   width: 60%;
   height: 100%;
   background-color: white;
-  animation: ${({ $sidebarOpen }) => ($sidebarOpen ? showUp : showOut)} 0.3s
-    ease-in-out forwards;
+  animation: ${({ $sidebarOpen }) => ($sidebarOpen ? showUp : showOut)} 0.3s ease-in-out forwards;
   box-shadow: 0 0 5px black;
   z-index: 1;
 `;

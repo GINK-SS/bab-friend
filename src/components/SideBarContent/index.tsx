@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
 import * as S from './styles';
-import { CommonPropsType } from '../../types/sideBar';
+import { CommonPropsType } from '@_types/sideBar';
 
-import square from '../../assets/images/svg/square.svg';
-import page from '../../assets/images/svg/page.svg';
+import square from '@_assets/images/svg/square.svg';
+import page from '@_assets/images/svg/page.svg';
 
 const SideBarContent = ({ setSidebarOpen }: CommonPropsType) => {
   const navigate = useNavigate();

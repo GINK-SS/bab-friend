@@ -1,6 +1,6 @@
 import * as S from './styles';
-import infoCircle from '../../assets/images/svg/alert-circle.svg';
-import SelectOption from '../../components/SelectOption';
+import SelectOption from '@_components/SelectOption';
+import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
 const CreatePost = () => {
   return (

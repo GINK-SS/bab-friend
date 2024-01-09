@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
 import * as S from './styles';
-import SideBarContent from '../SideBarContent';
-import { SideBarPropsType } from '../../types/sideBar';
+import SideBarContent from '@_components/SideBarContent';
+import { SideBarPropsType } from '@_types/sideBar';
+import ProgressBar from '@_components/common/ProgressBar';
 
-import close from '../../assets/images/svg/cancle.svg';
-import arrow from '../../assets/images/svg/arrow.svg';
-import ProgressBar from '../common/ProgressBar';
+import close from '@_assets/images/svg/cancle.svg';
+import arrow from '@_assets/images/svg/arrow.svg';
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   useEffect(() => {
@@ -27,10 +27,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   };
   return (
     <>
-      <S.SideMenuBackground
-        $sidebarOpen={sidebarOpen}
-        onClick={handleCloseSidebar}
-      />
+      <S.SideMenuBackground $sidebarOpen={sidebarOpen} onClick={handleCloseSidebar} />
       <S.SideBarContainer $sidebarOpen={sidebarOpen}>
         <S.CloseBtnWrap>
           <S.CloseBtn src={close} onClick={handleCloseSidebar} />
