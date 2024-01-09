@@ -4,18 +4,30 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import { FormDataType } from '../../types/createPost';
 import Calendar from '../Calendar';
+import KakaoMapModal from '../KakaoMapModal';
 
 const SelectOption = () => {
   const navigate = useNavigate();
+  // 지도에서 클릭한 장소의 정보를 담을 상태
   const [formData, setFormData] = useState<FormDataType>({
     categoryType: '',
     eatTime: '',
     joinLimit: '',
-    alchol: true,
-    gender: '',
+    alchol: false,
+    fix: false,
+    gender: 'ALL',
     priceRange: 0,
+    ageGroupLimit: false,
+    location: {
+      content: '',
+      position: {
+        lat: '',
+        lng: '',
+      },
+    },
   });
-
+  const [mapModalOpen, setMapModalOpen] = useState(false);
+  console.log(formData);
   const handleChange = (name: string, value: string | number | boolean) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -51,10 +63,6 @@ const SelectOption = () => {
           required
         ></S.MenuInput>
       </S.Menu>
-      <S.Time>
-        <S.TimeText>식사 시간</S.TimeText>
-        <Calendar />
-      </S.Time>
       <S.PeopleNum>
         <S.PeopleNumText>모집 인원</S.PeopleNumText>
         <S.PeopleNumSelect
@@ -66,13 +74,31 @@ const SelectOption = () => {
           <S.PeopleNumSelectOption value='' disabled>
             최대 5명
           </S.PeopleNumSelectOption>
-          <S.PeopleNumSelectOption value='1person'>1명</S.PeopleNumSelectOption>
-          <S.PeopleNumSelectOption value='2person'>2명</S.PeopleNumSelectOption>
-          <S.PeopleNumSelectOption value='3person'>3명</S.PeopleNumSelectOption>
-          <S.PeopleNumSelectOption value='4person'>4명</S.PeopleNumSelectOption>
-          <S.PeopleNumSelectOption value='5person'>5명</S.PeopleNumSelectOption>
+          <S.PeopleNumSelectOption value='1'>1명</S.PeopleNumSelectOption>
+          <S.PeopleNumSelectOption value='2'>2명</S.PeopleNumSelectOption>
+          <S.PeopleNumSelectOption value='3'>3명</S.PeopleNumSelectOption>
+          <S.PeopleNumSelectOption value='4'>4명</S.PeopleNumSelectOption>
+          <S.PeopleNumSelectOption value='5'>5명</S.PeopleNumSelectOption>
         </S.PeopleNumSelect>
       </S.PeopleNum>
+      <S.Time>
+        <S.TimeText>식사 시간</S.TimeText>
+        <Calendar formData={formData} setFormData={setFormData} />
+      </S.Time>
+      <S.StoreNameWrap>
+        <S.StoreName>가게명을 입력해주세요.</S.StoreName>
+        <S.StoreBtn
+          onClick={() => {
+            setMapModalOpen(!mapModalOpen);
+          }}
+        >
+          가게명 검색하기
+        </S.StoreBtn>
+        <S.StoreName>{formData.location.content}</S.StoreName>
+        {mapModalOpen && (
+          <KakaoMapModal setMapModalOpen={setMapModalOpen} formData={formData} setFormData={setFormData} />
+        )}
+      </S.StoreNameWrap>
       <S.Alchol>
         <S.AlcholText>술 여부</S.AlcholText>
         <S.AlcholRadio>
@@ -102,6 +128,35 @@ const SelectOption = () => {
           </S.AlcholRadioLabel>
         </S.AlcholRadio>
       </S.Alchol>
+      <S.AgeLimitWrap>
+        <S.AgeLimitText>연령 제한</S.AgeLimitText>
+        <S.AgeLimitRadio>
+          <S.AgeLimitRadioLabel htmlFor='AgeLimit'>
+            O
+            <S.AgeLimitInput
+              type='radio'
+              id='AgeLimit'
+              name='ageGroupLimit'
+              onChange={() => handleChange('ageGroupLimit', true)}
+              checked={formData.ageGroupLimit === true}
+              required
+            ></S.AgeLimitInput>
+            <S.AgeLimitCustomRadio></S.AgeLimitCustomRadio>
+          </S.AgeLimitRadioLabel>
+          <S.AgeLimitRadioLabel htmlFor='NotAgeLimit'>
+            X
+            <S.AgeLimitInput
+              type='radio'
+              id='NotAgeLimit'
+              name='ageGroupLimit'
+              onChange={() => handleChange('ageGroupLimit', false)}
+              checked={formData.ageGroupLimit === false}
+              required
+            ></S.AgeLimitInput>
+            <S.AgeLimitCustomRadio></S.AgeLimitCustomRadio>
+          </S.AgeLimitRadioLabel>
+        </S.AgeLimitRadio>
+      </S.AgeLimitWrap>
       <S.Gender>
         <S.GenderText>성별</S.GenderText>
         <S.GenderRadio>
@@ -111,32 +166,32 @@ const SelectOption = () => {
               type='radio'
               id='male'
               name='gender'
-              onChange={() => handleChange('gender', 'male')}
-              checked={formData.gender === 'male'}
+              onChange={() => handleChange('gender', 'MALE')}
+              checked={formData.gender === 'MALE'}
               required
             ></S.GenderInput>
             <S.GenderCustomRadio></S.GenderCustomRadio>
           </S.GenderRadioLabel>
-          <S.GenderRadioLabel htmlFor='female'>
+          <S.GenderRadioLabel htmlFor='FEMAIL'>
             여자만
             <S.GenderInput
               type='radio'
-              id='female'
+              id='FEMAIL'
               name='gender'
-              onChange={() => handleChange('gender', 'female')}
-              checked={formData.gender === 'female'}
+              onChange={() => handleChange('gender', 'FEMAIL')}
+              checked={formData.gender === 'FEMAIL'}
               required
             ></S.GenderInput>
             <S.GenderCustomRadio></S.GenderCustomRadio>
           </S.GenderRadioLabel>
-          <S.GenderRadioLabel htmlFor='mix'>
+          <S.GenderRadioLabel htmlFor='ALL'>
             상관없음
             <S.GenderInput
               type='radio'
-              id='mix'
+              id='ALL'
               name='gender'
-              onChange={() => handleChange('gender', 'mix')}
-              checked={formData.gender === 'mix'}
+              onChange={() => handleChange('gender', 'ALL')}
+              checked={formData.gender === 'ALL'}
               required
             ></S.GenderInput>
             <S.GenderCustomRadio></S.GenderCustomRadio>

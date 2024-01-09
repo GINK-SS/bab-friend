@@ -48,9 +48,6 @@ export const RegoinInput = styled.input``;
 export const Menu = styled.div``;
 export const MenuText = styled.p``;
 export const MenuInput = styled.input``;
-export const Store = styled.div``;
-export const StoreText = styled.p``;
-export const StoreInput = styled.input``;
 export const FoodType = styled.div``;
 export const FoodTypeText = styled.p``;
 export const FoodTypeSelect = styled.select``;
@@ -58,6 +55,13 @@ export const FoodTypeSelectOption = styled.option``;
 export const Time = styled.div``;
 export const TimeText = styled.p``;
 export const TimeInput = styled.input``;
+export const StoreNameWrap = styled.div``;
+export const StoreName = styled.p``;
+export const StoreBtn = styled.button`
+  border: 0.1px solid black;
+  padding: 2px 8px;
+  border-radius: 5px;
+`;
 export const PeopleNum = styled.div``;
 export const PeopleNumText = styled.p``;
 export const PeopleNumSelect = styled.select``;
@@ -90,6 +94,54 @@ export const AlcholInput = styled.input`
   }
 `;
 export const AlcholCustomRadio = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #eee;
+  &::after {
+    content: '';
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+  }
+`;
+export const AgeLimitWrap = styled.div``;
+export const AgeLimitText = styled.p`
+  padding-bottom: -20px;
+`;
+export const AgeLimitRadio = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: -20px;
+`;
+export const AgeLimitRadioLabel = styled.label`
+  cursor: pointer;
+  position: relative;
+  padding-left: 30px;
+`;
+export const AgeLimitInput = styled.input`
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  &:checked + span {
+    background-color: ${({ theme }) => theme.mainColor};
+  }
+  &:checked + span::after {
+    display: block;
+  }
+`;
+export const AgeLimitCustomRadio = styled.span`
   position: absolute;
   top: 0;
   left: 0;

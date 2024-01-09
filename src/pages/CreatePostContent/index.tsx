@@ -11,9 +11,8 @@ const CreatePostContent = () => {
   const [contentData, setContentDate] = useState<ContentDataType>({
     title: '',
     content: '',
-    link: '',
+    linkUrl: '',
   });
-
   const handleChange = (name: string, value: string) => {
     setContentDate((prevData) => ({
       ...prevData,
@@ -52,8 +51,8 @@ const CreatePostContent = () => {
         <S.LinkInput
           placeholder='링크(오픈채팅방)을 입력해주세요..'
           type='text'
-          onChange={(e) => handleChange('link', e.target.value)}
-          value={contentData.link}
+          onChange={(e) => handleChange('linkUrl', e.target.value)}
+          value={contentData.linkUrl}
         ></S.LinkInput>
       </S.Link>
       <S.BtnWrap>
