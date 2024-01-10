@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
 import Calendar from '../Calendar';
 import KakaoMapModal from '../KakaoMapModal';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { locationData, postsState } from '@_recoil/atoms/posts';
 import { StaticMap } from 'react-kakao-maps-sdk';
 
@@ -12,7 +12,7 @@ const SelectOption = () => {
   // 지도에서 클릭한 장소의 정보를 담을 상태
   const [postState, setPostState] = useRecoilState(postsState);
   const [mapModalOpen, setMapModalOpen] = useState(false);
-  const [mapData, setMapData] = useRecoilState(locationData);
+  const mapData = useRecoilValue(locationData);
   const handleChange = (name: string, value: string | number | boolean) => {
     setPostState((prevData) => ({
       ...prevData,
