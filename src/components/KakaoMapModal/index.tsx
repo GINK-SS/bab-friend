@@ -1,9 +1,9 @@
 import * as S from './styles';
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { PostDataType } from '../../types/createPost';
+import { PostDataType } from '@_types/createPost';
 
-import closeBtn from '../../assets/images/svg/cancle.svg';
+import closeBtn from '@_assets/images/svg/cancle.svg';
 import { useRecoilState } from 'recoil';
 import { locationData } from '@_recoil/atoms/posts';
 

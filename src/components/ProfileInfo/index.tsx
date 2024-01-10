@@ -1,28 +1,51 @@
-import { useRef, useState } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useRecoilValue } from 'recoil';
+
+import { fetchUserInfoDetail } from '@_apis/auth';
+import { userState } from '@_recoil/atoms/user';
+import { userEditPatch } from '@_apis/userEdit';
+import { UserEditType } from '@_types/userEdit';
+
 import * as S from './styles';
-
-type EditDataType = {
-  nickName: string;
-  profileImageUrl: string;
-};
-
-type EditDataType = {
-  nickName: string;
-  profileImageUrl: string;
-};
 
 const ProfileInfo = () => {
   const [editSet, setEditSet] = useState(false);
-  const [editData, setEditData] = useState<EditDataType>({
-    nickName: '밥심 한국인',
-    profileImageUrl:
-      'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  const [editData, setEditData] = useState<UserEditType>({
+    nickName: '',
+    profileImageUrl: '',
   });
+  const user = useRecoilValue(userState);
+  // 유저정보 detail get 요청
+  const { data: userInfo } = useQuery({
+    queryKey: ['users'],
+    queryFn: () => fetchUserInfoDetail(user.accessToken),
+  });
+  // 서버상태값 state에 저장
+  useEffect(() => {
+    if (userInfo?.data) {
+      setEditData({
+        nickName: userInfo.data.nickName,
+        profileImageUrl: userInfo.data.profileImageUrl,
+      });
+    }
+  }, [userInfo?.data]);
+  // 유저정보 수정
+  const editPatch = useMutation({
+    mutationFn: () => userEditPatch(user.accessToken, { ...editData }),
+    onSuccess: (data) => {
+      console.log('유저정보 수정 완료', data);
+    },
+    onError: (error) => {
+      console.error('유저정보 수정 실패:', error);
+    },
+  });
+
   const imgRef = useRef<HTMLInputElement>(null);
 
   const handleEditState = () => {
     setEditSet(!editSet);
+    editPatch.mutate();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,47 +59,21 @@ const ProfileInfo = () => {
       setEditData((prevData) => ({ ...prevData, profileImageUrl: imageUrl }));
     }
   };
+
   const onClickFileBtn = () => {
     if (imgRef.current) {
       imgRef.current.click();
     }
   };
-  const [editSet, setEditSet] = useState(false);
-  const [editData, setEditData] = useState<EditDataType>({
-    nickName: '밥심 한국인',
-    profileImageUrl:
-      'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  });
-  const imgRef = useRef<HTMLInputElement>(null);
 
-  const handleEditState = () => {
-    setEditSet(!editSet);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditData((prevData) => ({ ...prevData, nickName: e.target.value }));
-  };
-
-  const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files;
-    if (file && file[0]) {
-      const imageUrl = URL.createObjectURL(file[0]);
-      setEditData((prevData) => ({ ...prevData, profileImageUrl: imageUrl }));
-    }
-  };
-  const onClickFileBtn = () => {
-    if (imgRef.current) {
-      imgRef.current.click();
-    }
-  };
   return (
     <>
       <S.ProfileInfoContainer>
         <S.ProfileImgWrap $editSet={editSet}>
           {editSet ? (
-            <S.ProfileImg src={editData.profileImageUrl} onClick={onClickFileBtn} />
+            <S.ProfileImg src={editData?.profileImageUrl} onClick={onClickFileBtn} />
           ) : (
-            <S.ProfileImg src={editData.profileImageUrl} />
+            <S.ProfileImg src={userInfo?.data.profileImageUrl} />
           )}
           <input type='file' onChange={handleChangeImage} ref={imgRef} style={{ display: 'none' }} />
         </S.ProfileImgWrap>
@@ -92,11 +89,10 @@ const ProfileInfo = () => {
           </S.EditingWrap>
         ) : (
           <S.UserInfoWrap>
-            <S.Nickname>{editData?.nickName}</S.Nickname>
-            <S.UserEmail>leek71355@naver.com</S.UserEmail>
+            <S.Nickname>{userInfo?.data.nickName}</S.Nickname>
+            <S.UserEmail>{userInfo?.data.email}</S.UserEmail>
           </S.UserInfoWrap>
         )}
-
         <S.EditWrap>
           {editSet ? (
             <S.EditText onClick={handleEditState}>완료</S.EditText>

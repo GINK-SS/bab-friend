@@ -3,7 +3,7 @@ import { format, setHours, setMinutes } from 'date-fns';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
-import { PostDataType } from '../types/createPost';
+import { PostDataType } from '@_types/createPost';
 
 export type CalendarPropsType = {
   postState: PostDataType;

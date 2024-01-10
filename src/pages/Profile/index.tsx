@@ -1,24 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
-import { userState } from '../../recoil/atoms/user';
-import { fetchUserInfoDetail } from '../../apis/auth';
-
 import * as S from './styles';
-import ProfileInfo from '../../components/ProfileInfo';
-import MannerTemp from '../../components/BabTemp';
-import BabReview from '../../components/BabReview';
+import ProfileInfo from '@_components/ProfileInfo';
+import MannerTemp from '@_components/BabTemp';
+import BabReview from '@_components/BabReview';
 
-import arrow from '../../assets/images/svg/arrow.svg';
-import { fetchUserInfoDetail } from '../../apis/auth';
+import arrow from '@_assets/images/svg/arrow.svg';
 
 const Profile = () => {
-  const user = useRecoilValue(userState);
-
-  const { data: userInfo } = useQuery({
-    queryKey: ['users'],
-    queryFn: () => fetchUserInfoDetail(user.accessToken),
-  });
-
   return (
     <>
       <ProfileInfo />

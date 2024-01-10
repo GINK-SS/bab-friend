@@ -1,6 +1,6 @@
-import ProgressBar from '../common/ProgressBar';
+import ProgressBar from '@_common/ProgressBar';
 
-import group from '../../assets/images/svg/user-group.svg';
+import group from '@_assets/images/svg/user-group.svg';
 
 import * as S from './styles';
 
