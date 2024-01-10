@@ -12,13 +12,13 @@ declare global {
     kakao: any;
   }
 }
-export type KakaoMapModalPropsType = {
+type KakaoMapModalProps = {
   setMapModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   postState: PostDataType;
   setPostState: React.Dispatch<React.SetStateAction<PostDataType>>;
 };
 
-const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapModalPropsType) => {
+const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapModalProps) => {
   const [mapData, setMapData] = useRecoilState(locationData);
   // 검색된 장소의 마커 정보를 담을 상태
   const [markers, setMarkers] = useState<any>([]);
