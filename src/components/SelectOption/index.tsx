@@ -4,16 +4,15 @@ import * as S from './styles';
 import Calendar from '../Calendar';
 import KakaoMapModal from '../KakaoMapModal';
 import { useRecoilState } from 'recoil';
-import { postsState } from '@_recoil/atoms/posts';
+import { locationData, postsState } from '@_recoil/atoms/posts';
+import { StaticMap } from 'react-kakao-maps-sdk';
 
 const SelectOption = () => {
   const navigate = useNavigate();
   // 지도에서 클릭한 장소의 정보를 담을 상태
   const [postState, setPostState] = useRecoilState(postsState);
   const [mapModalOpen, setMapModalOpen] = useState(false);
-  console.log(postState);
-  const stringLocation = JSON.stringify(postState.location);
-
+  const [mapData, setMapData] = useRecoilState(locationData);
   const handleChange = (name: string, value: string | number | boolean) => {
     setPostState((prevData) => ({
       ...prevData,
@@ -44,7 +43,7 @@ const SelectOption = () => {
         <S.MenuInput
           type='number'
           placeholder='예상 가격을 입력해주세요.'
-          onChange={(e) => handleChange('priceRange', e.target.value)}
+          onChange={(e) => handleChange('priceRange', parseInt(e.target.value))}
           value={postState.priceRange}
           maxLength={7}
           required
@@ -81,7 +80,31 @@ const SelectOption = () => {
         >
           가게명 검색하기
         </S.StoreBtn>
-        <S.StoreName>{postState.location.content}</S.StoreName>
+        <S.StoreName>{mapData.location.content}</S.StoreName>
+        {mapData.location.content === '' ? (
+          <></>
+        ) : (
+          <StaticMap
+            center={{
+              lat: mapData.location.position.lat,
+              lng: mapData.location.position.lng,
+            }}
+            style={{
+              width: '100%',
+              height: '200px',
+            }}
+            marker={[
+              {
+                position: {
+                  lat: mapData.location.position.lat,
+                  lng: mapData.location.position.lng,
+                },
+                text: mapData.location.content,
+              },
+            ]}
+            level={3}
+          />
+        )}
         {mapModalOpen && (
           <KakaoMapModal setMapModalOpen={setMapModalOpen} postState={postState} setPostState={setPostState} />
         )}

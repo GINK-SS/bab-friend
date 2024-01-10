@@ -40,6 +40,7 @@ export const ContentWrap = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+export const TextRequired = styled.p``;
 export const MarkerContent = styled.p`
   margin: 20px 0;
 `;

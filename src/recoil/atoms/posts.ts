@@ -1,5 +1,5 @@
 import { PostDataType } from '@_types/createPost';
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 export const postsState = atom<PostDataType>({
   key: 'postsState',
@@ -12,15 +12,31 @@ export const postsState = atom<PostDataType>({
     gender: 'ALL',
     priceRange: 0,
     ageGroupLimit: false,
-    location: {
-      content: '',
-      position: {
-        lat: '',
-        lng: '',
-      },
-    },
+    location: '',
     title: '',
     content: '',
     linkUrl: '',
+  },
+});
+export const locationData = atom({
+  key: 'locationData',
+  default: {
+    location: {
+      content: '',
+      position: {
+        lat: 0,
+        lng: 0,
+      },
+    },
+  },
+});
+export const locationStringSelector = selector<string>({
+  key: 'locationStringSelector',
+  get: ({ get }) => {
+    const locationObject = get(locationData);
+
+    const location = JSON.stringify(locationObject.location);
+
+    return location;
   },
 });

@@ -1,16 +1,15 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import * as S from './styles';
 import { userState } from '../../recoil/atoms/user';
 import { postsBoards } from '../../apis/posts';
+import { locationStringSelector, postsState } from '@_recoil/atoms/posts';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
-import { postsState } from '@_recoil/atoms/posts';
 
 const CreatePostContent = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const user = useRecoilValue(userState);
   const [postState, setPostState] = useRecoilState(postsState);
@@ -24,10 +23,8 @@ const CreatePostContent = () => {
     },
   });
   const handleChange = (name: string, value: string) => {
-    const locationState = location.state || {};
     setPostState((prevData) => ({
       ...prevData,
-      ...locationState, // location.state의 모든 속성을 contentData에 복사
       [name]: value,
     }));
   };

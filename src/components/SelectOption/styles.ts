@@ -56,7 +56,10 @@ export const Time = styled.div``;
 export const TimeText = styled.p``;
 export const TimeInput = styled.input``;
 export const StoreNameWrap = styled.div``;
-export const StoreName = styled.p``;
+export const StoreName = styled.p`
+  margin-top: 20px;
+  color: ${({ theme }) => theme.mainColor};
+`;
 export const StoreBtn = styled.button`
   border: 0.1px solid black;
   padding: 2px 8px;

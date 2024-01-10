@@ -7,12 +7,12 @@ export type PostDataType = {
   gender: string;
   priceRange: number;
   ageGroupLimit: boolean;
-  location: MapInfoType;
+  location: string;
   title: string;
   content: string;
   linkUrl: string;
 };
 export type MapInfoType = {
   content: string;
-  position: { lat: string; lng: string };
+  position: { lat: number; lng: number };
 };
