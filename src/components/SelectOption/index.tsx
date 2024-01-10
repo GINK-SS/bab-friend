@@ -1,35 +1,21 @@
-import * as S from './styles';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './styles';
-import { FormDataType } from '../../types/createPost';
 import Calendar from '../Calendar';
 import KakaoMapModal from '../KakaoMapModal';
+import { useRecoilState } from 'recoil';
+import { postsState } from '@_recoil/atoms/posts';
 
 const SelectOption = () => {
   const navigate = useNavigate();
   // 지도에서 클릭한 장소의 정보를 담을 상태
-  const [formData, setFormData] = useState<FormDataType>({
-    categoryType: '',
-    eatTime: '',
-    joinLimit: '',
-    alchol: false,
-    fix: false,
-    gender: 'ALL',
-    priceRange: 0,
-    ageGroupLimit: false,
-    location: {
-      content: '',
-      position: {
-        lat: '',
-        lng: '',
-      },
-    },
-  });
+  const [postState, setPostState] = useRecoilState(postsState);
   const [mapModalOpen, setMapModalOpen] = useState(false);
-  console.log(formData);
+  console.log(postState);
+  const stringLocation = JSON.stringify(postState.location);
+
   const handleChange = (name: string, value: string | number | boolean) => {
-    setFormData((prevData) => ({
+    setPostState((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -41,7 +27,7 @@ const SelectOption = () => {
         <S.FoodTypeSelect
           name='categoryType'
           onChange={(e) => handleChange('categoryType', e.target.value)}
-          value={formData.categoryType}
+          value={postState.categoryType}
           required
         >
           <S.FoodTypeSelectOption value='' disabled>
@@ -56,10 +42,11 @@ const SelectOption = () => {
       <S.Menu>
         <S.MenuText>예상 가격</S.MenuText>
         <S.MenuInput
-          type='text'
+          type='number'
           placeholder='예상 가격을 입력해주세요.'
           onChange={(e) => handleChange('priceRange', e.target.value)}
-          value={formData.priceRange}
+          value={postState.priceRange}
+          maxLength={7}
           required
         ></S.MenuInput>
       </S.Menu>
@@ -67,12 +54,12 @@ const SelectOption = () => {
         <S.PeopleNumText>모집 인원</S.PeopleNumText>
         <S.PeopleNumSelect
           name='joinLimit'
-          onChange={(e) => handleChange('joinLimit', e.target.value)}
-          value={formData.joinLimit}
+          onChange={(e) => handleChange('joinLimit', parseInt(e.target.value))}
+          value={postState.joinLimit}
           required
         >
           <S.PeopleNumSelectOption value='' disabled>
-            최대 5명
+            예상 인원을 선택하세요.
           </S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value='1'>1명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value='2'>2명</S.PeopleNumSelectOption>
@@ -83,7 +70,7 @@ const SelectOption = () => {
       </S.PeopleNum>
       <S.Time>
         <S.TimeText>식사 시간</S.TimeText>
-        <Calendar formData={formData} setFormData={setFormData} />
+        <Calendar postState={postState} setPostState={setPostState} />
       </S.Time>
       <S.StoreNameWrap>
         <S.StoreName>가게명을 입력해주세요.</S.StoreName>
@@ -94,9 +81,9 @@ const SelectOption = () => {
         >
           가게명 검색하기
         </S.StoreBtn>
-        <S.StoreName>{formData.location.content}</S.StoreName>
+        <S.StoreName>{postState.location.content}</S.StoreName>
         {mapModalOpen && (
-          <KakaoMapModal setMapModalOpen={setMapModalOpen} formData={formData} setFormData={setFormData} />
+          <KakaoMapModal setMapModalOpen={setMapModalOpen} postState={postState} setPostState={setPostState} />
         )}
       </S.StoreNameWrap>
       <S.Alchol>
@@ -109,7 +96,7 @@ const SelectOption = () => {
               id='alcholOk'
               name='alchol'
               onChange={() => handleChange('alchol', true)}
-              checked={formData.alchol === true}
+              checked={postState.alchol === true}
               required
             ></S.AlcholInput>
             <S.AlcholCustomRadio></S.AlcholCustomRadio>
@@ -121,7 +108,7 @@ const SelectOption = () => {
               id='alcholNo'
               name='alchol'
               onChange={() => handleChange('alchol', false)}
-              checked={formData.alchol === false}
+              checked={postState.alchol === false}
               required
             ></S.AlcholInput>
             <S.AlcholCustomRadio></S.AlcholCustomRadio>
@@ -138,7 +125,7 @@ const SelectOption = () => {
               id='AgeLimit'
               name='ageGroupLimit'
               onChange={() => handleChange('ageGroupLimit', true)}
-              checked={formData.ageGroupLimit === true}
+              checked={postState.ageGroupLimit === true}
               required
             ></S.AgeLimitInput>
             <S.AgeLimitCustomRadio></S.AgeLimitCustomRadio>
@@ -150,7 +137,7 @@ const SelectOption = () => {
               id='NotAgeLimit'
               name='ageGroupLimit'
               onChange={() => handleChange('ageGroupLimit', false)}
-              checked={formData.ageGroupLimit === false}
+              checked={postState.ageGroupLimit === false}
               required
             ></S.AgeLimitInput>
             <S.AgeLimitCustomRadio></S.AgeLimitCustomRadio>
@@ -167,7 +154,7 @@ const SelectOption = () => {
               id='male'
               name='gender'
               onChange={() => handleChange('gender', 'MALE')}
-              checked={formData.gender === 'MALE'}
+              checked={postState.gender === 'MALE'}
               required
             ></S.GenderInput>
             <S.GenderCustomRadio></S.GenderCustomRadio>
@@ -179,7 +166,7 @@ const SelectOption = () => {
               id='FEMAIL'
               name='gender'
               onChange={() => handleChange('gender', 'FEMAIL')}
-              checked={formData.gender === 'FEMAIL'}
+              checked={postState.gender === 'FEMAIL'}
               required
             ></S.GenderInput>
             <S.GenderCustomRadio></S.GenderCustomRadio>
@@ -191,7 +178,7 @@ const SelectOption = () => {
               id='ALL'
               name='gender'
               onChange={() => handleChange('gender', 'ALL')}
-              checked={formData.gender === 'ALL'}
+              checked={postState.gender === 'ALL'}
               required
             ></S.GenderInput>
             <S.GenderCustomRadio></S.GenderCustomRadio>
@@ -202,7 +189,7 @@ const SelectOption = () => {
         <S.NextBtn
           onClick={() => {
             navigate('/createcontent', {
-              state: { ...formData },
+              state: { ...postState },
             });
           }}
         >

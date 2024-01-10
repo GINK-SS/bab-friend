@@ -1,4 +1,4 @@
-export type FormDataType = {
+export type PostDataType = {
   categoryType: string;
   eatTime: string;
   joinLimit: string;
@@ -8,13 +8,11 @@ export type FormDataType = {
   priceRange: number;
   ageGroupLimit: boolean;
   location: MapInfoType;
+  title: string;
+  content: string;
+  linkUrl: string;
 };
 export type MapInfoType = {
   content: string;
   position: { lat: string; lng: string };
-};
-export type ContentDataType = {
-  title: string;
-  content: string;
-  linkUrl: string;
 };

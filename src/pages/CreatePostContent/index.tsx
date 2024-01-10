@@ -1,27 +1,21 @@
-import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import * as S from './styles';
-import { ContentDataType } from '../../types/createPost';
 import { userState } from '../../recoil/atoms/user';
 import { postsBoards } from '../../apis/posts';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
+import { postsState } from '@_recoil/atoms/posts';
 
 const CreatePostContent = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const user = useRecoilValue(userState);
-  const [contentData, setContentDate] = useState<ContentDataType>({
-    title: '',
-    content: '',
-    linkUrl: '',
-  });
-
+  const [postState, setPostState] = useRecoilState(postsState);
   const mutation = useMutation({
-    mutationFn: () => postsBoards(user.accessToken, { ...contentData, ...location.state }),
+    mutationFn: () => postsBoards(user.accessToken, { ...postState }),
     onSuccess: (data) => {
       console.log('게시글 등록 성공:', data);
     },
@@ -30,9 +24,10 @@ const CreatePostContent = () => {
     },
   });
   const handleChange = (name: string, value: string) => {
-    console.log(user);
-    setContentDate((prevData) => ({
+    const locationState = location.state || {};
+    setPostState((prevData) => ({
       ...prevData,
+      ...locationState, // location.state의 모든 속성을 contentData에 복사
       [name]: value,
     }));
   };
@@ -50,7 +45,7 @@ const CreatePostContent = () => {
           type='text'
           placeholder='글 제목을 입력해주세요..'
           onChange={(e) => handleChange('content', e.target.value)}
-          value={contentData.content}
+          value={postState.content}
           required
         ></S.TitleInput>
       </S.Title>
@@ -59,7 +54,7 @@ const CreatePostContent = () => {
         <S.ContentInput
           placeholder='글 내용을 입력해주세요..'
           onChange={(e) => handleChange('title', e.target.value)}
-          value={contentData.title}
+          value={postState.title}
           required
         ></S.ContentInput>
       </S.Content>
@@ -69,7 +64,7 @@ const CreatePostContent = () => {
           placeholder='링크(오픈채팅방)을 입력해주세요..'
           type='text'
           onChange={(e) => handleChange('linkUrl', e.target.value)}
-          value={contentData.linkUrl}
+          value={postState.linkUrl}
         ></S.LinkInput>
       </S.Link>
       <S.BtnWrap>

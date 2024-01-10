@@ -1,7 +1,7 @@
 import * as S from './styles';
 import { useEffect, useState } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import { FormDataType } from '../../types/createPost';
+import { PostDataType } from '../../types/createPost';
 
 import closeBtn from '../../assets/images/svg/cancle.svg';
 
@@ -12,15 +12,11 @@ declare global {
 }
 export type KakaoMapModalPropsType = {
   setMapModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  formData: FormDataType;
-  setFormData: React.Dispatch<React.SetStateAction<FormDataType>>;
+  postState: PostDataType;
+  setPostState: React.Dispatch<React.SetStateAction<PostDataType>>;
 };
 
-const KakaoMapModal = ({
-  setMapModalOpen,
-  formData,
-  setFormData,
-}: KakaoMapModalPropsType) => {
+const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapModalPropsType) => {
   // 지도에서 클릭한 장소의 정보를 담을 상태
   // const [info, setInfo] = useState<any>();
   // 검색된 장소의 마커 정보를 담을 상태
@@ -71,7 +67,7 @@ const KakaoMapModal = ({
   }, [map]);
 
   const alertConfirm = (marker: any) => {
-    if (formData.location.content === '') {
+    if (postState.location.content === '') {
       alert('위치를 지정해주세요.');
     } else {
       setMapModalOpen(false);
@@ -89,7 +85,7 @@ const KakaoMapModal = ({
       </S.CloseBtnWrap>
       <S.ModalWrap>
         <S.ModalInput
-          type="text"
+          type='text'
           value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
@@ -114,22 +110,21 @@ const KakaoMapModal = ({
             key={`marker-${marker.content}-${marker?.position.lat},${marker?.position.lng}`}
             position={marker?.position}
             onClick={() =>
-              setFormData((prevData) => ({
+              setPostState((prevData) => ({
                 ...prevData,
                 location: marker,
               }))
             }
           >
             {/* 마커를 클릭하면 해당 장소의 정보를 표시 */}
-            {formData?.location &&
-              formData?.location.content === marker?.content && (
-                <div style={{ color: '#000' }}>{marker?.content}</div>
-              )}
+            {postState?.location && postState?.location.content === marker?.content && (
+              <div style={{ color: '#000' }}>{marker?.content}</div>
+            )}
           </MapMarker>
         ))}
       </Map>
       <S.ContentWrap>
-        <S.MarkerContent>{formData.location?.content}</S.MarkerContent>
+        <S.MarkerContent>{postState.location?.content}</S.MarkerContent>
         <S.ConfirmBtn onClick={alertConfirm}>확인</S.ConfirmBtn>
       </S.ContentWrap>
     </S.ModalContainer>
