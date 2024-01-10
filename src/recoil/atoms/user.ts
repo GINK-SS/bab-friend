@@ -10,7 +10,7 @@ export const userState = atom({
     accessToken: '',
     email: '',
     name: '',
-    nickname: '',
+    nickName: '',
     genderType: '',
     birthYear: 0,
     profileImageUrl: '',

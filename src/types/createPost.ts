@@ -1,15 +1,18 @@
-export type FormDataType = {
-  foodType: string;
-  menu: string;
-  store: string;
-  region: string;
-  time: string;
-  peopleNum: string;
-  alchol: string;
+export type PostDataType = {
+  categoryType: string;
+  eatTime: string;
+  joinLimit: string;
+  alchol: boolean;
+  fix: boolean;
   gender: string;
-};
-export type ContentDataType = {
+  priceRange: number;
+  ageGroupLimit: boolean;
+  location: string;
   title: string;
   content: string;
-  link: string;
+  linkUrl: string;
+};
+export type MapInfoType = {
+  content: string;
+  position: { lat: number; lng: number };
 };

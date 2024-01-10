@@ -9,8 +9,8 @@ import GlobalStyle from '@_style/global';
 import theme from '@_style/theme';
 import '@_assets/fonts/font.css';
 
-const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const queryClient = new QueryClient();
 
 root.render(
   <RecoilRoot>

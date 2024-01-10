@@ -12,7 +12,6 @@ const requestTokens = async (code: string): Promise<TokensResponse> => {
       code: code,
     },
   });
-
   return data;
 };
 

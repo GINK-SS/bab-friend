@@ -1,21 +1,29 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { useRecoilState, useRecoilValue } from 'recoil';
+
 import * as S from './styles';
-import { useState } from 'react';
-import { ContentDataType } from '@_types/createPost';
+import { userState } from '../../recoil/atoms/user';
+import postApi from '@_apis/posts';
+import { postsState } from '@_recoil/atoms/posts';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
 const CreatePostContent = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const [contentData, setContentDate] = useState<ContentDataType>({
-    title: '',
-    content: '',
-    link: '',
+  const user = useRecoilValue(userState);
+  const [postState, setPostState] = useRecoilState(postsState);
+  const mutation = useMutation({
+    mutationFn: () => postApi.postsBoards(user.accessToken, { ...postState }),
+    onSuccess: (data) => {
+      console.log('게시글 등록 성공:', data);
+    },
+    onError: (error) => {
+      console.error('게시글 등록 실패:', error);
+    },
   });
-
   const handleChange = (name: string, value: string) => {
-    setContentDate((prevData) => ({
+    setPostState((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -34,7 +42,7 @@ const CreatePostContent = () => {
           type='text'
           placeholder='글 제목을 입력해주세요..'
           onChange={(e) => handleChange('content', e.target.value)}
-          value={contentData.content}
+          value={postState.content}
           required
         ></S.TitleInput>
       </S.Title>
@@ -43,7 +51,7 @@ const CreatePostContent = () => {
         <S.ContentInput
           placeholder='글 내용을 입력해주세요..'
           onChange={(e) => handleChange('title', e.target.value)}
-          value={contentData.title}
+          value={postState.title}
           required
         ></S.ContentInput>
       </S.Content>
@@ -52,8 +60,8 @@ const CreatePostContent = () => {
         <S.LinkInput
           placeholder='링크(오픈채팅방)을 입력해주세요..'
           type='text'
-          onChange={(e) => handleChange('link', e.target.value)}
-          value={contentData.link}
+          onChange={(e) => handleChange('linkUrl', e.target.value)}
+          value={postState.linkUrl}
         ></S.LinkInput>
       </S.Link>
       <S.BtnWrap>
@@ -64,7 +72,7 @@ const CreatePostContent = () => {
         >
           이전
         </S.PrevBtn>
-        <S.registrationBtn>등록</S.registrationBtn>
+        <S.registrationBtn onClick={() => mutation.mutate()}>등록</S.registrationBtn>
       </S.BtnWrap>
     </S.CreateContentContainer>
   );

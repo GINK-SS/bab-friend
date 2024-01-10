@@ -1,6 +1,6 @@
 import * as S from './styles';
 
-import more from '../../assets/images/svg/more-vertical.svg';
+import more from '@_assets/images/svg/more-vertical.svg';
 
 const BabReview = () => {
   return (
