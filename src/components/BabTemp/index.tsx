@@ -1,4 +1,4 @@
-import ProgressBar from '@_common/ProgressBar';
+import ProgressBar from '../common/ProgressBar';
 
 import group from '@_assets/images/svg/user-group.svg';
 
