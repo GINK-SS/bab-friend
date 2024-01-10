@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import * as S from './styles';
 import { userState } from '../../recoil/atoms/user';
-import { postsBoards } from '../../apis/posts';
+import postApi from '@_apis/posts';
 import { postsState } from '@_recoil/atoms/posts';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
@@ -14,7 +14,7 @@ const CreatePostContent = () => {
   const user = useRecoilValue(userState);
   const [postState, setPostState] = useRecoilState(postsState);
   const mutation = useMutation({
-    mutationFn: () => postsBoards(user.accessToken, { ...postState }),
+    mutationFn: () => postApi.postsBoards(user.accessToken, { ...postState }),
     onSuccess: (data) => {
       console.log('게시글 등록 성공:', data);
     },

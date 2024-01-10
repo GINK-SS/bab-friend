@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 
 import { fetchUserInfoDetail } from '@_apis/auth';
 import { userState } from '@_recoil/atoms/user';
-import { userEditPatch } from '@_apis/userEdit';
+import userEditApi from '@_apis/userEdit';
 import { UserEditType } from '@_types/userEdit';
 
 import * as S from './styles';
@@ -32,7 +32,7 @@ const ProfileInfo = () => {
   }, [userInfo?.data]);
   // 유저정보 수정
   const editPatch = useMutation({
-    mutationFn: () => userEditPatch(user.accessToken, { ...editData }),
+    mutationFn: () => userEditApi.userEditPatch(user.accessToken, { ...editData }),
     onSuccess: (data) => {
       console.log('유저정보 수정 완료', data);
     },

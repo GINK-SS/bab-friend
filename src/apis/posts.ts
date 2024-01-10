@@ -10,3 +10,7 @@ export const postsBoards = async (accessToken: string, postData: PostDataType): 
 
   return data;
 };
+
+const postApi = { postsBoards };
+
+export default postApi;

@@ -20,3 +20,7 @@ export const userEditPatch = async (accessToken: string, userEditData: UserEditT
 
   return data;
 };
+
+const userEditApi = { userEditPatch };
+
+export default userEditApi;
