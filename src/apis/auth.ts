@@ -1,5 +1,7 @@
 import { TokenResponse, UserInfoResponse } from '@_types/api';
-import { request } from './axios';
+import { request, setAccessToken } from './axios';
+import { setRecoil } from 'recoil-nexus';
+import { userState } from '@_recoil/atoms/user';
 
 let refreshTimer: NodeJS.Timeout;
 
@@ -8,9 +10,26 @@ let refreshTimer: NodeJS.Timeout;
  * @returns 새로운 accessToken
  */
 const refresh = async () => {
-  const { data } = await request.post<TokenResponse>('/auth/reissue');
+  const {
+    data: {
+      data: { accessToken },
+    },
+  } = await request.post<TokenResponse>('/auth/refresh');
 
-  return data;
+  if (!accessToken) {
+    setRecoil(userState, (prev) => ({
+      ...prev,
+      authStatus: 'unauthorized' as 'authorized' | 'pending' | 'unauthorized',
+    }));
+
+    return;
+  }
+
+  setAccessToken(accessToken);
+  setRecoil(userState, (prev) => ({
+    ...prev,
+    authStatus: 'authorized' as 'authorized' | 'pending' | 'unauthorized',
+  }));
 };
 
 /**
