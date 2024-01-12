@@ -15,7 +15,7 @@ const Auth = () => {
     const getTokensAndUserInfo = async () => {
       const {
         data: { accessToken },
-      } = await authApi.requestTokens(code);
+      } = await authApi.kakaoLogin(code);
 
       if (!accessToken) {
         // ToDo: 로그인 실패 시 구현

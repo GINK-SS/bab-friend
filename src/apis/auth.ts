@@ -1,4 +1,4 @@
-import { TokensResponse, UserInfoResponse } from '@_types/api';
+import { TokenResponse, UserInfoResponse } from '@_types/api';
 import { request } from './axios';
 
 /**
@@ -6,8 +6,8 @@ import { request } from './axios';
  * @param code 카카오 인가코드
  * @returns statusCode, 유저 accessToken와 refreshToken
  */
-const requestTokens = async (code: string) => {
-  const { data } = await request.get<TokensResponse>('/kakao/callback', {
+const kakaoLogin = async (code: string) => {
+  const { data } = await request.get<TokenResponse>('/kakao/callback', {
     params: {
       code,
     },
@@ -32,6 +32,6 @@ const fetchUserInfoDetail = async () => {
   return response.data;
 };
 
-const authApi = { requestTokens, requestUserInfo, fetchUserInfoDetail };
+const authApi = { kakaoLogin, requestUserInfo, fetchUserInfoDetail };
 
 export default authApi;

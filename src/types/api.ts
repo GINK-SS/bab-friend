@@ -1,8 +1,7 @@
-export type TokensResponse = {
+export type TokenResponse = {
   statusCode: number;
   data: {
     accessToken: string;
-    refreshToken: string;
   };
 };
 
