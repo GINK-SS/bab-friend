@@ -6,36 +6,29 @@ import { request } from './axios';
  * @param code 카카오 인가코드
  * @returns statusCode, 유저 accessToken와 refreshToken
  */
-const requestTokens = async (code: string): Promise<TokensResponse> => {
-  const { data } = await request.get('/kakao/callback', {
+const requestTokens = async (code: string) => {
+  const { data } = await request.get<TokensResponse>('/kakao/callback', {
     params: {
-      code: code,
+      code,
     },
   });
+
   return data;
 };
 
 /**
  * @description 유저정보반환 API
- * @param accessToken 유저 엑세스 토큰
  * @returns 유저 정보
  */
-const requestUserInfo = async (accessToken: string): Promise<UserInfoResponse> => {
-  const { data } = await request.get('/users/info', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+const requestUserInfo = async () => {
+  const { data } = await request.get<UserInfoResponse>('/users/info');
 
   return data;
 };
 
-export const fetchUserInfoDetail = async (accessToken: string): Promise<UserInfoResponse> => {
-  const response = await request.get('/users/info/detail', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+const fetchUserInfoDetail = async () => {
+  const response = await request.get<UserInfoResponse>('/users/info/detail');
+
   return response.data;
 };
 

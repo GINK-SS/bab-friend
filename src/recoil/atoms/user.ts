@@ -1,16 +1,16 @@
-import { recoilPersist } from 'recoil-persist';
-import { atom } from 'recoil';
+import { RecoilState, atom } from 'recoil';
 import { UserState } from '@_types/auth';
 
 const { persistAtom } = recoilPersist();
 
-export const userState = atom({
+export const userState: RecoilState<UserState> = atom({
   key: 'userState',
   default: {
-    accessToken: '',
+    authStatus: 'pending',
     email: '',
     name: '',
     nickName: '',
+    temperature: 0,
     genderType: '',
     birthYear: 0,
     profileImageUrl: '',

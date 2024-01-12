@@ -11,7 +11,7 @@ import SideBar from '@_components/SideBar';
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { accessToken } = useRecoilValue(userState);
+  const { authStatus } = useRecoilValue(userState);
   const location = useLocation();
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);
@@ -34,7 +34,7 @@ const Header = () => {
         ) : (
           <S.HeaderLogo>BAB-FRIEND</S.HeaderLogo>
         )}
-        {accessToken ? (
+        {authStatus === 'authorized' ? (
           <S.HeaderContentBox>
             <S.HeaderAlert src={bell} alt='bellimage' />
             <S.HeaderMenu
