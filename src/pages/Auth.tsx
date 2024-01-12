@@ -33,9 +33,7 @@ const Auth = () => {
         return;
       }
 
-      setUserInfo((prev) => {
-        return { ...prev, authStatus: 'authorized', ...data };
-      });
+      setUserInfo((prev) => ({ ...prev, authStatus: 'authorized', ...data }));
     };
 
     try {
