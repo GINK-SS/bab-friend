@@ -1,6 +1,44 @@
 import { TokenResponse, UserInfoResponse } from '@_types/api';
 import { request } from './axios';
 
+let refreshTimer: NodeJS.Timeout;
+
+/**
+ * @description accessToken, refreshToken 발급
+ * @returns 새로운 accessToken
+ */
+const refresh = async () => {
+  const { data } = await request.post<TokenResponse>('/auth/reissue');
+
+  return data;
+};
+
+/**
+ * @description 토큰 재발급 카운트
+ */
+const silentRefresh = () => {
+  refreshTimer = setTimeout(
+    async () => {
+      try {
+        await refresh();
+        silentRefresh();
+      } catch (e) {
+        setTimeout(() => silentRefresh(), 10000);
+      }
+    },
+    1000 * 60 * 29
+  );
+};
+
+/**
+ * @description 토큰 재발급 카운트 취소
+ */
+const stopRefresh = () => {
+  if (refreshTimer) {
+    clearTimeout(refreshTimer);
+  }
+};
+
 /**
  * @description 카카오 로그인 API
  * @param code 카카오 인가코드
@@ -32,6 +70,6 @@ const fetchUserInfoDetail = async () => {
   return response.data;
 };
 
-const authApi = { kakaoLogin, requestUserInfo, fetchUserInfoDetail };
+const authApi = { refresh, silentRefresh, stopRefresh, kakaoLogin, requestUserInfo, fetchUserInfoDetail };
 
 export default authApi;
