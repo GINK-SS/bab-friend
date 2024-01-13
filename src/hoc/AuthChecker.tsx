@@ -1,10 +1,12 @@
 import { ReactNode, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import authApi from '@_apis/auth';
 import { userState } from '@_recoil/atoms/user';
+import { authState } from '@_recoil/atoms/auth';
 
 const AuthChecker = ({ children }: { children: ReactNode }) => {
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [authInfo, setAuthInfo] = useRecoilState(authState);
+  const setUserInfo = useSetRecoilState(userState);
 
   useEffect(() => {
     (async () => {
@@ -12,16 +14,16 @@ const AuthChecker = ({ children }: { children: ReactNode }) => {
         await authApi.refresh();
 
         const { data } = await authApi.requestUserInfo();
-        setUserInfo((prev) => ({ ...prev, ...data }));
+        setUserInfo({ ...data });
 
         authApi.silentRefresh();
       } catch (e) {
-        setUserInfo((prev) => ({ ...prev, authStatus: 'unauthorized' }));
+        setAuthInfo({ authStatus: 'unauthorized' });
       }
     })();
-  }, [setUserInfo]);
+  }, [setAuthInfo, setUserInfo]);
 
-  if (userInfo.authStatus === 'pending') return null;
+  if (authInfo.authStatus === 'pending') return null;
 
   return <>{children}</>;
 };

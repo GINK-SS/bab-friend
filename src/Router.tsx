@@ -1,18 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Home from './pages/Home';
-import MainLayout from './components/MainLayout';
-import CreatePost from './pages/CreatePost';
-import CreatePostContent from './pages/CreatePostContent';
-import Auth from './pages/Auth';
-import Profile from './pages/Profile';
-import PostDetail from '@_pages/PostView';
+import Home from '@_pages/Home';
+import MainLayout from '@_components/MainLayout';
+import CreatePost from '@_pages/CreatePost';
+import CreatePostContent from '@_pages/CreatePostContent';
+import Profile from '@_pages/Profile';
+import SignIn from '@_pages/SignIn';
 
 const Router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
       { path: '', element: <Home /> },
-      { path: 'kakao/callback', element: <Auth /> },
+      { path: 'kakao/callback', element: <SignIn /> },
       { path: 'createpost', element: <CreatePost /> },
       { path: 'createcontent', element: <CreatePostContent /> },
       { path: 'postdetail/:id', element: <PostDetail /> },

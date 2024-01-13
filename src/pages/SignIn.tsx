@@ -5,9 +5,11 @@ import authApi from '@_apis/auth';
 import { userState } from '@_recoil/atoms/user';
 import Spinner from '@_components/common/Spinner';
 import { setAccessToken } from '@_apis/axios';
+import { authState } from '@_recoil/atoms/auth';
 
-const Auth = () => {
+const SignIn = () => {
   const code = new URL(document.URL).searchParams.get('code') as string;
+  const setAuthInfo = useSetRecoilState(authState);
   const setUserInfo = useSetRecoilState(userState);
   const navigate = useNavigate();
 
@@ -33,7 +35,8 @@ const Auth = () => {
         return;
       }
 
-      setUserInfo((prev) => ({ ...prev, authStatus: 'authorized', ...data }));
+      setUserInfo({ ...data });
+      setAuthInfo({ authStatus: 'authorized' });
     };
 
     try {
@@ -44,9 +47,9 @@ const Auth = () => {
     } finally {
       navigate('/');
     }
-  }, [code, navigate, setUserInfo]);
+  }, [code, navigate, setAuthInfo, setUserInfo]);
 
   return <Spinner />;
 };
 
-export default Auth;
+export default SignIn;

@@ -6,12 +6,12 @@ import bell from '@_assets/images/svg/bell.svg';
 import menu from '@_assets/images/svg/menu.svg';
 import arrowLeft from '@_assets/images/svg/arrow-left.svg';
 import { modalState } from '@_recoil/atoms/modal';
-import { userState } from '@_recoil/atoms/user';
 import SideBar from '@_components/SideBar';
+import { authState } from '@_recoil/atoms/auth';
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { authStatus } = useRecoilValue(userState);
+  const { authStatus } = useRecoilValue(authState);
   const location = useLocation();
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);

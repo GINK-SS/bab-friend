@@ -1,10 +1,9 @@
 import { RecoilState, atom } from 'recoil';
-import { UserState } from '@_types/auth';
+import { UserState } from '@_types/user';
 
 export const userState: RecoilState<UserState> = atom({
   key: 'userState',
   default: {
-    authStatus: 'pending',
     email: '',
     name: '',
     nickName: '',
