@@ -7,6 +7,10 @@ export const setAccessToken = (accessToken: string) => {
   request.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 };
 
+export const deleteAccessToken = () => {
+  delete request.defaults.headers.common['Authorization'];
+};
+
 export const request: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
