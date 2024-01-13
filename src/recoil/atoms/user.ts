@@ -10,6 +10,6 @@ export const userState: RecoilState<UserState> = atom({
     temperature: 0,
     genderType: '',
     birthYear: 0,
-    profileImageUrl: '',
+    profileImageUrl: null,
   } as UserState,
 });

@@ -71,9 +71,10 @@ const ProfileInfo = () => {
       <S.ProfileInfoContainer>
         <S.ProfileImgWrap $editSet={editSet}>
           {editSet ? (
-            <S.ProfileImg src={editData?.profileImageUrl} onClick={onClickFileBtn} />
+            // ToDo: imageUrl이 null일 때
+            <S.ProfileImg src={editData.profileImageUrl ?? ''} onClick={onClickFileBtn} />
           ) : (
-            <S.ProfileImg src={userInfo?.data.profileImageUrl} />
+            <S.ProfileImg src={userInfo?.data.profileImageUrl ?? ''} />
           )}
           <input type='file' onChange={handleChangeImage} ref={imgRef} style={{ display: 'none' }} />
         </S.ProfileImgWrap>

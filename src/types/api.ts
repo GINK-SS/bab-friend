@@ -14,6 +14,6 @@ export type UserInfoResponse = {
     temperature: number;
     genderType: string;
     birthYear: number;
-    profileImageUrl?: string;
+    profileImageUrl: string | null;
   };
 };

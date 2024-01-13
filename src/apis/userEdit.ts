@@ -8,7 +8,7 @@ const userEditPatch = async (userEditData: UserEditType): Promise<UserEditType> 
     formData.append('nickName', userEditData.nickName);
   }
 
-  if (userEditData.profileImageUrl !== undefined) {
+  if (userEditData.profileImageUrl !== null) {
     formData.append('profileImageUrl', userEditData.profileImageUrl);
   }
 
