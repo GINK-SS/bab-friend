@@ -4,6 +4,7 @@ import MainLayout from '@_components/MainLayout';
 import CreatePost from '@_pages/CreatePost';
 import CreatePostContent from '@_pages/CreatePostContent';
 import Profile from '@_pages/Profile';
+import PostDetail from '@_pages/PostDetail';
 import SignIn from '@_pages/SignIn';
 
 const Router = createBrowserRouter([
