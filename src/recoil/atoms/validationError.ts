@@ -1,3 +1,4 @@
+import { ErrorMessages } from '@_types/errorMessage';
 import { atom } from 'recoil';
 
 export const errorMessageState = atom({
@@ -7,5 +8,5 @@ export const errorMessageState = atom({
     titleError: '',
     linkUrlError: '',
     priceRangeError: '',
-  },
+  } as ErrorMessages,
 });
