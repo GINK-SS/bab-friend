@@ -10,6 +10,14 @@ import Textarea from '@_components/common/Textarea';
 import * as S from './styles';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
+import { useState } from 'react';
+
+type ErrorMessages = {
+  contentError?: string;
+  titleError?: string;
+  linkUrlError?: string;
+  priceRangeError?: string;
+};
 
 const CreatePostContent = () => {
   const navigate = useNavigate();
@@ -29,6 +37,7 @@ const CreatePostContent = () => {
       console.error('게시글 등록 실패:', error);
     },
   });
+
   const handleChange = (name: string, value: string) => {
     setErrorMessage((prev) => ({
       ...prev,
