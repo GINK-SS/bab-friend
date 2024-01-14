@@ -1,7 +1,7 @@
-import { RecoilState, atom } from 'recoil';
+import { atom } from 'recoil';
 import { UserState } from '@_types/user';
 
-export const userState: RecoilState<UserState> = atom({
+export const userState = atom<UserState>({
   key: 'userState',
   default: {
     email: '',
@@ -11,5 +11,5 @@ export const userState: RecoilState<UserState> = atom({
     genderType: '',
     birthYear: 0,
     profileImageUrl: null,
-  } as UserState,
+  },
 });

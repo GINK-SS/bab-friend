@@ -4,9 +4,9 @@ export type ModalState = {
   isActive: boolean;
 };
 
-export const modalState = atom({
+export const modalState = atom<ModalState>({
   key: 'modalState',
   default: {
     isActive: false,
-  } as ModalState,
+  },
 });

@@ -1,9 +1,9 @@
 import { AuthState } from '@_types/auth';
-import { atom, RecoilState } from 'recoil';
+import { atom } from 'recoil';
 
-export const authState: RecoilState<AuthState> = atom({
+export const authState = atom<AuthState>({
   key: 'authState',
   default: {
     authStatus: 'pending',
-  } as AuthState,
+  },
 });
