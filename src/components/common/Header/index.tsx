@@ -16,6 +16,10 @@ const Header = () => {
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);
 
+  const onLogoClick = () => {
+    navigate('/');
+  };
+
   const handleLoginBtnClick = () => {
     setModal({ isActive: true });
   };
@@ -32,7 +36,7 @@ const Header = () => {
             }}
           ></S.HeaderBackImg>
         ) : (
-          <S.HeaderLogo>BAB-FRIEND</S.HeaderLogo>
+          <S.HeaderLogo onClick={onLogoClick}>BAB-FRIEND</S.HeaderLogo>
         )}
         {authStatus === 'authorized' ? (
           <S.HeaderContentBox>

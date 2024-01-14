@@ -36,6 +36,11 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
     setSidebarOpen(false);
   };
 
+  const onProfileClick = () => {
+    navigate('/profile');
+    setSidebarOpen(false);
+  };
+
   const logout = () => {
     // ToDo: refreshToken 삭제 요청 API
     authApi.stopRefresh();
@@ -53,7 +58,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
         <S.CloseBtnWrap>
           <S.CloseBtn src={close} onClick={handleCloseSidebar} />
         </S.CloseBtnWrap>
-        <S.Profile>
+        <S.Profile onClick={onProfileClick}>
           <S.ProfileImg
             src={
               'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
