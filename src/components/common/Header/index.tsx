@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import bell from '@_assets/images/svg/bell.svg';
 import menu from '@_assets/images/svg/menu.svg';
 import arrowLeft from '@_assets/images/svg/arrow-left.svg';
-import { modalState } from '@_recoil/atoms/modal';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 import SideBar from '@_components/SideBar';
 import { authState } from '@_recoil/atoms/auth';
 import { AuthStatus } from '@_types/auth';
@@ -22,7 +22,7 @@ const Header = () => {
   };
 
   const handleLoginBtnClick = () => {
-    setModal({ isActive: true });
+    setModal({ name: ModalName.login, isActive: true });
   };
 
   return (
