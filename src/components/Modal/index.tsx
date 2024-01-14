@@ -20,6 +20,7 @@ const Modal = ({ children, fullScreen, contentPadding }: ModalProps) => {
   const closeModal = () => {
     setModal({ isActive: false });
   };
+  const closeModal = useCloseModal();
 
   const handleOuterClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!fullScreen && e.target === e.currentTarget.firstChild) {

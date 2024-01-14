@@ -16,3 +16,12 @@ export const modalState = atom<ModalState>({
     isActive: false,
   },
 });
+
+export const useCloseModal = () => {
+  const setModal = useSetRecoilState(modalState);
+  const closeModal = () => {
+    setModal({ name: null, isActive: false });
+  };
+
+  return closeModal;
+};
