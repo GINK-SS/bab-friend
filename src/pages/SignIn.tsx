@@ -14,32 +14,32 @@ const SignIn = () => {
   const setUserInfo = useSetRecoilState(userState);
   const navigate = useNavigate();
 
+  const getTokensAndUserInfo = async () => {
+    const {
+      data: { accessToken },
+    } = await authApi.kakaoLogin(code);
+
+    if (!accessToken) {
+      // ToDo: 로그인 실패 시 구현
+      console.log('로그인 실패');
+      return;
+    }
+
+    setAccessToken(accessToken);
+
+    const { data } = await authApi.requestUserInfo();
+
+    if (!data) {
+      // ToDo: 사용자 정보 불러오기 실패 시 구현
+      console.log('사용자 정보 불러오기 실패');
+      return;
+    }
+
+    setUserInfo({ ...data });
+    setAuthInfo({ authStatus: AuthStatus.authorized });
+  };
+
   useEffect(() => {
-    const getTokensAndUserInfo = async () => {
-      const {
-        data: { accessToken },
-      } = await authApi.kakaoLogin(code);
-
-      if (!accessToken) {
-        // ToDo: 로그인 실패 시 구현
-        console.log('로그인 실패');
-        return;
-      }
-
-      setAccessToken(accessToken);
-
-      const { data } = await authApi.requestUserInfo();
-
-      if (!data) {
-        // ToDo: 사용자 정보 불러오기 실패 시 구현
-        console.log('사용자 정보 불러오기 실패');
-        return;
-      }
-
-      setUserInfo({ ...data });
-      setAuthInfo({ authStatus: AuthStatus.authorized });
-    };
-
     try {
       getTokensAndUserInfo();
     } catch (err) {
