@@ -1,6 +1,6 @@
 import * as S from './styles';
 import { useEffect, useState } from 'react';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 import { PostDataType } from '@_types/createPost';
 
 import closeBtn from '@_assets/images/svg/cancle.svg';
@@ -107,6 +107,8 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
         level={1}
         onCreate={setMap}
       >
+        <MapTypeControl position={'TOPRIGHT'} />
+        <ZoomControl position={'RIGHT'} />
         {markers.map((marker: any) => (
           <MapMarker
             key={`marker-${marker.content}-${marker?.position.lat},${marker?.position.lng}`}
