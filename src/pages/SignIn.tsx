@@ -42,6 +42,7 @@ const SignIn = () => {
   useEffect(() => {
     try {
       getTokensAndUserInfo();
+      authApi.silentRefresh();
     } catch (err) {
       console.log(err);
       window.alert('다시 로그인해주세요.');
