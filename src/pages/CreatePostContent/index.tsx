@@ -10,14 +10,6 @@ import Textarea from '@_components/common/Textarea';
 import * as S from './styles';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
-import { useState } from 'react';
-
-type ErrorMessages = {
-  contentError?: string;
-  titleError?: string;
-  linkUrlError?: string;
-  priceRangeError?: string;
-};
 
 const CreatePostContent = () => {
   const navigate = useNavigate();
