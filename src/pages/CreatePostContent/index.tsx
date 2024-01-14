@@ -19,7 +19,7 @@ const CreatePostContent = () => {
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
 
   const mutation = useMutation({
-    mutationFn: () => postApi.postsBoards(user.accessToken, { ...postState }),
+    mutationFn: () => postApi.postsBoards({ ...postState }),
     onSuccess: (data) => {
       console.log('게시글 등록 성공:', data);
     },

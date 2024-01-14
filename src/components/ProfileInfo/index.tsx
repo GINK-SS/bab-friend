@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRecoilValue } from 'recoil';
 
-import { fetchUserInfoDetail } from '@_apis/auth';
+import authApi from '@_apis/auth';
 import { userState } from '@_recoil/atoms/user';
 import userEditApi from '@_apis/userEdit';
 import { UserEditType } from '@_types/userEdit';
@@ -19,7 +19,7 @@ const ProfileInfo = () => {
   // 유저정보 detail get 요청
   const { data: userInfo } = useQuery({
     queryKey: ['users'],
-    queryFn: () => fetchUserInfoDetail(user.accessToken),
+    queryFn: () => authApi.fetchUserInfoDetail(),
   });
   // 서버상태값 state에 저장
   useEffect(() => {
@@ -32,7 +32,7 @@ const ProfileInfo = () => {
   }, [userInfo?.data]);
   // 유저정보 수정
   const editPatch = useMutation({
-    mutationFn: () => userEditApi.userEditPatch(user.accessToken, { ...editData }),
+    mutationFn: () => userEditApi.userEditPatch({ ...editData }),
     onSuccess: (data) => {
       console.log('유저정보 수정 완료', data);
     },
@@ -71,9 +71,10 @@ const ProfileInfo = () => {
       <S.ProfileInfoContainer>
         <S.ProfileImgWrap $editSet={editSet}>
           {editSet ? (
-            <S.ProfileImg src={editData?.profileImageUrl} onClick={onClickFileBtn} />
+            // ToDo: imageUrl이 null일 때
+            <S.ProfileImg src={editData.profileImageUrl ?? ''} onClick={onClickFileBtn} />
           ) : (
-            <S.ProfileImg src={userInfo?.data.profileImageUrl} />
+            <S.ProfileImg src={userInfo?.data.profileImageUrl ?? ''} />
           )}
           <input type='file' onChange={handleChangeImage} ref={imgRef} style={{ display: 'none' }} />
         </S.ProfileImgWrap>

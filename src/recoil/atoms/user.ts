@@ -1,19 +1,15 @@
-import { recoilPersist } from 'recoil-persist';
 import { atom } from 'recoil';
-import { UserState } from '@_types/auth';
+import { UserState } from '@_types/user';
 
-const { persistAtom } = recoilPersist();
-
-export const userState = atom({
+export const userState = atom<UserState>({
   key: 'userState',
   default: {
-    accessToken: '',
     email: '',
     name: '',
     nickName: '',
+    temperature: 0,
     genderType: '',
     birthYear: 0,
-    profileImageUrl: '',
-  } as UserState,
-  effects_UNSTABLE: [persistAtom],
+    profileImageUrl: null,
+  },
 });
