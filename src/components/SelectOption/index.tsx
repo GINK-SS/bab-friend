@@ -1,24 +1,45 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as S from './styles';
+
 import Calendar from '../Calendar';
 import KakaoMapModal from '../KakaoMapModal';
+import Input from '@_components/common/Input';
+
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { locationData, postsState } from '@_recoil/atoms/posts';
 import { StaticMap } from 'react-kakao-maps-sdk';
+import { errorMessageState } from '@_recoil/atoms/validationError';
+
+import * as S from './styles';
 
 const SelectOption = () => {
   const navigate = useNavigate();
-  // 지도에서 클릭한 장소의 정보를 담을 상태
   const [postState, setPostState] = useRecoilState(postsState);
+  const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const [mapModalOpen, setMapModalOpen] = useState(false);
   const mapData = useRecoilValue(locationData);
   const handleChange = (name: string, value: string | number | boolean) => {
+    setErrorMessage((prev) => ({
+      ...prev,
+      [`${name}Error`]: '',
+    }));
     setPostState((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+
+  const handleClickNextBtn = () => {
+    if (postState.priceRange === 0) {
+      setErrorMessage((prev) => ({
+        ...prev,
+        priceRangeError: '예상가격을 입력해주세요.',
+      }));
+      return;
+    }
+    navigate('/createcontent');
+  };
+
   return (
     <S.SelectOptionContainer>
       <S.FoodType>
@@ -39,15 +60,14 @@ const SelectOption = () => {
         </S.FoodTypeSelect>
       </S.FoodType>
       <S.Menu>
-        <S.MenuText>예상 가격</S.MenuText>
-        <S.MenuInput
+        <Input
           type='number'
-          placeholder='예상 가격을 입력해주세요.'
-          onChange={(e) => handleChange('priceRange', parseInt(e.target.value))}
+          placeholder='예상가격을 입력해주세요..'
+          label='예상가격'
           value={postState.priceRange}
-          maxLength={7}
-          required
-        ></S.MenuInput>
+          errorMessage={errorMessage?.priceRangeError}
+          onChange={(e) => handleChange('priceRange', e.target.value)}
+        />
       </S.Menu>
       <S.PeopleNum>
         <S.PeopleNumText>모집 인원</S.PeopleNumText>
@@ -209,15 +229,7 @@ const SelectOption = () => {
         </S.GenderRadio>
       </S.Gender>
       <S.NextBtnWrap>
-        <S.NextBtn
-          onClick={() => {
-            navigate('/createcontent', {
-              state: { ...postState },
-            });
-          }}
-        >
-          다음
-        </S.NextBtn>
+        <S.NextBtn onClick={handleClickNextBtn}>다음</S.NextBtn>
       </S.NextBtnWrap>
     </S.SelectOptionContainer>
   );
