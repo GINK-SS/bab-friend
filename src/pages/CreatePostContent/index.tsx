@@ -4,26 +4,19 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { userState } from '../../recoil/atoms/user';
 import { postsState } from '@_recoil/atoms/posts';
+import { errorMessageState } from '@_recoil/atoms/validationError';
 import postApi from '@_apis/posts';
 import Input from '@_components/common/Input';
 import Textarea from '@_components/common/Textarea';
 import * as S from './styles';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
-import { useState } from 'react';
-
-type ErrorMessages = {
-  contentError?: string;
-  titleError?: string;
-  linkUrlError?: string;
-  priceRangeError?: string;
-};
 
 const CreatePostContent = () => {
   const navigate = useNavigate();
   const user = useRecoilValue(userState);
   const [postState, setPostState] = useRecoilState(postsState);
-  const [errorMessage, setErrorMessage] = useState<ErrorMessages>();
+  const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
 
   const mutation = useMutation({
     mutationFn: () => postApi.postsBoards(user.accessToken, { ...postState }),
