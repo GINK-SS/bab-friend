@@ -8,7 +8,6 @@ let refreshTimer: NodeJS.Timeout;
 
 /**
  * @description accessToken, refreshToken 발급
- * @returns 새로운 accessToken
  */
 const refresh = async () => {
   const {
