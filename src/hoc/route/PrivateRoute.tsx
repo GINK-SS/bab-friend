@@ -3,6 +3,7 @@ import { modalState } from '@_recoil/atoms/modal';
 import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { AuthStatus } from '@_types/auth';
 
 type PrivateRouteProps = {
   component: JSX.Element;
@@ -13,13 +14,13 @@ const PrivateRoute = ({ component }: PrivateRouteProps) => {
   const setModal = useSetRecoilState(modalState);
 
   useEffect(() => {
-    if (authStatus === 'unauthorized') {
+    if (authStatus === AuthStatus.unauthorized) {
       setModal({ isActive: true });
     }
   }, [authStatus, setModal]);
 
-  if (authStatus === 'pending') return null;
-  if (authStatus === 'authorized') {
+  if (authStatus === AuthStatus.pending) return null;
+  if (authStatus === AuthStatus.authorized) {
     return component;
   }
 

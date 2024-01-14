@@ -3,6 +3,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import authApi from '@_apis/auth';
 import { userState } from '@_recoil/atoms/user';
 import { authState } from '@_recoil/atoms/auth';
+import { AuthStatus } from '@_types/auth';
 
 const AuthChecker = ({ children }: { children: ReactNode }) => {
   const [authInfo, setAuthInfo] = useRecoilState(authState);
@@ -18,12 +19,12 @@ const AuthChecker = ({ children }: { children: ReactNode }) => {
 
         authApi.silentRefresh();
       } catch (e) {
-        setAuthInfo({ authStatus: 'unauthorized' });
+        setAuthInfo({ authStatus: AuthStatus.unauthorized });
       }
     })();
   }, [setAuthInfo, setUserInfo]);
 
-  if (authInfo.authStatus === 'pending') return null;
+  if (authInfo.authStatus === AuthStatus.pending) return null;
 
   return <>{children}</>;
 };

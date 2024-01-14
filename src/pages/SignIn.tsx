@@ -6,6 +6,7 @@ import { userState } from '@_recoil/atoms/user';
 import Spinner from '@_components/common/Spinner';
 import { setAccessToken } from '@_apis/axios';
 import { authState } from '@_recoil/atoms/auth';
+import { AuthStatus } from '@_types/auth';
 
 const SignIn = () => {
   const code = new URL(document.URL).searchParams.get('code') as string;
@@ -36,7 +37,7 @@ const SignIn = () => {
       }
 
       setUserInfo({ ...data });
-      setAuthInfo({ authStatus: 'authorized' });
+      setAuthInfo({ authStatus: AuthStatus.authorized });
     };
 
     try {

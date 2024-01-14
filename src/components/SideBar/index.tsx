@@ -13,6 +13,7 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { authState } from '@_recoil/atoms/auth';
 import { userState } from '@_recoil/atoms/user';
 import { useNavigate } from 'react-router-dom';
+import { AuthStatus } from '@_types/auth';
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   const setAuthInfo = useSetRecoilState(authState);
@@ -46,7 +47,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
     authApi.stopRefresh();
     resetUserInfo();
     deleteAccessToken();
-    setAuthInfo({ authStatus: 'unauthorized' });
+    setAuthInfo({ authStatus: AuthStatus.unauthorized });
     setSidebarOpen(false);
     navigate('/');
   };

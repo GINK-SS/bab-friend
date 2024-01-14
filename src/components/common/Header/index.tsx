@@ -8,6 +8,7 @@ import arrowLeft from '@_assets/images/svg/arrow-left.svg';
 import { modalState } from '@_recoil/atoms/modal';
 import SideBar from '@_components/SideBar';
 import { authState } from '@_recoil/atoms/auth';
+import { AuthStatus } from '@_types/auth';
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -38,7 +39,7 @@ const Header = () => {
         ) : (
           <S.HeaderLogo onClick={onLogoClick}>BAB-FRIEND</S.HeaderLogo>
         )}
-        {authStatus === 'authorized' ? (
+        {authStatus === AuthStatus.authorized ? (
           <S.HeaderContentBox>
             <S.HeaderAlert src={bell} alt='bellimage' />
             <S.HeaderMenu
