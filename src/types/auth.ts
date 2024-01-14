@@ -1,9 +1,9 @@
-export type UserState = {
-  accessToken: string;
-  email: string;
-  name: string;
-  nickName: string;
-  genderType: string;
-  birthYear: number;
-  profileImageUrl?: string;
+export enum AuthStatus {
+  authorized,
+  pending,
+  unauthorized,
+}
+
+export type AuthState = {
+  authStatus: AuthStatus;
 };

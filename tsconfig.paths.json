@@ -5,6 +5,7 @@
       "@_apis/*": ["apis/*"],
       "@_assets/*": ["assets/*"],
       "@_components/*": ["components/*"],
+      "@_hoc/*": ["hoc/*"],
       "@_libs/*": ["libs/*"],
       "@_pages/*": ["pages/*"],
       "@_recoil/*": ["recoil/*"],

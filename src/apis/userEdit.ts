@@ -1,20 +1,20 @@
 import { UserEditType } from '@_types/userEdit';
-import { formDataRequest } from './axios';
+import { request } from './axios';
 
-export const userEditPatch = async (accessToken: string, userEditData: UserEditType): Promise<UserEditType> => {
+const userEditPatch = async (userEditData: UserEditType): Promise<UserEditType> => {
   const formData = new FormData();
 
   if (userEditData.nickName !== undefined) {
     formData.append('nickName', userEditData.nickName);
   }
 
-  if (userEditData.profileImageUrl !== undefined) {
+  if (userEditData.profileImageUrl !== null) {
     formData.append('profileImageUrl', userEditData.profileImageUrl);
   }
 
-  const { data } = await formDataRequest.patch('/users/info', formData, {
+  const { data } = await request.patch('/users/info', formData, {
     headers: {
-      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'multipart/form-data',
     },
   });
 

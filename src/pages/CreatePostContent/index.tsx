@@ -14,7 +14,7 @@ const CreatePostContent = () => {
   const user = useRecoilValue(userState);
   const [postState, setPostState] = useRecoilState(postsState);
   const mutation = useMutation({
-    mutationFn: () => postApi.postsBoards(user.accessToken, { ...postState }),
+    mutationFn: () => postApi.postsBoards({ ...postState }),
     onSuccess: (data) => {
       console.log('게시글 등록 성공:', data);
     },

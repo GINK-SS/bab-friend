@@ -1,4 +1,4 @@
 export type UserEditType = {
   nickName: string;
-  profileImageUrl?: string;
+  profileImageUrl: string | null;
 };

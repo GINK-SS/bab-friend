@@ -7,8 +7,19 @@ import ProgressBar from '@_components/common/ProgressBar';
 
 import close from '@_assets/images/svg/cancle.svg';
 import arrow from '@_assets/images/svg/arrow.svg';
+import { deleteAccessToken } from '@_apis/axios';
+import authApi from '@_apis/auth';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { authState } from '@_recoil/atoms/auth';
+import { userState } from '@_recoil/atoms/user';
+import { useNavigate } from 'react-router-dom';
+import { AuthStatus } from '@_types/auth';
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
+  const setAuthInfo = useSetRecoilState(authState);
+  const resetUserInfo = useResetRecoilState(userState);
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.addEventListener('scroll', handleScroll);
     return () => {
@@ -25,6 +36,22 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   const handleCloseSidebar = () => {
     setSidebarOpen(false);
   };
+
+  const onProfileClick = () => {
+    navigate('/profile');
+    setSidebarOpen(false);
+  };
+
+  const logout = () => {
+    // ToDo: refreshToken 삭제 요청 API
+    authApi.stopRefresh();
+    resetUserInfo();
+    deleteAccessToken();
+    setAuthInfo({ authStatus: AuthStatus.unauthorized });
+    setSidebarOpen(false);
+    navigate('/');
+  };
+
   return (
     <>
       <S.SideMenuBackground $sidebarOpen={sidebarOpen} onClick={handleCloseSidebar} />
@@ -32,7 +59,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
         <S.CloseBtnWrap>
           <S.CloseBtn src={close} onClick={handleCloseSidebar} />
         </S.CloseBtnWrap>
-        <S.Profile>
+        <S.Profile onClick={onProfileClick}>
           <S.ProfileImg
             src={
               'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
@@ -43,7 +70,7 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
         </S.Profile>
         <ProgressBar temp={36.5} />
         <SideBarContent setSidebarOpen={setSidebarOpen} />
-        <S.Logout>로그아웃</S.Logout>
+        <S.Logout onClick={logout}>로그아웃</S.Logout>
       </S.SideBarContainer>
     </>
   );
