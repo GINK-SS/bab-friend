@@ -8,6 +8,7 @@ import theme from '@_style/theme';
 import '@_assets/fonts/font.css';
 import App from './App';
 import RecoilNexus from 'recoil-nexus';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const queryClient = new QueryClient();
@@ -16,11 +17,13 @@ root.render(
   <RecoilRoot>
     <RecoilNexus />
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <App />
-        <ReactQueryDevtools />
-      </ThemeProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <App />
+          <ReactQueryDevtools />
+        </ThemeProvider>
+      </BrowserRouter>
     </QueryClientProvider>
   </RecoilRoot>
 );
