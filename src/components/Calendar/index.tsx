@@ -24,7 +24,18 @@ const Calendar = ({ postState, setPostState }: CalendarProps) => {
     const formattedDate = format(date || new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
     setPostState((prevData) => ({ ...prevData, eatTime: formattedDate }));
   };
+  function formatDate(inputDate: string) {
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
 
+    const formattedDate = `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes < 10 ? '0' : ''}${minutes}분`;
+
+    return formattedDate;
+  }
   return (
     <>
       <S.StyledDatePicker
@@ -32,12 +43,13 @@ const Calendar = ({ postState, setPostState }: CalendarProps) => {
         onChange={(date) => {
           covertTimeType(date);
         }}
-        timeInputLabel='Time:'
+        timeInputLabel='약속시간:'
         showTimeInput
         filterTime={filterPassedTime}
         dateFormat='yyyy/MM/dd   h:mm aa'
         closeOnScroll={true}
       />
+      <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>
     </>
   );
 };
