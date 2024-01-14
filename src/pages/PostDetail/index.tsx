@@ -3,7 +3,7 @@ import PostContent from '@_components/PostContent';
 import CommnetInput from '@_components/CommentInput';
 import CommentDisplay from '@_components/CommentDisplay';
 
-const PostView = () => {
+const PostDetail = () => {
   return (
     <>
       <PostOption />
@@ -14,4 +14,4 @@ const PostView = () => {
   );
 };
 
-export default PostView;
+export default PostDetail;

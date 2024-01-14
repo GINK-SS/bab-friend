@@ -1,8 +1,7 @@
-export type TokensResponse = {
+export type TokenResponse = {
   statusCode: number;
   data: {
     accessToken: string;
-    refreshToken: string;
   };
 };
 
@@ -12,8 +11,9 @@ export type UserInfoResponse = {
     email: string;
     name: string;
     nickName: string;
+    temperature: number;
     genderType: string;
     birthYear: number;
-    profileImageUrl?: string;
+    profileImageUrl: string | null;
   };
 };

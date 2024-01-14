@@ -5,19 +5,24 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import bell from '@_assets/images/svg/bell.svg';
 import menu from '@_assets/images/svg/menu.svg';
 import arrowLeft from '@_assets/images/svg/arrow-left.svg';
-import { modalState } from '@_recoil/atoms/modal';
-import { userState } from '@_recoil/atoms/user';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 import SideBar from '@_components/SideBar';
+import { authState } from '@_recoil/atoms/auth';
+import { AuthStatus } from '@_types/auth';
 
 const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { accessToken } = useRecoilValue(userState);
+  const { authStatus } = useRecoilValue(authState);
   const location = useLocation();
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);
 
+  const onLogoClick = () => {
+    navigate('/');
+  };
+
   const handleLoginBtnClick = () => {
-    setModal({ isActive: true });
+    setModal({ name: ModalName.login, isActive: true });
   };
 
   return (
@@ -32,9 +37,9 @@ const Header = () => {
             }}
           ></S.HeaderBackImg>
         ) : (
-          <S.HeaderLogo>BAB-FRIEND</S.HeaderLogo>
+          <S.HeaderLogo onClick={onLogoClick}>BAB-FRIEND</S.HeaderLogo>
         )}
-        {accessToken ? (
+        {authStatus === AuthStatus.authorized ? (
           <S.HeaderContentBox>
             <S.HeaderAlert src={bell} alt='bellimage' />
             <S.HeaderMenu
