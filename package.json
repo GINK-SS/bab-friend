@@ -34,6 +34,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
+    "type": "tsc --noEmit -p ./ ",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\""
   },
   "eslintConfig": {
