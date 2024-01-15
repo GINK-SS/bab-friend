@@ -18,7 +18,7 @@ const CreatePostContent = () => {
   const locationStringData = useRecoilValue(locationStringSelector);
   const mapData = useRecoilValue(locationData);
 
-  const mutation = useMutation({
+  const createPost = useMutation({
     mutationFn: () => postApi.postsBoards({ ...postState, location: locationStringData }),
     onSuccess: (data) => {
       navigate('/');
@@ -39,7 +39,9 @@ const CreatePostContent = () => {
       [name]: value,
     }));
   };
+  // postState의 값들이 비어있으면 alert창 띄우기
   const validateValue = () => {
+    // 값이 빈 문자열인 경우가 하나라도 있는지 확인
     const isAnyFieldEmpty = Object.entries(postState)
       .filter(([key]) => key !== 'location')
       .some(([key, value]) => value === '');
@@ -75,7 +77,7 @@ const CreatePostContent = () => {
       return;
     }
     validateValue();
-    mutation.mutate();
+    createPost.mutate();
   };
   return (
     <S.CreateContentContainer>
