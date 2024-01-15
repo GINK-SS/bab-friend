@@ -1,0 +1,58 @@
+name: Deploy for development bab-friend
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+
+      # Node 버전 설정
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # 모듈 설치
+      - name: Install Dependencies
+        run: npm install
+
+      # .env 키 세팅
+      - name: Setting .env
+        run: |
+          echo "REACT_APP_REST_API_KEY = ${{ secrets.REACT_APP_REST_API_KEY }}" >> .env
+          echo "REACT_APP_REDIRECT_URI = ${{ secrets.REACT_APP_REDIRECT_URI }}" >> .env
+          echo "REACT_APP_BASE_URL = ${{ secrets.REACT_APP_BASE_URL }}" >> .env
+
+      # 빌드
+      - name: Build Project
+        run: npm run build
+
+      # AWS 계정 정보
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # AWS S3 배포
+      - name: Deploy to S3
+        env:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: aws s3 sync --region ${{ secrets.AWS_REGION }} build s3://bab-friend --delete
+
+      # CloudFront 캐시 무효화
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths "/*"
