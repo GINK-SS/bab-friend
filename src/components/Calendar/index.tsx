@@ -49,7 +49,7 @@ const Calendar = ({ postState, setPostState }: CalendarProps) => {
         dateFormat='yyyy/MM/dd   h:mm aa'
         closeOnScroll={true}
       />
-      <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>
+      {postState.eatTime && <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>}
     </>
   );
 };
