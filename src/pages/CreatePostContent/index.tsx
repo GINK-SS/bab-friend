@@ -2,8 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { userState } from '../../recoil/atoms/user';
-import { postsState } from '@_recoil/atoms/posts';
+import { locationData, locationStringSelector, postsState } from '@_recoil/atoms/posts';
 import { errorMessageState } from '@_recoil/atoms/validationError';
 import postApi from '@_apis/posts';
 import Input from '@_components/common/Input';
@@ -14,32 +13,44 @@ import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
 const CreatePostContent = () => {
   const navigate = useNavigate();
-  const user = useRecoilValue(userState);
   const [postState, setPostState] = useRecoilState(postsState);
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
+  const locationStringData = useRecoilValue(locationStringSelector);
+  const mapData = useRecoilValue(locationData);
 
   const mutation = useMutation({
-    mutationFn: () => postApi.postsBoards({ ...postState }),
+    mutationFn: () => postApi.postsBoards({ ...postState, location: locationStringData }),
     onSuccess: (data) => {
+      navigate('/');
       console.log('게시글 등록 성공:', data);
     },
     onError: (error) => {
+      alert('게시글 작성 실패');
       console.error('게시글 등록 실패:', error);
     },
   });
-
   const handleChange = (name: string, value: string) => {
     setErrorMessage((prev) => ({
       ...prev,
       [`${name}Error`]: '',
     }));
-    console.log(errorMessage);
     setPostState((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+  const validateValue = () => {
+    const isAnyFieldEmpty = Object.entries(postState)
+      .filter(([key]) => key !== 'location')
+      .some(([key, value]) => value === '');
 
+    const isLocationDataEmpty = !mapData || !mapData.location || !mapData.location.content;
+
+    if (isAnyFieldEmpty || isLocationDataEmpty) {
+      alert('모든 항목을 입력해주세요.');
+      return;
+    }
+  };
   const handleClickRegistration = () => {
     if (!postState.title) {
       setErrorMessage((prev) => ({
@@ -63,10 +74,9 @@ const CreatePostContent = () => {
       }));
       return;
     }
-
+    validateValue();
     mutation.mutate();
   };
-
   return (
     <S.CreateContentContainer>
       <S.TextBox>
