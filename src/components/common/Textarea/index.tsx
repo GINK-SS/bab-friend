@@ -8,7 +8,7 @@ type TextareaProps = {
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
-const Input = ({ label, placeholder, value, errorMessage, onChange }: TextareaProps) => {
+const Textarea = ({ label, placeholder, value, errorMessage, onChange }: TextareaProps) => {
   return (
     <S.TextareaWrap>
       <S.Label>{label}</S.Label>
@@ -18,4 +18,4 @@ const Input = ({ label, placeholder, value, errorMessage, onChange }: TextareaPr
   );
 };
 
-export default Input;
+export default Textarea;
