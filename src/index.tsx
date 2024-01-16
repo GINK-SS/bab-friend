@@ -15,7 +15,7 @@ async function enableMocking() {
 
   const { worker } = await import('@_mocks/browser');
 
-  return worker.start();
+  return worker.start({ onUnhandledRequest: 'bypass' });
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
