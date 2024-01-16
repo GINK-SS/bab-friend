@@ -45,7 +45,7 @@ const ProfileInfo = () => {
       setEditData((prevData) => ({ ...prevData, nickName: userInfo.data.nickName }));
     }
     if (userInfo?.data.profileImageUrl) {
-      setSelectedImage(`https://bab-friend-back.store${userInfo?.data.profileImageUrl}`);
+      setSelectedImage(`${window.location.origin}${userInfo?.data.profileImageUrl}`);
     }
   }, [userInfo?.data.nickName, userInfo?.data.profileImageUrl]);
 
@@ -62,31 +62,34 @@ const ProfileInfo = () => {
   };
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files;
-    if (file && file[0]) {
-      const imageUrl = URL.createObjectURL(file[0]);
-      setEditData((prevData) => ({ ...prevData, profileImageUrl: file[0] }));
+    const imageFile = e.target.files?.[0];
+
+    if (imageFile) {
+      const imageUrl = URL.createObjectURL(imageFile);
+      setEditData((prevData) => ({ ...prevData, profileImageUrl: imageFile }));
       setSelectedImage(imageUrl);
     } else {
       setEditData((prevData) => ({ ...prevData, profileImageUrl: null }));
       setSelectedImage(null);
     }
   };
+
   const onClickFileBtn = () => {
     if (imgRef.current) {
       imgRef.current.click();
     }
   };
+
   return (
     <S.ProfileInfoContainer>
       <S.ProfileImgWrap $editSet={editSet}>
         {editSet ? (
           <S.ProfileImg
-            src={selectedImage || `https://bab-friend-back.store${userInfo?.data.profileImageUrl}`}
+            src={selectedImage || `${window.location.origin}${userInfo?.data.profileImageUrl}`}
             onClick={onClickFileBtn}
           />
         ) : (
-          <S.ProfileImg src={`https://bab-friend-back.store${userInfo?.data.profileImageUrl}` ?? ''} />
+          <S.ProfileImg src={`${window.location.origin}${userInfo?.data.profileImageUrl}` ?? ''} />
         )}
         <input type='file' onChange={handleChangeImage} ref={imgRef} style={{ display: 'none' }} />
       </S.ProfileImgWrap>
@@ -111,6 +114,15 @@ const ProfileInfo = () => {
       <S.EditWrap onClick={clickEditBtn}>
         <S.EditText>{editSet ? '완료' : '수정'}</S.EditText>
       </S.EditWrap>
+      {editSet && (
+        <S.CancleWrap
+          onClick={() => {
+            setEditSet(false);
+          }}
+        >
+          <S.CancleText>취소</S.CancleText>
+        </S.CancleWrap>
+      )}
     </S.ProfileInfoContainer>
   );
 };
