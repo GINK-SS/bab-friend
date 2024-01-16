@@ -7,6 +7,7 @@
       "@_components/*": ["components/*"],
       "@_hoc/*": ["hoc/*"],
       "@_libs/*": ["libs/*"],
+      "@_mocks/*": ["mocks/*"],
       "@_pages/*": ["pages/*"],
       "@_recoil/*": ["recoil/*"],
       "@_style/*": ["style/*"],

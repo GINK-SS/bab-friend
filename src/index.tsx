@@ -10,20 +10,30 @@ import App from './App';
 import RecoilNexus from 'recoil-nexus';
 import { BrowserRouter } from 'react-router-dom';
 
+async function enableMocking() {
+  if (!process.env.REACT_APP_USE_MOCK) return;
+
+  const { worker } = await import('@_mocks/browser');
+
+  return worker.start({ onUnhandledRequest: 'bypass' });
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const queryClient = new QueryClient();
 
-root.render(
-  <RecoilRoot>
-    <RecoilNexus />
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <App />
-          <ReactQueryDevtools />
-        </ThemeProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
-  </RecoilRoot>
+enableMocking().then(() =>
+  root.render(
+    <RecoilRoot>
+      <RecoilNexus />
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <App />
+            <ReactQueryDevtools />
+          </ThemeProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </RecoilRoot>
+  )
 );
