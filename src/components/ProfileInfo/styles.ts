@@ -48,11 +48,28 @@ export const UserEmail = styled.p`
   font-family: 'Pretendard-ExtraLight';
   opacity: 0.8;
 `;
+export const CancleWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px 0 10px;
+  margin-left: 10px;
+  width: 66px;
+  height: 36px;
+  border: 1px solid ${({ theme }) => theme.blackColor};
+  border-radius: 8px;
+  cursor: pointer;
+`;
+export const CancleText = styled.p`
+  font-size: 12px;
+  color: ${({ theme }) => theme.blackColor};
+`;
 export const EditWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 10px 0 10px;
+  margin-left: 10px;
   width: 66px;
   height: 36px;
   border: 1px solid ${({ theme }) => theme.mainColor};
@@ -66,6 +83,9 @@ export const EditText = styled.p`
 export const EditingWrap = styled.div`
   width: 100%;
   padding-left: 20px;
+`;
+export const InputWrap = styled.div`
+  width: 40%;
 `;
 export const EditingText = styled.p`
   margin-bottom: 10px;
