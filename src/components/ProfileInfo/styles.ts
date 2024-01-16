@@ -67,6 +67,9 @@ export const EditingWrap = styled.div`
   width: 100%;
   padding-left: 20px;
 `;
+export const InputWrap = styled.div`
+  width: 40%;
+`;
 export const EditingText = styled.p`
   margin-bottom: 10px;
 `;

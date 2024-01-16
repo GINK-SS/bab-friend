@@ -4,10 +4,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import authApi from '@_apis/auth';
 import userEditApi from '@_apis/userEdit';
 import { UserEditType } from '@_types/userEdit';
+import Input from '@_components/common/Input';
 
 import * as S from './styles';
 
-// 프로필이미지 변경 안했을 시에는 null 전송 (근데 현재는 nickName, profileImg 모두 수정해야 데이터 전송됨 )
 // ToDo : 닉네임을 빈 값으로 전송하면 기존 닉네임으로 유지 (현재는 빈 값으로 입력하면 기존 닉네임이 삭제됨)
 
 const ProfileInfo = () => {
@@ -92,13 +92,15 @@ const ProfileInfo = () => {
       </S.ProfileImgWrap>
       {editSet ? (
         <S.EditingWrap>
-          <S.EditingText>닉네임</S.EditingText>
-          <S.EditingInput
-            type='text'
-            placeholder='변경하실 닉네임을 입력하세요.'
-            value={editData?.nickName}
-            onChange={handleChangeNickname}
-          ></S.EditingInput>
+          <S.InputWrap>
+            <Input
+              type='text'
+              label='닉네임'
+              placeholder='변경하실 닉네임을 입력하세요.'
+              value={editData?.nickName}
+              onChange={handleChangeNickname}
+            />
+          </S.InputWrap>
         </S.EditingWrap>
       ) : (
         <S.UserInfoWrap>
