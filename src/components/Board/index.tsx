@@ -34,11 +34,11 @@ const Board = ({ boardData }: BoardProps) => {
   const isLimitedByGender = boardData.genderLimit !== 'ALL' && boardData.genderLimit !== userInfo.genderType;
 
   const isLimitedByAge =
-    (boardData.ageLimit.up && boardData.ageLimit.up < calculateAge(userInfo.birthYear)) ||
-    (boardData.ageLimit.down && boardData.ageLimit.down > calculateAge(userInfo.birthYear));
+    !!(boardData.ageLimit.up && boardData.ageLimit.up < calculateAge(userInfo.birthYear)) ||
+    !!(boardData.ageLimit.down && boardData.ageLimit.down > calculateAge(userInfo.birthYear));
 
   return (
-    <S.Wrapper onClick={onBoard}>
+    <S.Container>
       {boardData.fix ? (
         <S.BlockContainer>확정 완료</S.BlockContainer>
       ) : isLimitedByGender ? (
@@ -47,32 +47,34 @@ const Board = ({ boardData }: BoardProps) => {
         <S.BlockContainer>나이 제한</S.BlockContainer>
       ) : null}
 
-      <S.CategoryWrapper>
-        <S.Category hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
-        <S.Category hasData={!!categoryTypeToKorean[boardData.categoryType]}>
-          {categoryTypeToKorean[boardData.categoryType]}
-        </S.Category>
-        <S.Category>{boardData.alcohol ? '술 가능' : '술 불가'}</S.Category>
-        <S.Category>
-          {boardData.currentJoin}명 / {boardData.joinLimit}명
-        </S.Category>
-      </S.CategoryWrapper>
+      <S.Wrapper isLimit={boardData.fix || isLimitedByGender || isLimitedByAge} onClick={onBoard}>
+        <S.CategoryWrapper>
+          <S.Category hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
+          <S.Category hasData={!!categoryTypeToKorean[boardData.categoryType]}>
+            {categoryTypeToKorean[boardData.categoryType]}
+          </S.Category>
+          <S.Category>{boardData.alcohol ? '술 가능' : '술 불가'}</S.Category>
+          <S.Category>
+            {boardData.currentJoin}명 / {boardData.joinLimit}명
+          </S.Category>
+        </S.CategoryWrapper>
 
-      <S.Title>{boardData.title}</S.Title>
-      <S.Content>
-        {boardData.content.length > 40 ? `${boardData.content.slice(0, 40)}...` : boardData.content}
-      </S.Content>
+        <S.Title>{boardData.title}</S.Title>
+        <S.Content>
+          {boardData.content.length > 40 ? `${boardData.content.slice(0, 40)}...` : boardData.content}
+        </S.Content>
 
-      <S.TimeWrapper>
-        <IoTimeOutline size={25} />
-        <span>{formatDate(boardData.eatTime)}</span>
-      </S.TimeWrapper>
+        <S.TimeWrapper>
+          <IoTimeOutline size={25} />
+          <span>{formatDate(boardData.eatTime)}</span>
+        </S.TimeWrapper>
 
-      <S.WriterWrapper>
-        <S.WriterImage src={boardData.writerImageUrl} alt='' />
-        <p>{boardData.writer}</p>
-      </S.WriterWrapper>
-    </S.Wrapper>
+        <S.WriterWrapper>
+          <S.WriterImage src={boardData.writerImageUrl} alt='' />
+          <p>{boardData.writer}</p>
+        </S.WriterWrapper>
+      </S.Wrapper>
+    </S.Container>
   );
 };
 

@@ -1,12 +1,10 @@
 import { styled } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 20px;
   border-top: 4px solid ${({ theme }) => `${theme.colors.mainColor}50`};
-  cursor: pointer;
 `;
 
 export const BlockContainer = styled.div`
@@ -18,7 +16,7 @@ export const BlockContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.3);
   color: ${({ theme }) => theme.colors.mainColor};
   font-family: 'Pretendard-SemiBold';
   font-size: 3em;
@@ -27,6 +25,17 @@ export const BlockContainer = styled.div`
     0px 1px rgb(0, 0, 0),
     1px 0px rgb(0, 0, 0),
     0px -1px rgb(0, 0, 0);
+`;
+
+export const Wrapper = styled.div<{ isLimit: boolean }>`
+  padding: 20px;
+  filter: ${({ isLimit }) => (isLimit ? 'blur(2px) brightness(60%)' : 'none')};
+  transition: 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: ${({ isLimit }) => (isLimit ? 'none' : 'scale(1.02)')};
+  }
 `;
 
 export const CategoryWrapper = styled.div`
@@ -66,6 +75,7 @@ export const TimeWrapper = styled.div`
   margin-bottom: 3px;
 
   & > span {
+    font-size: 0.85em;
     color: rgba(0, 0, 0, 0.6);
   }
 `;
@@ -74,6 +84,7 @@ export const WriterWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+  font-size: 0.85em;
   color: rgba(0, 0, 0, 0.6);
 `;
 
