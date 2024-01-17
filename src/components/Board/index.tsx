@@ -3,12 +3,15 @@ import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
 import formatDate from '@_utils/formatDate';
 import { IoTimeOutline } from 'react-icons/io5';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@_recoil/atoms/user';
 
 type BoardProps = {
   boardData: BoardInfo;
 };
 
 const Board = ({ boardData }: BoardProps) => {
+  const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
   const categoryTypeToKorean = {
     KOREAN: '한식',
@@ -18,19 +21,39 @@ const Board = ({ boardData }: BoardProps) => {
     ALL: null,
   };
 
+  const calculateAge = (birthYear: number) => {
+    const currentYear = new Date().getFullYear();
+
+    return currentYear - birthYear + 1;
+  };
+
   const onBoard = () => {
     navigate(`/postdetail/${boardData.id}`);
   };
 
+  const isLimitedByGender = boardData.genderLimit !== 'ALL' && boardData.genderLimit !== userInfo.genderType;
+
+  const isLimitedByAge =
+    (boardData.ageLimit.up && boardData.ageLimit.up < calculateAge(userInfo.birthYear)) ||
+    (boardData.ageLimit.down && boardData.ageLimit.down > calculateAge(userInfo.birthYear));
+
   return (
     <S.Wrapper onClick={onBoard}>
+      {boardData.fix ? (
+        <S.BlockContainer>확정 완료</S.BlockContainer>
+      ) : isLimitedByGender ? (
+        <S.BlockContainer>성별 제한</S.BlockContainer>
+      ) : isLimitedByAge ? (
+        <S.BlockContainer>나이 제한</S.BlockContainer>
+      ) : null}
+
       <S.CategoryWrapper>
         <S.Category hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
         <S.Category hasData={!!categoryTypeToKorean[boardData.categoryType]}>
           {categoryTypeToKorean[boardData.categoryType]}
         </S.Category>
-        <S.Category hasData>{boardData.alcohol ? '술 가능' : '술 불가'}</S.Category>
-        <S.Category hasData>
+        <S.Category>{boardData.alcohol ? '술 가능' : '술 불가'}</S.Category>
+        <S.Category>
           {boardData.currentJoin}명 / {boardData.joinLimit}명
         </S.Category>
       </S.CategoryWrapper>
