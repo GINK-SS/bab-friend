@@ -2,6 +2,7 @@ import { BoardInfo } from '@_types/board';
 import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
 import formatDate from '@_utils/formatDate';
+import { IoTimeOutline } from 'react-icons/io5';
 
 type BoardProps = {
   boardData: BoardInfo;
@@ -25,12 +26,18 @@ const Board = ({ boardData }: BoardProps) => {
         </span>
       </div>
 
-      <p>{boardData.title}</p>
-      <p>{boardData.content.length > 40 ? `${boardData.content.slice(0, 40)}...` : boardData.content}</p>
-      <p>{formatDate(boardData.eatTime)}</p>
+      <S.Title>{boardData.title}</S.Title>
+      <S.Content>
+        {boardData.content.length > 40 ? `${boardData.content.slice(0, 40)}...` : boardData.content}
+      </S.Content>
+
+      <S.TimeWrapper>
+        <IoTimeOutline size={25} />
+        <span>{formatDate(boardData.eatTime)}</span>
+      </S.TimeWrapper>
 
       <S.WriterWrapper>
-        <S.WriterImage src={boardData.writerImageUrl} alt='사용자 프로필' />
+        <S.WriterImage src={boardData.writerImageUrl} alt='' />
         <p>{boardData.writer}</p>
       </S.WriterWrapper>
     </S.Wrapper>
