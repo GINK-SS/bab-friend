@@ -1,6 +1,7 @@
 import { BoardInfo } from '@_types/board';
 import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
+import formatDate from '@_utils/formatDate';
 
 type BoardProps = {
   boardData: BoardInfo;
@@ -26,7 +27,7 @@ const Board = ({ boardData }: BoardProps) => {
 
       <p>{boardData.title}</p>
       <p>{boardData.content.length > 40 ? `${boardData.content.slice(0, 40)}...` : boardData.content}</p>
-      <p>{boardData.eatTime}</p>
+      <p>{formatDate(boardData.eatTime)}</p>
 
       <div>
         <img src={boardData.writerImageUrl} alt='사용자 프로필' />
