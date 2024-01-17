@@ -34,7 +34,7 @@ export const CommentInput = styled.textarea`
     font-family: 'Pretendard-ExtraLight';
   }
   &:focus {
-    border: 1px solid ${({ theme }) => theme.mainColor};
+    border: 1px solid ${({ theme }) => theme.colors.mainColor};
   }
 `;
 export const SubmitButton = styled.span`
@@ -44,7 +44,7 @@ export const SubmitButton = styled.span`
   margin-top: 18px;
   margin-right: 10px;
   border-radius: 5px;
-  background-color: ${({ theme }) => theme.subColor};
+  background-color: ${({ theme }) => theme.colors.subColor};
   color: #fff;
   cursor: pointer;
 `;

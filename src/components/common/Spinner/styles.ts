@@ -12,7 +12,7 @@ export const Spin = styled.span`
   width: 48px;
   height: 48px;
   border: 5px solid #fff;
-  border-bottom-color: ${({ theme }) => theme.mainColor};
+  border-bottom-color: ${({ theme }) => theme.colors.mainColor};
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;

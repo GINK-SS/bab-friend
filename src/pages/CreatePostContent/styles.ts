@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const CreateContentContainer = styled.div`
   p {
-    color: ${({ theme }) => theme.blackColor};
+    color: ${({ theme }) => theme.colors.blackColor};
   }
   input {
     width: 100%;
@@ -17,7 +17,7 @@ export const CreateContentContainer = styled.div`
       font-family: 'Pretendard-ExtraLight';
     }
     &:focus {
-      border: 1px solid ${({ theme }) => theme.mainColor};
+      border: 1px solid ${({ theme }) => theme.colors.mainColor};
     }
   }
 `;
@@ -78,7 +78,7 @@ export const ContentInput = styled.textarea`
     font-family: 'Pretendard-ExtraLight';
   }
   &:focus {
-    border: 1px solid ${({ theme }) => theme.mainColor};
+    border: 1px solid ${({ theme }) => theme.colors.mainColor};
   }
 `;
 export const Link = styled.div`
@@ -110,6 +110,6 @@ export const PrevBtn = styled.button`
   border: 0.1px solid black;
 `;
 export const registrationBtn = styled.button`
-  background-color: ${({ theme }) => theme.subColor};
+  background-color: ${({ theme }) => theme.colors.subColor};
   color: white;
 `;

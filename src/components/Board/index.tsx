@@ -29,10 +29,10 @@ const Board = ({ boardData }: BoardProps) => {
       <p>{boardData.content.length > 40 ? `${boardData.content.slice(0, 40)}...` : boardData.content}</p>
       <p>{formatDate(boardData.eatTime)}</p>
 
-      <div>
-        <img src={boardData.writerImageUrl} alt='사용자 프로필' />
+      <S.WriterWrapper>
+        <S.WriterImage src={boardData.writerImageUrl} alt='사용자 프로필' />
         <p>{boardData.writer}</p>
-      </div>
+      </S.WriterWrapper>
     </S.Wrapper>
   );
 };

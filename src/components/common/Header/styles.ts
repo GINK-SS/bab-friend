@@ -34,7 +34,7 @@ export const HeaderLogin = styled.div`
   justify-content: center;
   align-items: center;
   font-family: 'Pretendard-Bold';
-  background-color: ${({ theme }) => theme.mainColor};
+  background-color: ${({ theme }) => theme.colors.mainColor};
   color: white;
   border-radius: 10px;
 `;

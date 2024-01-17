@@ -34,7 +34,7 @@ export const CloseBtn = styled.img`
   cursor: pointer;
 `;
 export const Profile = styled.div`
-  border-bottom: 0.1px solid ${({ theme }) => theme.subColor};
+  border-bottom: 0.1px solid ${({ theme }) => theme.colors.subColor};
   padding-bottom: 30px;
   margin-top: 30px;
   display: flex;

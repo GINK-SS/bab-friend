@@ -14,7 +14,7 @@ export const ElInput = styled.input`
     font-family: 'Pretendard-ExtraLight';
   }
   &:focus {
-    border: 1px solid ${({ theme }) => theme.mainColor};
+    border: 1px solid ${({ theme }) => theme.colors.mainColor};
   }
 `;
 export const Label = styled.label`

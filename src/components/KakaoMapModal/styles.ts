@@ -49,7 +49,7 @@ export const MarkerContent = styled.p`
 export const ConfirmBtn = styled.button`
   width: 100%;
   height: 50px;
-  background-color: ${({ theme }) => theme.subColor};
+  background-color: ${({ theme }) => theme.colors.subColor};
   color: #fff;
   border-radius: 15px;
   margin-top: 10px;
