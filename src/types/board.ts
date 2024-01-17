@@ -18,3 +18,7 @@ export type BoardInfo = {
   genderLimit: 'MALE' | 'FEMALE' | 'ALL';
   fix: boolean;
 };
+
+export type getBoardResponse = {
+  data: BoardInfo[];
+};
