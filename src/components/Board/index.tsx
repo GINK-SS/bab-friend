@@ -10,6 +10,13 @@ type BoardProps = {
 
 const Board = ({ boardData }: BoardProps) => {
   const navigate = useNavigate();
+  const categoryTypeToKorean = {
+    KOREAN: '한식',
+    JAPAN: '일식',
+    CHINA: '중식',
+    WEST: '양식',
+    ALL: null,
+  };
 
   const onBoard = () => {
     navigate(`/postdetail/${boardData.id}`);
@@ -18,11 +25,13 @@ const Board = ({ boardData }: BoardProps) => {
   return (
     <S.Wrapper onClick={onBoard}>
       <S.CategoryWrapper>
-        <S.Category>{boardData.shortenedLocation}</S.Category>
-        <S.Category>{boardData.categoryType}</S.Category>
-        <S.Category>{boardData.alcohol ? '술 가능' : '술 불가'}</S.Category>
-        <S.Category>
-          {boardData.currentJoin} / {boardData.joinLimit}
+        <S.Category hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
+        <S.Category hasData={!!categoryTypeToKorean[boardData.categoryType]}>
+          {categoryTypeToKorean[boardData.categoryType]}
+        </S.Category>
+        <S.Category hasData>{boardData.alcohol ? '술 가능' : '술 불가'}</S.Category>
+        <S.Category hasData>
+          {boardData.currentJoin}명 / {boardData.joinLimit}명
         </S.Category>
       </S.CategoryWrapper>
 

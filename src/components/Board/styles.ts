@@ -14,7 +14,8 @@ export const CategoryWrapper = styled.div`
   margin-bottom: 7px;
 `;
 
-export const Category = styled.div`
+export const Category = styled.div<{ hasData: boolean }>`
+  display: ${({ hasData }) => (hasData ? 'block' : 'none')};
   padding: 1px 20px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.mainColor};
