@@ -37,17 +37,17 @@ const Board = ({ boardData }: BoardProps) => {
     !!(boardData.ageLimit.up && boardData.ageLimit.up < calculateAge(userInfo.birthYear)) ||
     !!(boardData.ageLimit.down && boardData.ageLimit.down > calculateAge(userInfo.birthYear));
 
+  const isLimit = boardData.fix || isLimitedByGender || isLimitedByAge;
+
   return (
     <S.Container>
-      {boardData.fix ? (
-        <S.BlockContainer>확정 완료</S.BlockContainer>
-      ) : isLimitedByGender ? (
-        <S.BlockContainer>성별 제한</S.BlockContainer>
-      ) : isLimitedByAge ? (
-        <S.BlockContainer>나이 제한</S.BlockContainer>
+      {isLimit ? (
+        <S.BlockContainer>
+          {boardData.fix ? '확정 완료' : isLimitedByGender ? '성별 제한' : isLimitedByAge ? '나이 제한' : null}
+        </S.BlockContainer>
       ) : null}
 
-      <S.Wrapper isLimit={boardData.fix || isLimitedByGender || isLimitedByAge} onClick={onBoard}>
+      <S.Wrapper isLimit={isLimit} onClick={onBoard}>
         <S.CategoryWrapper>
           <S.Category hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
           <S.Category hasData={!!categoryTypeToKorean[boardData.categoryType]}>
