@@ -9,7 +9,7 @@ export const getBoardData = () => {
       writerImageUrl:
         'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       writer: '가련한 기린',
-      eatTime: '2024-01-16T03:42:38.038Z',
+      eatTime: '2024-01-20T03:40:38.038Z',
       shortenedLocation: '서울 성동구 송정동',
       categoryType: 'KOREAN',
       alcohol: false,
@@ -30,7 +30,7 @@ export const getBoardData = () => {
       writerImageUrl:
         'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       writer: '집구석파스타전문가엄준식',
-      eatTime: '2024-01-16T03:42:38.038Z',
+      eatTime: '2024-01-19T03:42:38.038Z',
       shortenedLocation: '서울 서초구 XX동',
       categoryType: 'WEST',
       alcohol: false,
@@ -51,7 +51,7 @@ export const getBoardData = () => {
       writerImageUrl:
         'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       writer: '가련한 기린',
-      eatTime: '2024-01-16T03:42:38.038Z',
+      eatTime: '2024-01-23T03:42:38.038Z',
       shortenedLocation: null,
       categoryType: 'ALL',
       alcohol: true,
