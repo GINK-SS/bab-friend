@@ -4,8 +4,22 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  border-top: 4px solid ${({ theme }) => `${theme.colors.mainColor}80`};
+  border-top: 4px solid ${({ theme }) => `${theme.colors.mainColor}50`};
   cursor: pointer;
+`;
+
+export const CategoryWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 7px;
+`;
+
+export const Category = styled.div`
+  padding: 1px 20px;
+  border-radius: 10px;
+  background-color: ${({ theme }) => theme.colors.mainColor};
+  color: white;
+  font-size: 0.8em;
 `;
 
 export const Title = styled.p`

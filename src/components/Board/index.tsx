@@ -17,14 +17,14 @@ const Board = ({ boardData }: BoardProps) => {
 
   return (
     <S.Wrapper onClick={onBoard}>
-      <div>
-        <span>{boardData.shortenedLocation}</span>
-        <span>{boardData.categoryType}</span>
-        <span>{boardData.alcohol ? '술 가능' : '술 불가'}</span>
-        <span>
+      <S.CategoryWrapper>
+        <S.Category>{boardData.shortenedLocation}</S.Category>
+        <S.Category>{boardData.categoryType}</S.Category>
+        <S.Category>{boardData.alcohol ? '술 가능' : '술 불가'}</S.Category>
+        <S.Category>
           {boardData.currentJoin} / {boardData.joinLimit}
-        </span>
-      </div>
+        </S.Category>
+      </S.CategoryWrapper>
 
       <S.Title>{boardData.title}</S.Title>
       <S.Content>
