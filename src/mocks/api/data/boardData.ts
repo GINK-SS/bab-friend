@@ -16,7 +16,6 @@ export const getBoardData = () => {
       currentJoin: 2,
       joinLimit: 4,
       ageLimit: {
-        isLimit: true,
         up: 30,
         down: 25,
       },
@@ -37,7 +36,6 @@ export const getBoardData = () => {
       currentJoin: 4,
       joinLimit: 4,
       ageLimit: {
-        isLimit: false,
         up: null,
         down: null,
       },
@@ -58,7 +56,6 @@ export const getBoardData = () => {
       currentJoin: 0,
       joinLimit: 4,
       ageLimit: {
-        isLimit: true,
         up: 25,
         down: 20,
       },
@@ -82,7 +79,6 @@ export const getBoardData = () => {
       currentJoin: i % 5,
       joinLimit: 5,
       ageLimit: {
-        isLimit: i % 2 ? true : false,
         up: i % 2 ? 40 : null,
         down: i % 2 ? 22 : null,
       },
