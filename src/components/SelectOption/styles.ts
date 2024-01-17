@@ -10,7 +10,7 @@ export const SelectOptionContainer = styled.div`
     margin-bottom: 15px;
     font-size: 16px;
     font-family: 'Pretendard-SemiBold';
-    color: ${({ theme }) => theme.blackColor};
+    color: ${({ theme }) => theme.colors.blackColor};
   }
   input {
     width: 100%;
@@ -25,7 +25,7 @@ export const SelectOptionContainer = styled.div`
       font-family: 'Pretendard-ExtraLight';
     }
     &:focus {
-      border: 1px solid ${({ theme }) => theme.mainColor};
+      border: 1px solid ${({ theme }) => theme.colors.mainColor};
     }
   }
   select {
@@ -58,7 +58,7 @@ export const TimeInput = styled.input``;
 export const StoreNameWrap = styled.div``;
 export const StoreName = styled.p`
   margin-top: 20px;
-  color: ${({ theme }) => theme.mainColor};
+  color: ${({ theme }) => theme.colors.mainColor};
 `;
 export const StoreBtn = styled.button`
   border: 0.1px solid black;
@@ -90,7 +90,7 @@ export const AlcholInput = styled.input`
   height: 0;
   width: 0;
   &:checked + span {
-    background-color: ${({ theme }) => theme.mainColor};
+    background-color: ${({ theme }) => theme.colors.mainColor};
   }
   &:checked + span::after {
     display: block;
@@ -138,7 +138,7 @@ export const AgeLimitInput = styled.input`
   height: 0;
   width: 0;
   &:checked + span {
-    background-color: ${({ theme }) => theme.mainColor};
+    background-color: ${({ theme }) => theme.colors.mainColor};
   }
   &:checked + span::after {
     display: block;
@@ -186,7 +186,7 @@ export const GenderInput = styled.input`
   height: 0;
   width: 0;
   &:checked + span {
-    background-color: ${({ theme }) => theme.mainColor};
+    background-color: ${({ theme }) => theme.colors.mainColor};
   }
   &:checked + span::after {
     display: block;
@@ -219,7 +219,7 @@ export const NextBtnWrap = styled.div`
 export const NextBtn = styled.button`
   padding: 6px 30px;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.subColor};
+  background-color: ${({ theme }) => theme.colors.subColor};
   color: white;
   width: 100%;
   cursor: pointer;

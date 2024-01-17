@@ -56,13 +56,13 @@ export const CancleWrap = styled.div`
   margin-left: 10px;
   width: 66px;
   height: 36px;
-  border: 1px solid ${({ theme }) => theme.blackColor};
+  border: 1px solid ${({ theme }) => theme.colors.blackColor};
   border-radius: 8px;
   cursor: pointer;
 `;
 export const CancleText = styled.p`
   font-size: 12px;
-  color: ${({ theme }) => theme.blackColor};
+  color: ${({ theme }) => theme.colors.blackColor};
 `;
 export const EditWrap = styled.div`
   display: flex;
@@ -72,13 +72,13 @@ export const EditWrap = styled.div`
   margin-left: 10px;
   width: 66px;
   height: 36px;
-  border: 1px solid ${({ theme }) => theme.mainColor};
+  border: 1px solid ${({ theme }) => theme.colors.mainColor};
   border-radius: 8px;
   cursor: pointer;
 `;
 export const EditText = styled.p`
   font-size: 12px;
-  color: ${({ theme }) => theme.mainColor};
+  color: ${({ theme }) => theme.colors.mainColor};
 `;
 export const EditingWrap = styled.div`
   width: 100%;
@@ -103,6 +103,6 @@ export const EditingInput = styled.input`
     font-family: 'Pretendard-ExtraLight';
   }
   &:focus {
-    border: 1px solid ${({ theme }) => theme.mainColor};
+    border: 1px solid ${({ theme }) => theme.colors.mainColor};
   }
 `;

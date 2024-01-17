@@ -11,7 +11,6 @@ export type BoardInfo = {
   currentJoin: number;
   joinLimit: number;
   ageLimit: {
-    isLimit: boolean;
     up: number | null;
     down: number | null;
   };

@@ -36,7 +36,7 @@ export const ReviewTextBox = styled.div`
   margin-top: 14px;
   padding: 5px 10px;
   border-radius: 0 8px 8px 8px;
-  background-color: ${({ theme }) => theme.subColor};
+  background-color: ${({ theme }) => theme.colors.subColor};
 `;
 export const ReviewText = styled.p`
   font-size: 12px;
