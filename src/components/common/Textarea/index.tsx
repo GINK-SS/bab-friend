@@ -1,7 +1,7 @@
 import * as S from './styles';
 
 type TextareaProps = {
-  label: string;
+  label?: string;
   placeholder: string;
   value: string | number;
   errorMessage?: string;
