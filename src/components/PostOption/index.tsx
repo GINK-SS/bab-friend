@@ -13,7 +13,7 @@ const PostOption = ({ boardData }: PostOptionProps) => {
     JAPAN: '일식',
     CHINA: '중식',
     WEST: '양식',
-    ALL: null,
+    ALL: '상관없음',
   };
   const genderLimitToKorean = {
     MALE: '남자만',

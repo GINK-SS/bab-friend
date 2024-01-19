@@ -7,7 +7,7 @@ const CommentInput = () => {
   const [comment, setComment] = useState({ comments: '' });
 
   const handleChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment((prevData) => ({ comments: e.target.value }));
+    setComment({ comments: e.target.value });
   };
 
   return (
