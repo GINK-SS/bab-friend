@@ -18,6 +18,22 @@ export type BoardInfo = {
   fix: boolean;
 };
 
+export type BoardDetailInfo = BoardInfo & {
+  location: {
+    content: string;
+    position: {
+      lat: number;
+      lng: number;
+    };
+  };
+  linkeUrl: string;
+  priceRange: number;
+};
+
+export type boardDetailResponse = {
+  data: BoardDetailInfo;
+};
+
 export type getBoardResponse = {
   data: BoardInfo[];
 };

@@ -1,63 +1,79 @@
 import { CiCalendar } from 'react-icons/ci';
 import * as S from './styles';
+import formatDate from '@_utils/formatDate';
+import { BoardDetailInfo } from '@_types/board';
 
-const PostOption = () => {
-  return (
+export type PostOptionProps = {
+  boardData?: BoardDetailInfo;
+};
+
+const PostOption = ({ boardData }: PostOptionProps) => {
+  const categoryTypeToKorean = {
+    KOREAN: '한식',
+    JAPAN: '일식',
+    CHINA: '중식',
+    WEST: '양식',
+    ALL: null,
+  };
+  const genderLimitToKorean = {
+    MALE: '남자만',
+    FEMALE: '여자만',
+    ALL: '상관없음',
+  };
+  return boardData ? (
     <S.PostOptionContainer>
       <S.PostHeaderWrap>
-        <S.Title>성동구 롯데마트 앞 죽이는 동태탕 드시러 가실분 구합니다 !~</S.Title>
+        <S.Title>{boardData.title}</S.Title>
         <S.ProfileWrap>
-          <S.ProfileImg
-            src={
-              'https:images.unsplash.com/photo-1704098712141-5fc42b69a39f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8'
-            }
-          />
-          <S.Nickname>액션가면액트</S.Nickname>
+          <S.ProfileImg src={boardData.writerImageUrl} />
+          <S.Nickname>{boardData.writer}</S.Nickname>
         </S.ProfileWrap>
         <S.TimeWrap>
           <CiCalendar />
-          <S.Time>2023년 12월 21일 15:00</S.Time>
+          <S.Time>{formatDate(boardData.eatTime)}</S.Time>
         </S.TimeWrap>
       </S.PostHeaderWrap>
       <S.OptionContainer>
         <S.OptionWrap>
           <S.CategoryWrap>
             <S.OptionTitle>음식 종류</S.OptionTitle>
-            <S.OptionContent>한식</S.OptionContent>
+            <S.OptionContent>{categoryTypeToKorean[boardData.categoryType]}</S.OptionContent>
           </S.CategoryWrap>
           <S.JoinLimitWrap>
             <S.OptionTitle>모집 인원</S.OptionTitle>
-            <S.OptionContent>4명</S.OptionContent>
+            <S.OptionContent>{boardData.joinLimit}명</S.OptionContent>
           </S.JoinLimitWrap>
           <S.AlcholWrap>
             <S.OptionTitle>술 여부</S.OptionTitle>
-            <S.OptionContent>가능</S.OptionContent>
+            <S.OptionContent>{boardData.alcohol ? '가능' : '불가능'}</S.OptionContent>
           </S.AlcholWrap>
           <S.FixWrap>
             <S.OptionTitle>약속 확정</S.OptionTitle>
-            <S.OptionContent>미확정</S.OptionContent>
+            <S.OptionContent>{boardData.fix ? '확정' : '미확정'}</S.OptionContent>
           </S.FixWrap>
         </S.OptionWrap>
         <S.OptionWrap>
           <S.PriceWrap>
             <S.OptionTitle>예상 가격</S.OptionTitle>
-            <S.OptionContent>15000원</S.OptionContent>
+            <S.OptionContent>{boardData.priceRange}원</S.OptionContent>
           </S.PriceWrap>
           <S.StoreWrap>
             <S.OptionTitle>가게명</S.OptionTitle>
-            <S.OptionContent>죽이는</S.OptionContent>
+            <S.OptionContent>{boardData.location.content}</S.OptionContent>
           </S.StoreWrap>
           <S.GenderWrap>
             <S.OptionTitle>성별</S.OptionTitle>
-            <S.OptionContent>상관없음</S.OptionContent>
+            <S.OptionContent>{genderLimitToKorean[boardData.genderLimit]}</S.OptionContent>
           </S.GenderWrap>
           <S.LinkWrap>
-            <S.OptionLink>채팅방 링크</S.OptionLink>
+            <S.OptionLink href={boardData.linkeUrl} target='_blank'>
+              채팅방 링크
+            </S.OptionLink>
           </S.LinkWrap>
         </S.OptionWrap>
       </S.OptionContainer>
     </S.PostOptionContainer>
-  );
+  ) : null;
 };
 
 export default PostOption;
