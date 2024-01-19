@@ -79,7 +79,7 @@ export const LinkWrap = styled.div`
   display: flex;
   justify-content: center;
 `;
-export const OptionLink = styled.p`
+export const OptionLink = styled.a`
   text-decoration: underline;
   cursor: pointer;
 `;
