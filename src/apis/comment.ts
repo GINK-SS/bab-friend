@@ -1,14 +1,10 @@
 import { request } from './axios';
+import { CommentResponse } from '@_types/comment';
 
-type CommentType = {
-  comments: string;
-};
-export const postsComment = async (commentData: CommentType): Promise<CommentType> => {
-  const { data } = await request.post('/comment', commentData);
+export const getComment = async (feedId: number) => {
+  const response = await request.get<CommentResponse>(`/comment/${feedId}`);
 
-  return data;
+  return response.data.data;
 };
 
-const postApi = { postsComment };
-
-export default postApi;
+export default getComment;

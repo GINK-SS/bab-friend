@@ -1,14 +1,14 @@
 import { http, HttpResponse } from 'msw';
+import { getCommentData } from './data/comment';
 
 const handlers = [
-  http.post(`${process.env.REACT_APP_BASE_URL}/comment`, async ({ request }) => {
-    try {
-      const comment = await request.json();
+  http.get(`${process.env.REACT_APP_BASE_URL}/comment/:id`, ({ params }) => {
+    const { id } = params;
+    const commentData = getCommentData().filter((post) => post.feedId === Number(id));
 
-      return HttpResponse.json(comment, { status: 201 });
-    } catch (error) {
-      return HttpResponse.json({ error: error }, { status: 400 });
-    }
+    return HttpResponse.json({
+      data: commentData,
+    });
   }),
 ];
 
