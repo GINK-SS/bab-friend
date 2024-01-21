@@ -26,6 +26,33 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
   const [map, setMap] = useState<any>();
   // 검색어 입력값을 담을 상태
   const [inputValue, setInputValue] = useState<string>('');
+  // 현재 위치의 좌표값을 저장할 상태
+  const [currentPosition, setCurrentPosition] = useState({
+    center: {
+      lat: 33.450701,
+      lng: 126.570667,
+    },
+  });
+
+  // 컴포넌트가 처음 렌더링될 때와 map 상태가 업데이트될 때 검색 수행
+  useEffect(() => {
+    handleSearch();
+  }, [map]);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+      navigator.geolocation.getCurrentPosition((position) => {
+        setCurrentPosition((prev) => ({
+          ...prev,
+          center: {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          },
+        }));
+      });
+    }
+  }, [navigator.geolocation.getCurrentPosition]);
 
   const handleClickMarker = (marker: any) => {
     setMapData((prevData) => ({
@@ -86,11 +113,6 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
     });
   };
 
-  // 컴포넌트가 처음 렌더링될 때와 map 상태가 업데이트될 때 검색 수행
-  useEffect(() => {
-    handleSearch();
-  }, [map]);
-
   const alertConfirm = (marker: any) => {
     getAddress(mapData.location.position.lat, mapData.location.position.lng);
 
@@ -123,14 +145,14 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
       <S.TextRequired>장소를 검색하고 화살표를 클릭해주세요.</S.TextRequired>
       <Map
         center={{
-          lat: 37.566826,
-          lng: 126.9786567,
+          lat: currentPosition.center.lat,
+          lng: currentPosition.center.lng,
         }}
         style={{
           width: '100%',
           height: '350px',
         }}
-        level={1}
+        level={3}
         onCreate={setMap}
       >
         <MapTypeControl position={'TOPRIGHT'} />
