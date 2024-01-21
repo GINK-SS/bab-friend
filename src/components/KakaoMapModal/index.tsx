@@ -125,58 +125,67 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
     }
   };
   return (
-    <S.ModalContainer>
-      <S.CloseBtnWrap>
-        <S.CloseBtn
-          src={closeBtn}
-          onClick={() => {
-            setMapModalOpen(false);
-          }}
-        />
-      </S.CloseBtnWrap>
-      <S.ModalWrap>
-        <Input
-          type='text'
-          value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-          }}
-        />
-        <S.ModalButton onClick={handleSearch}>검색</S.ModalButton>
-      </S.ModalWrap>
-      <S.TextRequired>장소를 검색하고 화살표를 클릭해주세요.</S.TextRequired>
-      <Map
-        center={{
-          lat: currentPosition.center.lat,
-          lng: currentPosition.center.lng,
+    <>
+      <S.Overlay
+        onClick={() => {
+          setMapModalOpen(false);
         }}
-        style={{
-          width: '100%',
-          height: '350px',
-        }}
-        level={3}
-        onCreate={setMap}
-      >
-        <MapTypeControl position={'TOPRIGHT'} />
-        <ZoomControl position={'RIGHT'} />
-        {markers.map((marker: any) => (
-          <MapMarker
-            key={`marker-${marker.content}-${marker?.position.lat},${marker?.position.lng}`}
-            position={marker?.position}
-            onClick={() => handleClickMarker(marker)}
-          >
-            {/* 마커를 클릭하면 해당 장소의 정보를 표시 */}
-            {mapData?.location && mapData?.location.content === marker?.content && (
-              <div style={{ color: '#000' }}>{marker?.content}</div>
-            )}
-          </MapMarker>
-        ))}
-      </Map>
-      <S.ContentWrap>
-        <S.MarkerContent>{mapData.location?.content}</S.MarkerContent>
-        <S.ConfirmBtn onClick={alertConfirm}>확인</S.ConfirmBtn>
-      </S.ContentWrap>
-    </S.ModalContainer>
+      />
+      <S.ModalContainer>
+        <S.CloseBtnWrap>
+          <S.CloseBtn
+            src={closeBtn}
+            onClick={() => {
+              setMapModalOpen(false);
+            }}
+          />
+        </S.CloseBtnWrap>
+        <S.ModalWrap>
+          <S.ModalInputWrap>
+            <Input
+              type='text'
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+              }}
+            />
+          </S.ModalInputWrap>
+          <S.ModalButton onClick={handleSearch}>검색</S.ModalButton>
+        </S.ModalWrap>
+        <S.TextRequired>장소를 검색하고 화살표를 클릭해주세요.</S.TextRequired>
+        <Map
+          center={{
+            lat: currentPosition.center.lat,
+            lng: currentPosition.center.lng,
+          }}
+          style={{
+            width: '100%',
+            height: '350px',
+          }}
+          level={3}
+          onCreate={setMap}
+        >
+          <MapTypeControl position={'TOPRIGHT'} />
+          <ZoomControl position={'RIGHT'} />
+          {markers.map((marker: any) => (
+            <MapMarker
+              key={`marker-${marker.content}-${marker?.position.lat},${marker?.position.lng}`}
+              position={marker?.position}
+              onClick={() => handleClickMarker(marker)}
+            >
+              {/* 마커를 클릭하면 해당 장소의 정보를 표시 */}
+              {mapData?.location && mapData?.location.content === marker?.content && (
+                <div style={{ color: '#000' }}>{marker?.content}</div>
+              )}
+            </MapMarker>
+          ))}
+        </Map>
+        <S.ContentWrap>
+          <S.MarkerContent>{mapData.location?.content}</S.MarkerContent>
+          <S.ConfirmBtn onClick={alertConfirm}>확인</S.ConfirmBtn>
+        </S.ContentWrap>
+      </S.ModalContainer>
+    </>
   );
 };
 
