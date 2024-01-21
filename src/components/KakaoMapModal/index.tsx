@@ -3,9 +3,11 @@ import { useEffect, useState } from 'react';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 import { PostDataType } from '@_types/createPost';
 
-import closeBtn from '@_assets/images/svg/cancle.svg';
 import { useRecoilState } from 'recoil';
 import { locationData } from '@_recoil/atoms/posts';
+import Input from '@_components/common/Input';
+
+import closeBtn from '@_assets/images/svg/cancle.svg';
 
 declare global {
   interface Window {
@@ -133,7 +135,7 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
         />
       </S.CloseBtnWrap>
       <S.ModalWrap>
-        <S.ModalInput
+        <Input
           type='text'
           value={inputValue}
           onChange={(e) => {

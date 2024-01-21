@@ -26,6 +26,7 @@ export const CloseBtn = styled.img`
 export const ModalWrap = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   margin: 40px 0;
 `;
