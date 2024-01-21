@@ -56,10 +56,22 @@ export const Time = styled.div``;
 export const TimeText = styled.p``;
 export const TimeInput = styled.input``;
 export const StoreNameWrap = styled.div``;
-export const StoreName = styled.p`
+export const StoreNameLabel = styled.p`
   margin-top: 20px;
   color: ${({ theme }) => theme.colors.mainColor};
 `;
+export const StoreInfo = styled.div`
+  border: 1px solid #d5d4dc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Pretendard-SemiBold';
+  margin: 20px 0px;
+  padding: 10px;
+`;
+export const StoreAddress = styled.p``;
+export const StoreName = styled.p``;
 export const StoreBtn = styled.button`
   border: 0.1px solid black;
   padding: 2px 8px;
