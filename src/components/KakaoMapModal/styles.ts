@@ -1,10 +1,20 @@
 import styled from 'styled-components';
 
+export const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: black;
+  opacity: 0.7;
+`;
 export const ModalContainer = styled.div`
   position: absolute;
-  top: 0%;
+  top: 10%;
   left: 50%;
-  transform: translate(-50%);
+  transform: translateX(-50%);
   background-color: #fff;
   padding: 0 30px;
   width: 70%;
@@ -26,13 +36,16 @@ export const CloseBtn = styled.img`
 export const ModalWrap = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 10px;
   margin: 40px 0;
 `;
-export const ModalInput = styled.input`
-  flex: 5;
+export const ModalInputWrap = styled.div`
+  flex: 3;
 `;
 export const ModalButton = styled.button`
+  padding: 5px 10px;
+  height: 100%;
   flex: 1;
   border: 0.1px solid gray;
   border-radius: 5px;

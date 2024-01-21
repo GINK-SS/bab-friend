@@ -28,7 +28,6 @@ const SelectOption = () => {
       [name]: value,
     }));
   };
-
   const handleClickNextBtn = () => {
     if (postState.priceRange === 0) {
       setErrorMessage((prev) => ({
@@ -92,7 +91,7 @@ const SelectOption = () => {
         <Calendar postState={postState} setPostState={setPostState} />
       </S.Time>
       <S.StoreNameWrap>
-        <S.StoreName>가게명을 입력해주세요.</S.StoreName>
+        <S.StoreNameLabel>가게명을 입력해주세요.</S.StoreNameLabel>
         <S.StoreBtn
           onClick={() => {
             setMapModalOpen(!mapModalOpen);
@@ -100,34 +99,38 @@ const SelectOption = () => {
         >
           가게명 검색하기
         </S.StoreBtn>
-        <S.StoreName>{mapData.location.content}</S.StoreName>
+
         {mapData.location.content === '' ? (
           <></>
         ) : (
-          <StaticMap
-            center={{
-              lat: mapData.location.position.lat,
-              lng: mapData.location.position.lng,
-            }}
-            style={{
-              width: '100%',
-              height: '200px',
-            }}
-            marker={[
-              {
-                position: {
-                  lat: mapData.location.position.lat,
-                  lng: mapData.location.position.lng,
+          <>
+            <S.StoreInfo>
+              <S.StoreAddress>위치 : {mapData.address}</S.StoreAddress>
+              <S.StoreName>가게명 : {mapData.location.content}</S.StoreName>
+            </S.StoreInfo>
+            <StaticMap
+              center={{
+                lat: mapData.location.position.lat,
+                lng: mapData.location.position.lng,
+              }}
+              style={{
+                width: '100%',
+                height: '200px',
+              }}
+              marker={[
+                {
+                  position: {
+                    lat: mapData.location.position.lat,
+                    lng: mapData.location.position.lng,
+                  },
+                  text: mapData.location.content,
                 },
-                text: mapData.location.content,
-              },
-            ]}
-            level={3}
-          />
+              ]}
+              level={3}
+            />
+          </>
         )}
-        {mapModalOpen && (
-          <KakaoMapModal setMapModalOpen={setMapModalOpen} postState={postState} setPostState={setPostState} />
-        )}
+        {mapModalOpen && <KakaoMapModal setMapModalOpen={setMapModalOpen} />}
       </S.StoreNameWrap>
       <S.Alchol>
         <S.AlcholText>술 여부</S.AlcholText>

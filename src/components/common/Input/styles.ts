@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const InputWrap = styled.div``;
 export const ElInput = styled.input`
   width: 100%;
+  height: 100%;
   border: 1px solid #d5d4dc;
   border-radius: 5px;
   padding: 5px 10px;
@@ -18,7 +19,7 @@ export const ElInput = styled.input`
   }
 `;
 export const Label = styled.label`
-  display: block;
+  display: inline-block;
   margin-bottom: 15px;
   font-size: 16px;
   font-family: 'Pretendard-SemiBold';
