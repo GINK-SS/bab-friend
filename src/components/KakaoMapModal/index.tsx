@@ -16,8 +16,6 @@ declare global {
 }
 type KakaoMapModalProps = {
   setMapModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  postState: PostDataType;
-  setPostState: React.Dispatch<React.SetStateAction<PostDataType>>;
 };
 
 const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
