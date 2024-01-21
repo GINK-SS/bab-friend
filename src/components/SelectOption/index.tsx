@@ -130,9 +130,7 @@ const SelectOption = () => {
             />
           </>
         )}
-        {mapModalOpen && (
-          <KakaoMapModal setMapModalOpen={setMapModalOpen} postState={postState} setPostState={setPostState} />
-        )}
+        {mapModalOpen && <KakaoMapModal setMapModalOpen={setMapModalOpen} />}
       </S.StoreNameWrap>
       <S.Alchol>
         <S.AlcholText>술 여부</S.AlcholText>

@@ -42,7 +42,7 @@ const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
     handleSearch();
   }, [map]);
 
-  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+  // GeoLocation을 이용해서 접속 위치를 얻어옴
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -57,6 +57,7 @@ const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
     }
   }, [navigator.geolocation.getCurrentPosition]);
 
+  // 마커 클릭시 정보 저장
   const handleClickMarker = (marker: any) => {
     setMapData((prevData) => ({
       ...prevData,
@@ -64,9 +65,10 @@ const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
     }));
   };
 
+  // 좌표 -> 주소 변환
   const getAddress = (lat: number, lng: number) => {
-    const geocoder = new kakao.maps.services.Geocoder(); // 좌표 -> 주소로 변환해주는 객체
-    const coord = new kakao.maps.LatLng(mapData.location.position.lat, mapData.location.position.lng); // 주소로 변환할 좌표 입력
+    const geocoder = new kakao.maps.services.Geocoder();
+    const coord = new kakao.maps.LatLng(mapData.location.position.lat, mapData.location.position.lng);
     const callback = function (result: any, status: any) {
       if (status === kakao.maps.services.Status.OK) {
         const addressFullName =
