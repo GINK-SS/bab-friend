@@ -20,7 +20,8 @@ type KakaoMapModalProps = {
   setPostState: React.Dispatch<React.SetStateAction<PostDataType>>;
 };
 
-const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapModalProps) => {
+const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
+  // 검색된 장소의 정보를 담을 상태
   const [mapData, setMapData] = useRecoilState(locationData);
   // 검색된 장소의 마커 정보를 담을 상태
   const [markers, setMarkers] = useState<any>([]);
@@ -41,9 +42,9 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
     handleSearch();
   }, [map]);
 
+  // GeoLocation을 이용해서 접속 위치를 얻어옵니다
   useEffect(() => {
     if (navigator.geolocation) {
-      // GeoLocation을 이용해서 접속 위치를 얻어옵니다
       navigator.geolocation.getCurrentPosition((position) => {
         setCurrentPosition((prev) => ({
           ...prev,
