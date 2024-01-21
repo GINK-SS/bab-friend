@@ -28,6 +28,7 @@ export const locationData = atom({
         lng: 0,
       },
     },
+    address: '',
   },
 });
 export const locationStringSelector = selector<string>({

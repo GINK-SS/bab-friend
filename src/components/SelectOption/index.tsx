@@ -100,7 +100,9 @@ const SelectOption = () => {
         >
           가게명 검색하기
         </S.StoreBtn>
-        <S.StoreName>{mapData.location.content}</S.StoreName>
+        <S.StoreName>
+          {mapData.location.content}, {mapData.address}
+        </S.StoreName>
         {mapData.location.content === '' ? (
           <></>
         ) : (

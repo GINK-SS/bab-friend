@@ -27,6 +27,30 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
   // 검색어 입력값을 담을 상태
   const [inputValue, setInputValue] = useState<string>('');
 
+  const handleClickMarker = (marker: any) => {
+    setMapData((prevData) => ({
+      ...prevData,
+      location: marker,
+    }));
+  };
+
+  const getAddress = (lat: number, lng: number) => {
+    const geocoder = new kakao.maps.services.Geocoder(); // 좌표 -> 주소로 변환해주는 객체
+    const coord = new kakao.maps.LatLng(mapData.location.position.lat, mapData.location.position.lng); // 주소로 변환할 좌표 입력
+    const callback = function (result: any, status: any) {
+      if (status === kakao.maps.services.Status.OK) {
+        const addressFullName =
+          result[0].address.region_1depth_name +
+          ' ' +
+          result[0].address.region_2depth_name +
+          ' ' +
+          result[0].address.region_3depth_name;
+        setMapData((prevData) => ({ ...prevData, address: addressFullName }));
+      }
+    };
+    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  };
+
   // 검색 버튼 클릭 시 실행되는 함수
   const handleSearch = () => {
     if (!map) return;
@@ -68,6 +92,8 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
   }, [map]);
 
   const alertConfirm = (marker: any) => {
+    getAddress(mapData.location.position.lat, mapData.location.position.lng);
+
     if (mapData.location?.content === '') {
       alert('위치를 지정해주세요.');
     } else {
@@ -113,12 +139,7 @@ const KakaoMapModal = ({ setMapModalOpen, postState, setPostState }: KakaoMapMod
           <MapMarker
             key={`marker-${marker.content}-${marker?.position.lat},${marker?.position.lng}`}
             position={marker?.position}
-            onClick={() =>
-              setMapData((prevData) => ({
-                ...prevData,
-                location: marker,
-              }))
-            }
+            onClick={() => handleClickMarker(marker)}
           >
             {/* 마커를 클릭하면 해당 장소의 정보를 표시 */}
             {mapData?.location && mapData?.location.content === marker?.content && (
