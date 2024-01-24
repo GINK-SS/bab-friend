@@ -1,5 +1,6 @@
 import { getBoards } from '@_apis/board';
 import Board from '@_components/Board';
+import Spinner from '@_components/common/Spinner';
 import { BoardInfo } from '@_types/board';
 import { useEffect, useRef, useState } from 'react';
 import { IoAddCircle } from 'react-icons/io5';
@@ -8,6 +9,7 @@ const Home = () => {
   const [boards, setBoards] = useState<BoardInfo[]>([]);
   const [page, setPage] = useState(0);
   const [isLoadActive, setIsLoadActive] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const loadTargetRef = useRef<HTMLDivElement>(null);
 
   const observer = new IntersectionObserver((entries, observer) => {
@@ -35,7 +37,9 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getBoardData();
+    setIsLoading(false);
   }, [page]);
 
   useEffect(() => {
@@ -47,9 +51,16 @@ const Home = () => {
   return (
     <>
       {boards.length ? (
-        boards.map((boardData, index) => (
-          <Board key={index} boardData={boardData} ref={loadTargetRef} isTarget={index === boards.length - 5} />
-        ))
+        <>
+          {boards.map((boardData, index) => (
+            <Board key={index} boardData={boardData} ref={loadTargetRef} isTarget={index === boards.length - 5} />
+          ))}
+          {isLoading && (
+            <div style={{ position: 'relative' }}>
+              <Spinner />
+            </div>
+          )}
+        </>
       ) : (
         <div
           style={{
