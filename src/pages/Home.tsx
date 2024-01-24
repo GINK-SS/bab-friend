@@ -1,26 +1,51 @@
 import { getBoards } from '@_apis/board';
 import Board from '@_components/Board';
 import { BoardInfo } from '@_types/board';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoAddCircle } from 'react-icons/io5';
 
 const Home = () => {
   const [boards, setBoards] = useState<BoardInfo[]>([]);
+  const [page, setPage] = useState(0);
+  const loadTargetRef = useRef<HTMLDivElement>(null);
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        observer.unobserve(entry.target);
+        setPage((prev) => prev + 1);
+      }
+    });
+  });
 
   const getBoardData = async () => {
-    const { data } = await getBoards();
+    const {
+      data: { boards, last },
+    } = await getBoards({ page });
 
-    setBoards(data);
+    setBoards((prev) => [...prev, ...boards]);
+
+    if (last) {
+      observer.disconnect();
+    }
   };
 
   useEffect(() => {
     getBoardData();
-  }, []);
+  }, [page]);
+
+  useEffect(() => {
+    if (loadTargetRef.current) {
+      observer.observe(loadTargetRef.current);
+    }
+  }, [boards]);
 
   return (
     <>
       {boards.length ? (
-        boards.map((boardData, index) => <Board key={index} boardData={boardData} />)
+        boards.map((boardData, index) => (
+          <Board key={index} boardData={boardData} ref={loadTargetRef} isTarget={index === boards.length - 5} />
+        ))
       ) : (
         <div
           style={{
