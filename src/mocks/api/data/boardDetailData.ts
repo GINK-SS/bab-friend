@@ -24,11 +24,10 @@ export const getBoardDetailData = () => {
       alcohol: false,
       currentJoin: 2,
       joinLimit: 4,
-      ageLimit: {
-        up: 30,
-        down: 25,
-      },
-      genderLimit: 'ALL',
+      ageGroupLimit: true,
+      up: 1992,
+      down: 1999,
+      genderType: 'ALL',
       fix: false,
     },
     {
@@ -53,11 +52,10 @@ export const getBoardDetailData = () => {
       alcohol: false,
       currentJoin: 4,
       joinLimit: 4,
-      ageLimit: {
-        up: null,
-        down: null,
-      },
-      genderLimit: 'FEMALE',
+      ageGroupLimit: false,
+      up: 0,
+      down: 0,
+      genderType: 'FEMALE',
       fix: true,
     },
     {
@@ -82,11 +80,10 @@ export const getBoardDetailData = () => {
       alcohol: true,
       currentJoin: 0,
       joinLimit: 4,
-      ageLimit: {
-        up: 25,
-        down: 20,
-      },
-      genderLimit: 'ALL',
+      ageGroupLimit: true,
+      up: 2000,
+      down: 2004,
+      genderType: 'ALL',
       fix: false,
     },
   ];
@@ -114,11 +111,10 @@ export const getBoardDetailData = () => {
       alcohol: i % 2 ? true : false,
       currentJoin: i % 5,
       joinLimit: 5,
-      ageLimit: {
-        up: i % 2 ? 40 : null,
-        down: i % 2 ? 22 : null,
-      },
-      genderLimit: i % 2 ? 'MALE' : 'FEMALE',
+      ageGroupLimit: true,
+      up: i % 2 ? 1993 : 1992,
+      down: i % 2 ? 2001 : 1995,
+      genderType: i % 2 ? 'MALE' : 'FEMALE',
       fix: false,
     });
   }

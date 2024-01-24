@@ -21,21 +21,19 @@ const Board = ({ boardData }: BoardProps) => {
     ALL: null,
   };
 
-  const calculateAge = (birthYear: number) => {
-    const currentYear = new Date().getFullYear();
-
-    return currentYear - birthYear + 1;
-  };
-
   const onBoard = () => {
     navigate(`/postdetail/${boardData.id}`);
   };
 
-  const isLimitedByGender = boardData.genderLimit !== 'ALL' && boardData.genderLimit !== userInfo.genderType;
+  const isLimitedByGender =
+    !!userInfo.genderType && boardData.genderType !== 'ALL' && boardData.genderType !== userInfo.genderType;
 
   const isLimitedByAge =
-    !!(boardData.ageLimit.up && boardData.ageLimit.up < calculateAge(userInfo.birthYear)) ||
-    !!(boardData.ageLimit.down && boardData.ageLimit.down > calculateAge(userInfo.birthYear));
+    !!userInfo.birthYear && boardData.ageGroupLimit
+      ? boardData.up < userInfo.birthYear && boardData.down > userInfo.birthYear
+        ? false
+        : true
+      : false;
 
   const isLimit = boardData.fix || isLimitedByGender || isLimitedByAge;
 

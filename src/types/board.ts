@@ -10,11 +10,10 @@ export type BoardInfo = {
   alcohol: boolean;
   currentJoin: number;
   joinLimit: number;
-  ageLimit: {
-    up: number | null;
-    down: number | null;
-  };
-  genderLimit: 'MALE' | 'FEMALE' | 'ALL';
+  ageGroupLimit: boolean;
+  up: number;
+  down: number;
+  genderType: 'MALE' | 'FEMALE' | 'ALL';
   fix: boolean;
 };
 
@@ -35,5 +34,12 @@ export type boardDetailResponse = {
 };
 
 export type getBoardResponse = {
-  data: BoardInfo[];
+  statusCode: number;
+  data: {
+    boards: BoardInfo[];
+    first: boolean;
+    last: boolean;
+    totalElement: number;
+    empty: boolean;
+  };
 };

@@ -63,7 +63,7 @@ const PostOption = ({ boardData }: PostOptionProps) => {
           </S.StoreWrap>
           <S.GenderWrap>
             <S.OptionTitle>성별</S.OptionTitle>
-            <S.OptionContent>{genderLimitToKorean[boardData.genderLimit]}</S.OptionContent>
+            <S.OptionContent>{genderLimitToKorean[boardData.genderType]}</S.OptionContent>
           </S.GenderWrap>
           <S.LinkWrap>
             <S.OptionLink href={boardData.linkeUrl} target='_blank'>
