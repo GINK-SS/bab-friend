@@ -7,13 +7,17 @@ import { IoAddCircle } from 'react-icons/io5';
 const Home = () => {
   const [boards, setBoards] = useState<BoardInfo[]>([]);
   const [page, setPage] = useState(0);
+  const [isLoadActive, setIsLoadActive] = useState(true);
   const loadTargetRef = useRef<HTMLDivElement>(null);
 
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         observer.unobserve(entry.target);
-        setPage((prev) => prev + 1);
+
+        if (isLoadActive) {
+          setPage((prev) => prev + 1);
+        }
       }
     });
   });
@@ -26,7 +30,7 @@ const Home = () => {
     setBoards((prev) => [...prev, ...boards]);
 
     if (last) {
-      observer.disconnect();
+      setIsLoadActive(false);
     }
   };
 
