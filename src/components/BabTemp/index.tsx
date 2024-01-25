@@ -1,13 +1,17 @@
 import ProgressBar from '../common/ProgressBar';
 
-import group from '@_assets/images/svg/user-group.svg';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@_recoil/atoms/user';
 
 import * as S from './styles';
+import group from '@_assets/images/svg/user-group.svg';
 
 const BabTemp = () => {
+  const userInfo = useRecoilValue(userState);
+
   return (
     <S.BabTempContainer>
-      <ProgressBar temp={36.5} />
+      <ProgressBar temp={userInfo.temperature} />
       <S.BabReviewWrap>
         <S.EachReviewWrap>
           <S.ImgWrap>

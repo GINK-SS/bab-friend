@@ -35,12 +35,12 @@ export const ProgressBar = styled.div`
   margin-top: 6px;
   overflow: hidden;
 `;
-export const Progress = styled.div<{ $temp: number }>`
+export const Progress = styled.div<{ $temp?: number }>`
   width: ${({ $temp }) => `${$temp}%`};
   height: 15px;
   padding: 0;
   text-align: center;
-  background-color: ${({ theme }) => theme.mainColor};
+  background-color: ${({ theme }) => theme.colors.mainColor};
   border-radius: 12px;
   color: #111;
 `;

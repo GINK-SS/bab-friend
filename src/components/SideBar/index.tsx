@@ -1,19 +1,18 @@
 import { useEffect } from 'react';
-
-import * as S from './styles';
-import SideBarContent from '@_components/SideBarContent';
-import { SideBarPropsType } from '@_types/sideBar';
-import ProgressBar from '@_components/common/ProgressBar';
-
-import close from '@_assets/images/svg/cancle.svg';
-import arrow from '@_assets/images/svg/arrow.svg';
-import { deleteAccessToken } from '@_apis/axios';
-import authApi from '@_apis/auth';
-import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useQuery } from '@tanstack/react-query';
 import { authState } from '@_recoil/atoms/auth';
 import { userState } from '@_recoil/atoms/user';
-import { useNavigate } from 'react-router-dom';
+
+import SideBarContent from '@_components/SideBarContent';
+import ProgressBar from '@_components/common/ProgressBar';
+import { deleteAccessToken } from '@_apis/axios';
+import authApi from '@_apis/auth';
 import { AuthStatus } from '@_types/auth';
+import { SideBarPropsType } from '@_types/sideBar';
+
+import * as S from './styles';
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   const setAuthInfo = useSetRecoilState(authState);
@@ -21,21 +20,20 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.addEventListener('scroll', handleScroll);
+    document.addEventListener('scroll', handleCloseSidebar);
     return () => {
-      document.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('scroll', handleCloseSidebar);
     };
   }, [sidebarOpen]);
-
-  const handleScroll = () => {
+  const handleCloseSidebar = () => {
     if (sidebarOpen) {
       setSidebarOpen(false);
     }
   };
-
-  const handleCloseSidebar = () => {
-    setSidebarOpen(false);
-  };
+  const { data: userInfo } = useQuery({
+    queryKey: ['users'],
+    queryFn: () => authApi.fetchUserInfoDetail(),
+  });
 
   const onProfileClick = () => {
     navigate('/profile');
@@ -51,24 +49,19 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
     setSidebarOpen(false);
     navigate('/');
   };
-
   return (
     <>
       <S.SideMenuBackground $sidebarOpen={sidebarOpen} onClick={handleCloseSidebar} />
       <S.SideBarContainer $sidebarOpen={sidebarOpen}>
         <S.CloseBtnWrap>
-          <S.CloseBtn src={close} onClick={handleCloseSidebar} />
+          <S.CloseIcon size='30' onClick={handleCloseSidebar} />
         </S.CloseBtnWrap>
         <S.Profile onClick={onProfileClick}>
-          <S.ProfileImg
-            src={
-              'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            }
-          ></S.ProfileImg>
-          <S.ProfileNickname>밥프렌즈 님</S.ProfileNickname>
-          <S.ProfileArrow src={arrow} />
+          <S.ProfileImg src={userInfo?.data.profileImageUrl || ''}></S.ProfileImg>
+          <S.ProfileNickname>{userInfo?.data.nickName}</S.ProfileNickname>
+          <S.ArrowBtn />
         </S.Profile>
-        <ProgressBar temp={36.5} />
+        <ProgressBar temp={userInfo?.data.temperature} />
         <SideBarContent setSidebarOpen={setSidebarOpen} />
         <S.Logout onClick={logout}>로그아웃</S.Logout>
       </S.SideBarContainer>

@@ -1,3 +1,5 @@
+import { IoCloseCircleSharp } from 'react-icons/io5';
+import { FaArrowRightLong } from 'react-icons/fa6';
 import styled, { keyframes } from 'styled-components';
 
 export const SideMenuBackground = styled.div<{ $sidebarOpen: boolean }>`
@@ -28,6 +30,10 @@ export const CloseBtnWrap = styled.div`
   height: 60px;
   padding: 0 20px;
 `;
+export const CloseIcon = styled(IoCloseCircleSharp)`
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.subColor};
+`;
 export const CloseBtn = styled.img`
   width: 30px;
   height: 30px;
@@ -50,9 +56,8 @@ export const ProfileImg = styled.img`
   object-fit: cover;
 `;
 export const ProfileNickname = styled.p``;
-export const ProfileArrow = styled.img`
-  width: 20px;
-  height: 20px;
+export const ArrowBtn = styled(FaArrowRightLong)`
+  cursor: pointer;
 `;
 
 export const Logout = styled.div`
