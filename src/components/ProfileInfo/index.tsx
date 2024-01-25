@@ -26,7 +26,6 @@ const ProfileInfo = () => {
     queryKey: ['users'],
     queryFn: () => authApi.fetchUserInfoDetail(),
   });
-  const profileImage = `https://bab-friend-back.store${userInfo?.data.profileImageUrl}`;
 
   // 유저정보 detail patch 요청
   const editPatch = useMutation({
@@ -46,7 +45,7 @@ const ProfileInfo = () => {
       setEditData((prevData) => ({ ...prevData, nickName: userInfo.data.nickName }));
     }
     if (userInfo?.data.profileImageUrl) {
-      setSelectedImage(profileImage);
+      setSelectedImage(userInfo?.data.profileImageUrl);
     }
   }, [userInfo?.data.nickName, userInfo?.data.profileImageUrl]);
 
@@ -80,14 +79,13 @@ const ProfileInfo = () => {
       imgRef.current.click();
     }
   };
-
   return (
     <S.ProfileInfoContainer>
       <S.ProfileImgWrap $editSet={editSet}>
         {editSet ? (
-          <S.ProfileImg src={selectedImage || profileImage} onClick={onClickFileBtn} />
+          <S.ProfileImg src={selectedImage || ''} onClick={onClickFileBtn} />
         ) : (
-          <S.ProfileImg src={profileImage ?? ''} />
+          <S.ProfileImg src={userInfo?.data.profileImageUrl ?? ''} />
         )}
         <input type='file' onChange={handleChangeImage} ref={imgRef} style={{ display: 'none' }} />
       </S.ProfileImgWrap>
