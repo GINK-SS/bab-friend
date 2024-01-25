@@ -1,7 +1,7 @@
 import * as S from './styles';
 
 type ProgressBarProps = {
-  temp: number;
+  temp: number | undefined;
 };
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ temp }) => {

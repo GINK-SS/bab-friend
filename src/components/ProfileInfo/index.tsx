@@ -7,6 +7,8 @@ import { UserEditType } from '@_types/userEdit';
 import Input from '@_components/common/Input';
 
 import * as S from './styles';
+import { userState } from '@_recoil/atoms/user';
+import { useRecoilValue } from 'recoil';
 
 // ToDo : 닉네임을 빈 값으로 전송하면 기존 닉네임으로 유지 (현재는 빈 값으로 입력하면 기존 닉네임이 삭제됨)
 
@@ -45,7 +47,7 @@ const ProfileInfo = () => {
       setEditData((prevData) => ({ ...prevData, nickName: userInfo.data.nickName }));
     }
     if (userInfo?.data.profileImageUrl) {
-      setSelectedImage(`${window.location.origin}${userInfo?.data.profileImageUrl}`);
+      setSelectedImage(userInfo?.data.profileImageUrl);
     }
   }, [userInfo?.data.nickName, userInfo?.data.profileImageUrl]);
 
@@ -79,17 +81,13 @@ const ProfileInfo = () => {
       imgRef.current.click();
     }
   };
-
   return (
     <S.ProfileInfoContainer>
       <S.ProfileImgWrap $editSet={editSet}>
         {editSet ? (
-          <S.ProfileImg
-            src={selectedImage || `${window.location.origin}${userInfo?.data.profileImageUrl}`}
-            onClick={onClickFileBtn}
-          />
+          <S.ProfileImg src={selectedImage || ''} onClick={onClickFileBtn} />
         ) : (
-          <S.ProfileImg src={`${window.location.origin}${userInfo?.data.profileImageUrl}` ?? ''} />
+          <S.ProfileImg src={userInfo?.data.profileImageUrl ?? ''} />
         )}
         <input type='file' onChange={handleChangeImage} ref={imgRef} style={{ display: 'none' }} />
       </S.ProfileImgWrap>
