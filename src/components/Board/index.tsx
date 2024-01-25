@@ -1,3 +1,4 @@
+import { forwardRef, ForwardedRef } from 'react';
 import { BoardInfo } from '@_types/board';
 import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
@@ -8,9 +9,10 @@ import { userState } from '@_recoil/atoms/user';
 
 type BoardProps = {
   boardData: BoardInfo;
+  isTarget?: boolean;
 };
 
-const Board = ({ boardData }: BoardProps) => {
+const Board = forwardRef(({ boardData, isTarget = false }: BoardProps, ref: ForwardedRef<HTMLDivElement>) => {
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
   const categoryTypeToKorean = {
@@ -21,26 +23,24 @@ const Board = ({ boardData }: BoardProps) => {
     ALL: null,
   };
 
-  const calculateAge = (birthYear: number) => {
-    const currentYear = new Date().getFullYear();
-
-    return currentYear - birthYear + 1;
-  };
-
   const onBoard = () => {
     navigate(`/postdetail/${boardData.id}`);
   };
 
-  const isLimitedByGender = boardData.genderLimit !== 'ALL' && boardData.genderLimit !== userInfo.genderType;
+  const isLimitedByGender =
+    !!userInfo.genderType && boardData.genderType !== 'ALL' && boardData.genderType !== userInfo.genderType;
 
   const isLimitedByAge =
-    !!(boardData.ageLimit.up && boardData.ageLimit.up < calculateAge(userInfo.birthYear)) ||
-    !!(boardData.ageLimit.down && boardData.ageLimit.down > calculateAge(userInfo.birthYear));
+    !!userInfo.birthYear && boardData.ageGroupLimit
+      ? boardData.up < userInfo.birthYear && boardData.down > userInfo.birthYear
+        ? false
+        : true
+      : false;
 
   const isLimit = boardData.fix || isLimitedByGender || isLimitedByAge;
 
   return (
-    <S.Container>
+    <S.Container ref={isTarget ? ref : null}>
       {isLimit ? (
         <S.BlockContainer>
           {boardData.fix ? '확정 완료' : isLimitedByGender ? '성별 제한' : isLimitedByAge ? '나이 제한' : null}
@@ -76,6 +76,6 @@ const Board = ({ boardData }: BoardProps) => {
       </S.Wrapper>
     </S.Container>
   );
-};
+});
 
 export default Board;
