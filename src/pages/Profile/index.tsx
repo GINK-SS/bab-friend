@@ -1,11 +1,27 @@
-import * as S from './styles';
+import { useEffect, useState } from 'react';
 import ProfileInfo from '@_components/ProfileInfo';
 import MannerTemp from '@_components/BabTemp';
-import BabReview from '@_components/BabReview';
-
+import Review from '@_components/Review';
+import reviewApi from '@_apis/review';
+import { ReviewInfo } from '@_types/review';
+import * as S from './styles';
 import arrow from '@_assets/images/svg/arrow.svg';
 
 const Profile = () => {
+  const [reviews, setReviews] = useState<ReviewInfo[]>([]);
+
+  const getReviewData = async () => {
+    const {
+      data: { reviews },
+    } = await reviewApi.getReviews({ page: 0 });
+
+    setReviews(reviews);
+  };
+
+  useEffect(() => {
+    getReviewData();
+  }, []);
+
   return (
     <>
       <ProfileInfo />
@@ -17,7 +33,8 @@ const Profile = () => {
         </S.ReviewHeader>
         <S.ArrowBtn src={arrow} />
       </S.ReviewHeaderWrap>
-      <BabReview />
+
+      {reviews.length ? reviews.map((reviewInfo, idx) => <Review key={idx} reviewInfo={reviewInfo} />) : null}
     </>
   );
 };
