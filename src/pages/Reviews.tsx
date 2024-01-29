@@ -1,4 +1,5 @@
 import reviewApi from '@_apis/review';
+import EmptyData from '@_components/EmptyData';
 import Review from '@_components/Review';
 import Spinner from '@_components/common/Spinner';
 import { ReviewInfo } from '@_types/review';
@@ -70,7 +71,9 @@ const Reviews = () => {
             </div>
           )}
         </>
-      ) : null}
+      ) : (
+        <EmptyData content='존재하는 밥 후기가 없습니다 :(' />
+      )}
     </div>
   );
 };

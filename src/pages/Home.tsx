@@ -1,5 +1,6 @@
 import { getBoards } from '@_apis/board';
 import Board from '@_components/Board';
+import EmptyData from '@_components/EmptyData';
 import Spinner from '@_components/common/Spinner';
 import { BoardInfo } from '@_types/board';
 import { useEffect, useRef, useState } from 'react';
@@ -62,20 +63,7 @@ const Home = () => {
           )}
         </>
       ) : (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            alignItems: 'center',
-          }}
-        >
-          <IoAddCircle style={{ marginBottom: '5px', transform: 'rotate(45deg)' }} size={30} />
-          <p>존재하는 게시물이 없습니다. :(</p>
-        </div>
+        <EmptyData content='존재하는 게시물이 없습니다 :(' />
       )}
     </>
   );

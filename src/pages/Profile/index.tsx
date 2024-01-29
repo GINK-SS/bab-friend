@@ -7,6 +7,7 @@ import { ReviewInfo } from '@_types/review';
 import * as S from './styles';
 import arrow from '@_assets/images/svg/arrow.svg';
 import { useNavigate } from 'react-router-dom';
+import EmptyData from '@_components/EmptyData';
 
 const Profile = () => {
   const [reviews, setReviews] = useState<ReviewInfo[]>([]);
@@ -42,7 +43,13 @@ const Profile = () => {
         <S.ArrowBtn src={arrow} />
       </S.ReviewHeaderWrap>
 
-      {reviews.length ? reviews.map((reviewInfo, idx) => <Review key={idx} reviewInfo={reviewInfo} />) : null}
+      {reviews.length ? (
+        reviews.map((reviewInfo, idx) => <Review key={idx} reviewInfo={reviewInfo} />)
+      ) : (
+        <div style={{ position: 'relative', marginTop: '50px' }}>
+          <EmptyData content='존재하는 밥 후기가 없습니다 :(' />
+        </div>
+      )}
     </>
   );
 };
