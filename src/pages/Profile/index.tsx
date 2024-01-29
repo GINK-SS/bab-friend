@@ -6,10 +6,12 @@ import reviewApi from '@_apis/review';
 import { ReviewInfo } from '@_types/review';
 import * as S from './styles';
 import arrow from '@_assets/images/svg/arrow.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [reviews, setReviews] = useState<ReviewInfo[]>([]);
   const [total, setTotal] = useState(0);
+  const navigate = useNavigate();
 
   const getReviewData = async () => {
     const {
@@ -20,6 +22,10 @@ const Profile = () => {
     setTotal(totalElement);
   };
 
+  const onReviews = () => {
+    navigate('/profile/reviews');
+  };
+
   useEffect(() => {
     getReviewData();
   }, []);
@@ -28,7 +34,7 @@ const Profile = () => {
     <>
       <ProfileInfo />
       <MannerTemp />
-      <S.ReviewHeaderWrap>
+      <S.ReviewHeaderWrap onClick={onReviews}>
         <S.ReviewHeader>
           받은 밥 후기
           <S.ReviewNum>{`(${total})`}</S.ReviewNum>

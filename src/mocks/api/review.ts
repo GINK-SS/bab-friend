@@ -9,9 +9,9 @@ const handlers = [
 
     return HttpResponse.json({
       data: {
-        reviews: getReviewData({ page: Number(page), size: Number(size) }),
+        reviews: getReviewData({ page: Number(page), size: Number(size) ?? 5 }),
         first: !Number(page),
-        last: Number(page) === Math.floor(53 / Number(size)),
+        last: Number(page) === 5,
         totalElement: 53,
         empty: false,
       },
