@@ -9,13 +9,15 @@ import arrow from '@_assets/images/svg/arrow.svg';
 
 const Profile = () => {
   const [reviews, setReviews] = useState<ReviewInfo[]>([]);
+  const [total, setTotal] = useState(0);
 
   const getReviewData = async () => {
     const {
-      data: { reviews },
+      data: { reviews, totalElement },
     } = await reviewApi.getReviews({ page: 0 });
 
     setReviews(reviews);
+    setTotal(totalElement);
   };
 
   useEffect(() => {
@@ -29,7 +31,7 @@ const Profile = () => {
       <S.ReviewHeaderWrap>
         <S.ReviewHeader>
           받은 밥 후기
-          <S.ReviewNum>(4)</S.ReviewNum>
+          <S.ReviewNum>{`(${total})`}</S.ReviewNum>
         </S.ReviewHeader>
         <S.ArrowBtn src={arrow} />
       </S.ReviewHeaderWrap>

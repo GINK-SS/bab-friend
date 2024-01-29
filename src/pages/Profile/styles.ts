@@ -16,6 +16,7 @@ export const ReviewHeader = styled.div`
   cursor: pointer;
 `;
 export const ReviewNum = styled.span`
+  margin-left: 5px;
   font-size: 12px;
 `;
 export const ArrowBtn = styled.img`
