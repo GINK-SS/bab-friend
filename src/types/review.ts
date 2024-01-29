@@ -4,7 +4,6 @@ export type ReviewInfo = {
   writerImageUrl: string;
   writer: string;
   createdAt: string;
-  assessments: string[];
 };
 
 export type ReviewResponse = {

@@ -9,7 +9,6 @@ export const getReviewData = ({ page, size = 10 }: { page: number; size?: number
         'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       writer: '가련한 기린',
       createdAt: '2024-01-16T03:42:38.038Z',
-      assessments: ['친절하고 매너가 좋아요.'],
     },
     {
       id: 52,
@@ -18,7 +17,6 @@ export const getReviewData = ({ page, size = 10 }: { page: number; size?: number
         'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       writer: '집구석파스타전문가엄준식',
       createdAt: '2024-01-16T03:42:38.038Z',
-      assessments: ['친절하고 매너가 좋아요.', '약속시간을 잘 지켜요.'],
     },
     {
       id: 51,
@@ -27,7 +25,6 @@ export const getReviewData = ({ page, size = 10 }: { page: number; size?: number
         'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       writer: '가련한 기린',
       createdAt: '2024-01-16T03:42:38.038Z',
-      assessments: ['친절하고 매너가 좋아요.'],
     },
   ];
 
@@ -39,7 +36,6 @@ export const getReviewData = ({ page, size = 10 }: { page: number; size?: number
         'https:images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       writer: `사용자 ${i}`,
       createdAt: '2024-01-16T03:42:38.038Z',
-      assessments: ['친절하고 매너가 좋아요.'],
     });
   }
 

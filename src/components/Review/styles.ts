@@ -6,7 +6,6 @@ export const Container = styled.div`
   align-items: start;
   position: relative;
   padding: 20px;
-  cursor: pointer;
 
   &::after {
     content: '';

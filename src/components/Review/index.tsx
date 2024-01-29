@@ -1,6 +1,5 @@
 import { ReviewInfo } from '@_types/review';
 import * as S from './styles';
-import more from '@_assets/images/svg/more-vertical.svg';
 
 type ReviewProps = {
   reviewInfo: ReviewInfo;
@@ -17,8 +16,6 @@ const Review = ({ reviewInfo }: ReviewProps) => {
 
         <S.Content>{reviewInfo.content}</S.Content>
       </S.ContentWrapper>
-
-      <img src={more} alt='' />
     </S.Container>
   );
 };
