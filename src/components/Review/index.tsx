@@ -1,6 +1,7 @@
 import { ReviewInfo } from '@_types/review';
 import * as S from './styles';
 import { ForwardedRef, forwardRef } from 'react';
+import formatDateToTimeAgo from '@_utils/formatDateToTimeAgo';
 
 type ReviewProps = {
   reviewInfo: ReviewInfo;
@@ -16,7 +17,7 @@ const Review = forwardRef(
 
         <S.ContentWrapper>
           <S.Nickname>{reviewInfo.writer}</S.Nickname>
-          <S.Date>{reviewInfo.createdAt}</S.Date>
+          <S.Date>{formatDateToTimeAgo(reviewInfo.createdAt)}</S.Date>
 
           <S.Content isFull={isFull}>{reviewInfo.content}</S.Content>
         </S.ContentWrapper>
