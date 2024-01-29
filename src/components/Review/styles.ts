@@ -52,8 +52,8 @@ export const Date = styled.p`
   opacity: 0.5;
 `;
 
-export const Content = styled.p`
-  display: -webkit-box;
+export const Content = styled.p<{ isFull: boolean }>`
+  display: ${({ isFull }) => (isFull ? 'block' : '-webkit-box')};
   overflow: hidden;
   text-overflow: ellipsis;
   margin-left: 5px;

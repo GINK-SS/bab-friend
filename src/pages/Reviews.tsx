@@ -56,7 +56,13 @@ const Reviews = () => {
       {reviews.length ? (
         <>
           {reviews.map((reviewInfo, index) => (
-            <Review key={index} reviewInfo={reviewInfo} ref={loadTargetRef} isTarget={index === reviews.length - 3} />
+            <Review
+              key={index}
+              reviewInfo={reviewInfo}
+              ref={loadTargetRef}
+              isTarget={index === reviews.length - 3}
+              isFull
+            />
           ))}
           {isLoading && (
             <div style={{ position: 'relative' }}>
