@@ -1,6 +1,7 @@
 import { getBoards } from '@_apis/board';
 import Board from '@_components/Board';
 import EmptyData from '@_components/EmptyData';
+import Search from '@_components/Search';
 import Spinner from '@_components/common/Spinner';
 import { BoardInfo } from '@_types/board';
 import { useEffect, useRef, useState } from 'react';
@@ -51,6 +52,8 @@ const Home = () => {
 
   return (
     <>
+      <Search />
+
       {boards.length ? (
         <>
           {boards.map((boardData, index) => (
