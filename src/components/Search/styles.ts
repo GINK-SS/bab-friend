@@ -5,7 +5,7 @@ export const Container = styled.div`
   margin: 40px auto 20px;
 `;
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   display: flex;
   align-items: center;
   gap: 10px;

@@ -12,6 +12,7 @@ const Home = () => {
   const [page, setPage] = useState(0);
   const [isLoadActive, setIsLoadActive] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState('');
   const loadTargetRef = useRef<HTMLDivElement>(null);
 
   const observer = new IntersectionObserver((entries, observer) => {
@@ -52,7 +53,7 @@ const Home = () => {
 
   return (
     <>
-      <Search />
+      <Search setSearch={setSearch} />
 
       {boards.length ? (
         <>
