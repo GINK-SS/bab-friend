@@ -1,17 +1,27 @@
+import { SetURLSearchParams } from 'react-router-dom';
 import { IoSearch } from 'react-icons/io5';
 import * as S from './styles';
 
 type SearchProps = {
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
 };
 
-const Search = ({ setSearch }: SearchProps) => {
+const Search = ({ searchParams, setSearchParams }: SearchProps) => {
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    setSearch(formData.get('search') as string);
+    if (!formData.get('search')) {
+      searchParams.delete('search');
+      setSearchParams(searchParams);
+
+      return;
+    }
+
+    searchParams.set('search', formData.get('search') as string);
+    setSearchParams(searchParams);
   };
 
   const handleEnter = (e: React.KeyboardEvent<HTMLFormElement>) => {

@@ -1,6 +1,6 @@
 import { BoardInfo } from '@_types/board';
 
-export const getBoardData = ({ page, size = 10 }: { page: number; size?: number }) => {
+export const getBoardData = ({ page, size = 10, search }: { page: number; size?: number; search: string }) => {
   const data: BoardInfo[] = [
     {
       id: 53,
@@ -82,6 +82,12 @@ export const getBoardData = ({ page, size = 10 }: { page: number; size?: number 
       genderType: i % 2 ? 'MALE' : 'FEMALE',
       fix: false,
     });
+  }
+
+  if (search) {
+    return data
+      .filter((value) => value.title.includes(search) || value.content.includes(search))
+      .slice(page * size, page * size + size);
   }
 
   return data.slice(page * size, page * size + size);

@@ -6,13 +6,15 @@ import Spinner from '@_components/common/Spinner';
 import { BoardInfo } from '@_types/board';
 import { useEffect, useRef, useState } from 'react';
 import { IoAddCircle } from 'react-icons/io5';
+import { useSearchParams } from 'react-router-dom';
 
 const Home = () => {
   const [boards, setBoards] = useState<BoardInfo[]>([]);
   const [page, setPage] = useState(0);
   const [isLoadActive, setIsLoadActive] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [search, setSearch] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [isNew, setIsNew] = useState(true);
   const loadTargetRef = useRef<HTMLDivElement>(null);
 
   const observer = new IntersectionObserver((entries, observer) => {
@@ -30,9 +32,14 @@ const Home = () => {
   const getBoardData = async () => {
     const {
       data: { boards, last },
-    } = await getBoards({ page });
+    } = await getBoards({ page: isNew ? 0 : page, search: searchParams.get('search') ?? undefined });
 
-    setBoards((prev) => [...prev, ...boards]);
+    if (isNew) {
+      setIsLoadActive(true);
+      setIsNew(false);
+      setPage(0);
+      setBoards(boards);
+    } else setBoards((prev) => [...prev, ...boards]);
 
     if (last) {
       setIsLoadActive(false);
@@ -40,10 +47,16 @@ const Home = () => {
   };
 
   useEffect(() => {
+    if (!isNew && page === 0) return;
+
     setIsLoading(true);
     getBoardData();
     setIsLoading(false);
-  }, [page]);
+  }, [page, isNew]);
+
+  useEffect(() => {
+    setIsNew(true);
+  }, [searchParams]);
 
   useEffect(() => {
     if (loadTargetRef.current) {
@@ -53,7 +66,7 @@ const Home = () => {
 
   return (
     <>
-      <Search setSearch={setSearch} />
+      <Search searchParams={searchParams} setSearchParams={setSearchParams} />
 
       {boards.length ? (
         <>

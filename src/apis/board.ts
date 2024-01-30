@@ -8,11 +8,12 @@ import { UpdatePostRequest } from '@_types/createBoard';
  * @param size 한번에 가져올 페이지의 크기
  * @returns page에 맞는 size개의 게시물들 정보
  */
-export const getBoards = async ({ page, size = 10 }: { page: number; size?: number }) => {
+export const getBoards = async ({ page, size = 10, search }: { page: number; size?: number; search?: string }) => {
   const { data } = await request.get<getBoardResponse>('/boards', {
     params: {
       page,
       size,
+      search,
     },
   });
 
