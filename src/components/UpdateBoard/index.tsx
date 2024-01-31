@@ -4,14 +4,14 @@ import { useRecoilValue } from 'recoil';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { useMutation } from '@tanstack/react-query';
 
-import { SelectOptionProps } from '@_components/SelectOption';
+import { SelectOptionProps } from '@_components/SelectBoardOption';
 import Input from '@_components/common/Input';
 import Calendar from '@_components/Calendar';
 import KakaoMapModal from '@_components/KakaoMapModal';
 import Textarea from '@_components/common/Textarea';
 import { locationData } from '@_recoil/atoms/posts';
 import boardApi from '@_apis/board';
-import { UpdatePost } from '@_types/createPost';
+import { UpdatePost } from '@_types/createBoard';
 
 import * as S from './styles';
 
@@ -52,7 +52,7 @@ const UpdateBoard = ({ boardDetailInfo }: SelectOptionProps) => {
     mutationFn: () =>
       boardApi.updateBoard(boardDetailInfo.id, { ...updatePostState, location: JSON.stringify(mapData) }),
     onSuccess: (data) => {
-      navigate(`/postdetail/${boardDetailInfo.id}`);
+      navigate(`/boarddetail/${boardDetailInfo.id}`);
       console.log('게시글 수정 완료', data);
     },
     onError: (error) => {

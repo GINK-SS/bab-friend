@@ -19,7 +19,7 @@ export type SelectOptionProps = {
   boardDetailInfo: BoardDetailInfo;
 };
 
-const SelectOption = ({ updating, boardDetailInfo }: SelectOptionProps) => {
+const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => {
   const navigate = useNavigate();
   const [postState, setPostState] = useRecoilState(postsState);
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
@@ -256,4 +256,4 @@ const SelectOption = ({ updating, boardDetailInfo }: SelectOptionProps) => {
   );
 };
 
-export default SelectOption;
+export default SelectBoardOption;

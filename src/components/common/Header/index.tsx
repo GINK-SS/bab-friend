@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <>
       <S.HeaderContainer>
-        {location.pathname === '/createcontent' || location.pathname === '/createpost' ? (
+        {location.pathname === '/createcontent' || location.pathname === '/createboard' ? (
           <S.HeaderBackImg
             src={arrowLeft}
             alt='backBtn'

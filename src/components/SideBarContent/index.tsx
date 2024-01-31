@@ -12,7 +12,7 @@ const SideBarContent = ({ setSidebarOpen }: CommonPropsType) => {
     <S.SideBarCotentContainer>
       <S.WritePost
         onClick={() => {
-          navigate('./createPost');
+          navigate('./createboard');
           setSidebarOpen(false);
         }}
       >

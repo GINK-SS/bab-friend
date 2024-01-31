@@ -3,11 +3,11 @@ import * as S from './styles';
 import formatDate from '@_utils/formatDate';
 import { BoardDetailInfo } from '@_types/board';
 
-export type PostOptionProps = {
+export type BoardDetailOption = {
   boardData?: BoardDetailInfo;
 };
 
-const PostOption = ({ boardData }: PostOptionProps) => {
+const BoardDetailOption = ({ boardData }: BoardDetailOption) => {
   const categoryTypeToKorean = {
     KOREAN: '한식',
     JAPAN: '일식',
@@ -76,4 +76,4 @@ const PostOption = ({ boardData }: PostOptionProps) => {
   ) : null;
 };
 
-export default PostOption;
+export default BoardDetailOption;

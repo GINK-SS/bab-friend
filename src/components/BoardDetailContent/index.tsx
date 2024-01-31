@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import boardApi from '@_apis/board';
 import * as S from './styles';
 
-type PostContentProps = {
+type BoardDetailContent = {
   boardContent?: string;
   boardWriter?: string;
   boardLocation?: {
@@ -20,7 +20,7 @@ type PostContentProps = {
   boardFix?: boolean;
 };
 
-const PostContent = ({ boardContent, boardLocation, isWriter, boardUpdate, boardFix }: PostContentProps) => {
+const BoardDetailContent = ({ boardContent, boardLocation, isWriter, boardUpdate, boardFix }: BoardDetailContent) => {
   let params = useParams();
   const navigate = useNavigate();
 
@@ -93,4 +93,4 @@ const PostContent = ({ boardContent, boardLocation, isWriter, boardUpdate, board
   );
 };
 
-export default PostContent;
+export default BoardDetailContent;

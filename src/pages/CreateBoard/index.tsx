@@ -1,10 +1,10 @@
 import { useLocation } from 'react-router-dom';
 
 import * as S from './styles';
-import SelectOption from '@_components/SelectOption';
+import SelectOption from '@_components/SelectBoardOption';
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
-const CreatePost = () => {
+const CreateBoard = () => {
   const location = useLocation();
 
   const updating = location.state?.isUpdate;
@@ -30,4 +30,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default CreateBoard;

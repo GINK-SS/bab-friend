@@ -1,4 +1,4 @@
-import { PostDataType } from '@_types/createPost';
+import { PostDataType } from '@_types/createBoard';
 import { atom, selector } from 'recoil';
 
 export const postsState = atom<PostDataType>({

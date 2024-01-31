@@ -11,14 +11,14 @@ import * as S from './styles';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
-const CreatePostContent = () => {
+const CreateBoardContent = () => {
   const navigate = useNavigate();
   const [postState, setPostState] = useRecoilState(postsState);
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const locationStringData = useRecoilValue(locationStringSelector);
   const mapData = useRecoilValue(locationData);
 
-  const createPost = useMutation({
+  const createBoard = useMutation({
     mutationFn: () => postApi.postsBoards({ ...postState, location: locationStringData }),
     onSuccess: (data) => {
       navigate('/');
@@ -77,7 +77,7 @@ const CreatePostContent = () => {
       return;
     }
     validateValue();
-    createPost.mutate();
+    createBoard.mutate();
   };
   return (
     <S.CreateContentContainer>
@@ -130,4 +130,4 @@ const CreatePostContent = () => {
   );
 };
 
-export default CreatePostContent;
+export default CreateBoardContent;

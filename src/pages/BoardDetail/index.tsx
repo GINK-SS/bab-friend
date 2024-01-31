@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-import PostOption from '@_components/PostOption';
-import PostContent from '@_components/PostContent';
+import PostOption from '@_components/BoardDetailOption';
+import PostContent from '@_components/BoardDetailContent';
 import CommnetInput from '@_components/CommentInput';
 import CommentDisplay from '@_components/CommentDisplay';
 
@@ -14,7 +14,7 @@ import { userState } from '@_recoil/atoms/user';
 import { Comment } from '@_types/comment';
 import * as S from './styles';
 
-const PostDetail = () => {
+const BoardDetail = () => {
   let params = useParams();
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const PostDetail = () => {
   }, [boardDetailInfo]);
 
   const boardUpdate = () => {
-    navigate('/createpost', {
+    navigate('/createboard', {
       state: {
         isUpdate: true,
         boardDetailInfo: boardDetailInfo,
@@ -69,4 +69,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default BoardDetail;

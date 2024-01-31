@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { format, setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import { PostDataType } from '@_types/createPost';
+import { PostDataType } from '@_types/createBoard';
 
 import * as S from './styles';
 import formatDate from '@_utils/formatDate';
