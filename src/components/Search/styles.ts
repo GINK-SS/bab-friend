@@ -10,6 +10,7 @@ export const Wrapper = styled.form`
   align-items: center;
   gap: 10px;
   padding: 8px 30px;
+  border: 1px solid #ad6e0a;
   border-radius: 30px;
   background-color: ${({ theme }) => theme.colors.mainColor};
 `;
