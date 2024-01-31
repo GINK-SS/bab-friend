@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { getBoardData } from './data/boardData';
+import { getBoardData, getBoardLast } from './data/boardData';
 
 const handlers = [
   http.get(`${process.env.REACT_APP_BASE_URL}/boards`, ({ request }) => {
@@ -12,7 +12,7 @@ const handlers = [
       data: {
         boards: getBoardData({ page: Number(page), size: Number(size), search }),
         first: !Number(page),
-        last: Number(page) === 5,
+        last: getBoardLast({ page: Number(page), size: Number(size), search }),
         totalElement: 53,
         empty: false,
       },
