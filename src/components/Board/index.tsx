@@ -6,6 +6,7 @@ import formatDate from '@_utils/formatDate';
 import { IoTimeOutline } from 'react-icons/io5';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@_recoil/atoms/user';
+import { isLimit, isLimitedByAge, isLimitedByGender } from '@_utils/limit';
 
 type BoardProps = {
   boardData: BoardInfo;
@@ -27,27 +28,21 @@ const Board = forwardRef(({ boardData, isTarget = false }: BoardProps, ref: Forw
     navigate(`/boarddetail/${boardData.id}`);
   };
 
-  const isLimitedByGender =
-    !!userInfo.genderType && boardData.genderType !== 'ALL' && boardData.genderType !== userInfo.genderType;
-
-  const isLimitedByAge =
-    !!userInfo.birthYear && boardData.ageGroupLimit
-      ? boardData.up < userInfo.birthYear && boardData.down > userInfo.birthYear
-        ? false
-        : true
-      : false;
-
-  const isLimit = boardData.fix || isLimitedByGender || isLimitedByAge;
-
   return (
     <S.Container ref={isTarget ? ref : null}>
-      {isLimit ? (
+      {isLimit(userInfo, boardData) ? (
         <S.BlockContainer>
-          {boardData.fix ? '확정 완료' : isLimitedByGender ? '성별 제한' : isLimitedByAge ? '나이 제한' : null}
+          {boardData.fix
+            ? '확정 완료'
+            : isLimitedByGender(userInfo, boardData)
+              ? '성별 제한'
+              : isLimitedByAge(userInfo, boardData)
+                ? '나이 제한'
+                : null}
         </S.BlockContainer>
       ) : null}
 
-      <S.Wrapper isLimit={isLimit} onClick={onBoard}>
+      <S.Wrapper isLimit={isLimit(userInfo, boardData)} onClick={onBoard}>
         <S.CategoryWrapper>
           <S.Category hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
           <S.Category hasData={!!categoryTypeToKorean[boardData.categoryType]}>
