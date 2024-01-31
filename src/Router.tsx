@@ -5,6 +5,7 @@ import CreatePostContent from '@_pages/CreatePostContent';
 import Profile from '@_pages/Profile';
 import PostDetail from '@_pages/PostDetail';
 import SignIn from '@_pages/SignIn';
+import Reviews from '@_pages/Reviews';
 import PrivateRoute from '@_hoc/route/PrivateRoute';
 import PublicRoute from '@_hoc/route/PublicRoute';
 
@@ -16,6 +17,7 @@ const Router = () => {
       <Route path='/kakao/callback' element={<PublicRoute component={<SignIn />} canAccessWithAuth={false} />} />
 
       <Route path='/profile' element={<PrivateRoute component={<Profile />} />} />
+      <Route path='/profile/reviews' element={<PrivateRoute component={<Reviews />} />} />
       <Route path='/createpost' element={<PrivateRoute component={<CreatePost />} />} />
       <Route path='/createcontent' element={<PrivateRoute component={<CreatePostContent />} />} />
     </Routes>
