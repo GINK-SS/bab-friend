@@ -6,10 +6,11 @@ export const postsState = atom<PostDataType>({
   default: {
     categoryType: '',
     eatTime: '',
-    joinLimit: '',
+    joinLimit: 0,
+    currentJoin: 1,
     alchol: false,
     fix: false,
-    gender: 'ALL',
+    genderType: 'ALL',
     priceRange: 0,
     ageGroupLimit: false,
     location: '',
@@ -36,8 +37,6 @@ export const locationStringSelector = selector<string>({
   get: ({ get }) => {
     const locationObject = get(locationData);
 
-    const location = JSON.stringify(locationObject.location);
-
-    return location;
+    return JSON.stringify(locationObject);
   },
 });

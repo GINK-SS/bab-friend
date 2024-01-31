@@ -59,7 +59,7 @@ const PostOption = ({ boardData }: PostOptionProps) => {
           </S.PriceWrap>
           <S.StoreWrap>
             <S.OptionTitle>가게명</S.OptionTitle>
-            <S.OptionContent>{boardData.location.content}</S.OptionContent>
+            <S.OptionContent>{boardData.location.location?.content}</S.OptionContent>
           </S.StoreWrap>
           <S.GenderWrap>
             <S.OptionTitle>성별</S.OptionTitle>

@@ -1,10 +1,11 @@
 export type PostDataType = {
   categoryType: string;
   eatTime: string;
-  joinLimit: string;
+  joinLimit: number;
+  currentJoin: number;
   alchol: boolean;
   fix: boolean;
-  gender: string;
+  genderType: 'MALE' | 'FEMALE' | 'ALL';
   priceRange: number;
   ageGroupLimit: boolean;
   location: string;
