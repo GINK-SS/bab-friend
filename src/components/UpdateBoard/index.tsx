@@ -9,47 +9,14 @@ import Input from '@_components/common/Input';
 import Calendar from '@_components/Calendar';
 import KakaoMapModal from '@_components/KakaoMapModal';
 import Textarea from '@_components/common/Textarea';
-import { locationData, postsState } from '@_recoil/atoms/posts';
+import { locationData } from '@_recoil/atoms/posts';
 import boardApi from '@_apis/board';
+import { UpdatePost } from '@_types/createPost';
+
 import * as S from './styles';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
-export type UpdatePost = {
-  title: string;
-  content: string;
-  location: {
-    address?: string;
-    location: {
-      content: string;
-      position: {
-        lat: number;
-        lng: number;
-      };
-    };
-  };
-  categoryType: string;
-  eatTime: string;
-  alcohol: boolean;
-  joinLimit: number;
-  ageGroupLimit: boolean;
-  genderType: string;
-  linkUrl: string;
-  priceRange: number;
-};
-export type UpdatePostRequest = {
-  title: string;
-  content: string;
-  location: string;
-  categoryType: string;
-  eatTime: string;
-  alcohol: boolean;
-  joinLimit: number;
-  ageGroupLimit: boolean;
-  genderType: string;
-  linkUrl: string;
-  priceRange: number;
-};
 const UpdateBoard = ({ boardDetailInfo }: SelectOptionProps) => {
   const navigate = useNavigate();
   const [mapModalOpen, setMapModalOpen] = useState(false);

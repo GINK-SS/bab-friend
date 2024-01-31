@@ -1,6 +1,6 @@
 import { BoardDetailInfo, boardDetailResponse, getBoardResponse } from '@_types/board';
 import { request } from './axios';
-import { UpdatePost, UpdatePostRequest } from '@_components/UpdateBoard';
+import { UpdatePostRequest } from '@_types/createPost';
 
 /**
  * @description 게시물 가져오는 API
