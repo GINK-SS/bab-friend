@@ -1,23 +1,55 @@
-import * as S from './styles';
+import { useEffect, useState } from 'react';
 import ProfileInfo from '@_components/ProfileInfo';
 import MannerTemp from '@_components/BabTemp';
-import BabReview from '@_components/BabReview';
-
+import Review from '@_components/Review';
+import reviewApi from '@_apis/review';
+import { ReviewInfo } from '@_types/review';
+import * as S from './styles';
 import arrow from '@_assets/images/svg/arrow.svg';
+import { useNavigate } from 'react-router-dom';
+import EmptyData from '@_components/EmptyData';
 
 const Profile = () => {
+  const [reviews, setReviews] = useState<ReviewInfo[]>([]);
+  const [total, setTotal] = useState(0);
+  const navigate = useNavigate();
+
+  const getReviewData = async () => {
+    const {
+      data: { reviews, totalElement },
+    } = await reviewApi.getReviews({ page: 0 });
+
+    setReviews(reviews);
+    setTotal(totalElement);
+  };
+
+  const onReviews = () => {
+    navigate('/profile/reviews');
+  };
+
+  useEffect(() => {
+    getReviewData();
+  }, []);
+
   return (
     <>
       <ProfileInfo />
       <MannerTemp />
-      <S.ReviewHeaderWrap>
+      <S.ReviewHeaderWrap onClick={onReviews}>
         <S.ReviewHeader>
           받은 밥 후기
-          <S.ReviewNum>(4)</S.ReviewNum>
+          <S.ReviewNum>{`(${total})`}</S.ReviewNum>
         </S.ReviewHeader>
         <S.ArrowBtn src={arrow} />
       </S.ReviewHeaderWrap>
-      <BabReview />
+
+      {reviews.length ? (
+        reviews.map((reviewInfo, idx) => <Review key={idx} reviewInfo={reviewInfo} />)
+      ) : (
+        <div style={{ position: 'relative', marginTop: '50px' }}>
+          <EmptyData content='존재하는 밥 후기가 없습니다 :(' />
+        </div>
+      )}
     </>
   );
 };

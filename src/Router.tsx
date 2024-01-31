@@ -4,6 +4,7 @@ import CreateBoardContent from '@_pages/CreateBoardContent';
 import Profile from '@_pages/Profile';
 import BoardDetail from '@_pages/BoardDetail';
 import SignIn from '@_pages/SignIn';
+import Reviews from '@_pages/Reviews';
 import PrivateRoute from '@_hoc/route/PrivateRoute';
 import PublicRoute from '@_hoc/route/PublicRoute';
 import CreateBoard from '@_pages/CreateBoard';
@@ -16,8 +17,12 @@ const Router = () => {
       <Route path='/kakao/callback' element={<PublicRoute component={<SignIn />} canAccessWithAuth={false} />} />
 
       <Route path='/profile' element={<PrivateRoute component={<Profile />} />} />
+
       <Route path='/createboard' element={<PrivateRoute component={<CreateBoard />} />} />
       <Route path='/createcontent' element={<PrivateRoute component={<CreateBoardContent />} />} />
+      <Route path='/profile/reviews' element={<PrivateRoute component={<Reviews />} />} />
+
+
     </Routes>
   );
 };
