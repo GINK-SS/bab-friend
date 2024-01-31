@@ -4,11 +4,11 @@ import { atom, selector } from 'recoil';
 export const postsState = atom<PostDataType>({
   key: 'postsState',
   default: {
-    categoryType: '',
+    categoryType: 'ALL',
     eatTime: '',
     joinLimit: 0,
     currentJoin: 1,
-    alchol: false,
+    alcohol: false,
     fix: false,
     genderType: 'ALL',
     priceRange: 0,

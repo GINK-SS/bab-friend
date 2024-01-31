@@ -11,7 +11,6 @@ import CommentDisplay from '@_components/CommentDisplay';
 import boardApi from '@_apis/board';
 import getComment from '@_apis/comment';
 import { userState } from '@_recoil/atoms/user';
-import { BoardDetailInfo } from '@_types/board';
 import { Comment } from '@_types/comment';
 import * as S from './styles';
 
@@ -33,24 +32,20 @@ const PostDetail = () => {
       };
     },
   });
-  console.log(boardDetailInfo);
   useEffect(() => {
     if (userInfo.email === boardDetailInfo?.writerEmail) {
       setIsWriter(true);
     }
   }, [boardDetailInfo]);
 
-  const deleteBoard = useMutation({
-    mutationFn: () => boardApi.deleteBoard(Number(params.id)),
-    onSuccess(data) {
-      navigate('/');
-    },
-    onError(err) {
-      console.log(err);
-      alert('게시글 삭제 실패');
-    },
-  });
-
+  const boardUpdate = () => {
+    navigate('/createpost', {
+      state: {
+        isUpdate: true,
+        boardDetailInfo: boardDetailInfo,
+      },
+    });
+  };
   // const getCommentData = async () => {
   //   const data = await getComment(Number(params.id));
 
@@ -58,18 +53,13 @@ const PostDetail = () => {
   // };
   return (
     <>
-      {isWriter && (
-        <S.PostEditBtnWrap>
-          <S.PostEditBtn>수정</S.PostEditBtn>
-          <S.PostDeleteBtn onClick={() => deleteBoard.mutate()}>삭제</S.PostDeleteBtn>
-        </S.PostEditBtnWrap>
-      )}
-
       <PostOption boardData={boardDetailInfo} />
       <PostContent
         boardContent={boardDetailInfo?.content}
         boardLocation={boardDetailInfo?.location.location}
         isWriter={isWriter}
+        boardUpdate={boardUpdate}
+        boardFix={boardDetailInfo?.fix}
       />
       <CommnetInput />
       {comment.map((item) => {

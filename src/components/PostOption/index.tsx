@@ -66,7 +66,7 @@ const PostOption = ({ boardData }: PostOptionProps) => {
             <S.OptionContent>{genderLimitToKorean[boardData.genderType]}</S.OptionContent>
           </S.GenderWrap>
           <S.LinkWrap>
-            <S.OptionLink href={boardData.linkeUrl} target='_blank'>
+            <S.OptionLink href={boardData.linkUrl} target='_blank'>
               채팅방 링크
             </S.OptionLink>
           </S.LinkWrap>

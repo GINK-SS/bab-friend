@@ -1,6 +1,5 @@
 import { StaticMap } from 'react-kakao-maps-sdk';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import boardApi from '@_apis/board';
 import * as S from './styles';
@@ -17,30 +16,53 @@ type PostContentProps = {
     address: string;
   };
   isWriter: boolean;
+  boardUpdate: () => void;
+  boardFix?: boolean;
 };
 
-const PostContent = ({ boardContent, boardLocation, isWriter }: PostContentProps) => {
+const PostContent = ({ boardContent, boardLocation, isWriter, boardUpdate, boardFix }: PostContentProps) => {
   let params = useParams();
+  const navigate = useNavigate();
 
   const fixPromise = useMutation({
     mutationFn: () => boardApi.fixBoard(Number(params.id)),
     onSuccess(data) {
-      console.log('약속 확정');
+      if (boardFix === true) {
+        alert('약속 마감이 해제 되었습니다.');
+      } else {
+        alert('약속이 마감 되었습니다.');
+      }
+      navigate('/');
     },
     onError(err) {
       console.log(err);
     },
   });
 
+  const deleteBoard = useMutation({
+    mutationFn: () => boardApi.deleteBoard(Number(params.id)),
+    onError(err) {
+      console.log(err);
+      alert('게시글 삭제 실패');
+    },
+  });
+  const clickDeleteBtn = () => {
+    deleteBoard.mutate();
+    navigate('/');
+    alert('게시글이 삭제되었습니다.');
+  };
   return (
     <S.PostContentContainer>
       {isWriter && (
-        <S.FixButtonWrap>
-          <S.FixButton type='checkbox' id='fixBtn'></S.FixButton>
-          <S.FixButtonLabel htmlFor='fixBtn' onClick={() => fixPromise.mutate()}>
-            약속 확정
-          </S.FixButtonLabel>
-        </S.FixButtonWrap>
+        <S.BtnWrap>
+          <S.PostEditBtn onClick={boardUpdate}>수정</S.PostEditBtn>
+          <S.PostDeleteBtn onClick={clickDeleteBtn}>삭제</S.PostDeleteBtn>
+          {boardFix ? (
+            <S.FixBtn onClick={() => fixPromise.mutate()}>마감해제</S.FixBtn>
+          ) : (
+            <S.FixBtn onClick={() => fixPromise.mutate()}>마감</S.FixBtn>
+          )}
+        </S.BtnWrap>
       )}
       <S.Content>{boardContent}</S.Content>
       {boardLocation?.position.lat && boardLocation?.position.lng && (

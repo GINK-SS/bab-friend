@@ -1,9 +1,9 @@
 export type PostDataType = {
-  categoryType: string;
+  categoryType: 'KOREAN' | 'JAPAN' | 'CHINA' | 'WEST' | 'ALL';
   eatTime: string;
   joinLimit: number;
   currentJoin: number;
-  alchol: boolean;
+  alcohol: boolean;
   fix: boolean;
   genderType: 'MALE' | 'FEMALE' | 'ALL';
   priceRange: number;

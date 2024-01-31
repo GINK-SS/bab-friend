@@ -43,7 +43,7 @@ export type BoardDetailInfo = {
     };
     address?: string;
   };
-  linkeUrl: string;
+  linkUrl: string;
   priceRange: number;
   writerEmail: string;
   lastModifiedAt: string;
@@ -68,7 +68,7 @@ export type boardDetailResponse = {
     genderType: 'MALE' | 'FEMALE' | 'ALL';
     fix: boolean;
     location: string;
-    linkeUrl: string;
+    linkUrl: string;
     priceRange: number;
     writerEmail: string;
     lastModifiedAt: string;
