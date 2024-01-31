@@ -22,10 +22,9 @@ const Home = () => {
   const loadTargetRef = useRef<HTMLDivElement>(null);
   const userInfo = useRecoilValue(userState);
 
-  const observer = new IntersectionObserver((entries, observer) => {
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        observer.unobserve(entry.target);
+      if (entry.isIntersecting && !isLoading) {
         getBoardData(page + 1);
         setPage((prev) => prev + 1);
       }
@@ -51,6 +50,11 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setPage(0);
+    getBoardData(0);
+  }, [searchParams, filter, userInfo]);
+
+  useEffect(() => {
     if (loadTargetRef.current && isLoadActive) {
       observer.observe(loadTargetRef.current);
     }
@@ -60,12 +64,7 @@ const Home = () => {
         observer.unobserve(loadTargetRef.current);
       }
     };
-  }, [boards]);
-
-  useEffect(() => {
-    setPage(0);
-    getBoardData(0);
-  }, [searchParams, filter]);
+  }, [observer]);
 
   return (
     <>
@@ -75,13 +74,16 @@ const Home = () => {
       {boards.length ? (
         <>
           {boards.map((boardData, index) => (
-            <Board key={index} boardData={boardData} ref={loadTargetRef} isTarget={index === boards.length - 5} />
+            <Board key={index} boardData={boardData} isTarget={index === boards.length - 5} />
           ))}
+
           {isLoading && (
             <div style={{ position: 'relative' }}>
               <Spinner />
             </div>
           )}
+
+          <div id='trigger' ref={loadTargetRef} style={{ height: '1px' }} />
         </>
       ) : (
         <EmptyData content='존재하는 게시물이 없습니다 :(' />

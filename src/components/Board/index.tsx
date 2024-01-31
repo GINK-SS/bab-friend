@@ -1,4 +1,3 @@
-import { forwardRef, ForwardedRef } from 'react';
 import { BoardInfo } from '@_types/board';
 import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +12,7 @@ type BoardProps = {
   isTarget?: boolean;
 };
 
-const Board = forwardRef(({ boardData, isTarget = false }: BoardProps, ref: ForwardedRef<HTMLDivElement>) => {
+const Board = ({ boardData, isTarget = false }: BoardProps) => {
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
   const categoryTypeToKorean = {
@@ -29,7 +28,7 @@ const Board = forwardRef(({ boardData, isTarget = false }: BoardProps, ref: Forw
   };
 
   return (
-    <S.Container ref={isTarget ? ref : null}>
+    <S.Container>
       {isLimit(userInfo, boardData) ? (
         <S.BlockContainer>
           {boardData.fix
@@ -71,6 +70,6 @@ const Board = forwardRef(({ boardData, isTarget = false }: BoardProps, ref: Forw
       </S.Wrapper>
     </S.Container>
   );
-});
+};
 
 export default Board;
