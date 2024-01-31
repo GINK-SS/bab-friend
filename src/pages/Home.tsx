@@ -4,10 +4,13 @@ import EmptyData from '@_components/EmptyData';
 import Filter from '@_components/Filter';
 import Search from '@_components/Search';
 import Spinner from '@_components/common/Spinner';
+import { userState } from '@_recoil/atoms/user';
 import { BoardFilter, BoardInfo } from '@_types/board';
+import { isLimit } from '@_utils/limit';
 import { useEffect, useRef, useState } from 'react';
 import { IoAddCircle } from 'react-icons/io5';
 import { useSearchParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 const Home = () => {
   const [boards, setBoards] = useState<BoardInfo[]>([]);
@@ -17,6 +20,7 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filter, setFilter] = useState<BoardFilter>({ isJoinPossible: true });
   const loadTargetRef = useRef<HTMLDivElement>(null);
+  const userInfo = useRecoilValue(userState);
 
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
@@ -37,8 +41,11 @@ const Home = () => {
     last ? setIsLoadActive(false) : setIsLoadActive(true);
 
     if (pageNum === 0) {
-      setBoards(boards);
-    } else setBoards((prev) => [...prev, ...boards]);
+      filter.isJoinPossible ? setBoards(boards.filter((board) => !isLimit(userInfo, board))) : setBoards(boards);
+    } else
+      filter.isJoinPossible
+        ? setBoards((prev) => [...prev, ...boards.filter((board) => !isLimit(userInfo, board))])
+        : setBoards((prev) => [...prev, ...boards]);
 
     setIsLoading(false);
   };
@@ -58,7 +65,7 @@ const Home = () => {
   useEffect(() => {
     setPage(0);
     getBoardData(0);
-  }, [searchParams]);
+  }, [searchParams, filter]);
 
   return (
     <>
