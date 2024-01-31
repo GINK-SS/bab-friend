@@ -1,9 +1,10 @@
 import { getBoards } from '@_apis/board';
 import Board from '@_components/Board';
 import EmptyData from '@_components/EmptyData';
+import Filter from '@_components/Filter';
 import Search from '@_components/Search';
 import Spinner from '@_components/common/Spinner';
-import { BoardInfo } from '@_types/board';
+import { BoardFilter, BoardInfo } from '@_types/board';
 import { useEffect, useRef, useState } from 'react';
 import { IoAddCircle } from 'react-icons/io5';
 import { useSearchParams } from 'react-router-dom';
@@ -14,6 +15,7 @@ const Home = () => {
   const [isLoadActive, setIsLoadActive] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [filter, setFilter] = useState<BoardFilter>({ isJoinPossible: true });
   const loadTargetRef = useRef<HTMLDivElement>(null);
 
   const observer = new IntersectionObserver((entries, observer) => {
@@ -61,6 +63,7 @@ const Home = () => {
   return (
     <>
       <Search searchParams={searchParams} setSearchParams={setSearchParams} />
+      <Filter filter={filter} setFilter={setFilter} />
 
       {boards.length ? (
         <>
