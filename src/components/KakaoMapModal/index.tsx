@@ -1,7 +1,7 @@
 import * as S from './styles';
 import { useEffect, useState } from 'react';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
-import { PostDataType } from '@_types/createPost';
+import { PostDataType } from '@_types/createBoard';
 
 import { useRecoilState } from 'recoil';
 import { locationData } from '@_recoil/atoms/posts';

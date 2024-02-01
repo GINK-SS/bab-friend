@@ -3,11 +3,11 @@ import * as S from './styles';
 import formatDate from '@_utils/formatDate';
 import { BoardDetailInfo } from '@_types/board';
 
-export type PostOptionProps = {
+export type BoardDetailOption = {
   boardData?: BoardDetailInfo;
 };
 
-const PostOption = ({ boardData }: PostOptionProps) => {
+const BoardDetailOption = ({ boardData }: BoardDetailOption) => {
   const categoryTypeToKorean = {
     KOREAN: '한식',
     JAPAN: '일식',
@@ -59,14 +59,14 @@ const PostOption = ({ boardData }: PostOptionProps) => {
           </S.PriceWrap>
           <S.StoreWrap>
             <S.OptionTitle>가게명</S.OptionTitle>
-            <S.OptionContent>{boardData.location.content}</S.OptionContent>
+            <S.OptionContent>{boardData.location.location?.content}</S.OptionContent>
           </S.StoreWrap>
           <S.GenderWrap>
             <S.OptionTitle>성별</S.OptionTitle>
             <S.OptionContent>{genderLimitToKorean[boardData.genderType]}</S.OptionContent>
           </S.GenderWrap>
           <S.LinkWrap>
-            <S.OptionLink href={boardData.linkeUrl} target='_blank'>
+            <S.OptionLink href={boardData.linkUrl} target='_blank'>
               채팅방 링크
             </S.OptionLink>
           </S.LinkWrap>
@@ -76,4 +76,4 @@ const PostOption = ({ boardData }: PostOptionProps) => {
   ) : null;
 };
 
-export default PostOption;
+export default BoardDetailOption;

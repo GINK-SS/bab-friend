@@ -1,5 +1,6 @@
-import { boardDetailResponse, getBoardResponse } from '@_types/board';
+import { BoardDetailInfo, boardDetailResponse, getBoardResponse } from '@_types/board';
 import { request } from './axios';
+import { UpdatePostRequest } from '@_types/createBoard';
 
 /**
  * @description 게시물 가져오는 API
@@ -23,6 +24,21 @@ export const getBoardDetail = async (id: number) => {
 
   return data;
 };
-const boardApi = { getBoards, getBoardDetail };
+
+export const deleteBoard = async (id: number) => {
+  await request.delete(`/boards/${id}`);
+};
+
+export const fixBoard = async (id: number) => {
+  const { data } = await request.post(`/boards/${id}/fix`);
+
+  return data;
+};
+export const updateBoard = async (id: number, updateData: UpdatePostRequest) => {
+  const { data } = await request.patch(`/boards/${id}`, updateData);
+
+  return data;
+};
+const boardApi = { getBoards, getBoardDetail, deleteBoard, fixBoard, updateBoard };
 
 export default boardApi;

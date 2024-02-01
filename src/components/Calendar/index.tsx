@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { format, setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import { PostDataType } from '@_types/createPost';
+import { PostDataType } from '@_types/createBoard';
 
 import * as S from './styles';
 import formatDate from '@_utils/formatDate';
+import { useRecoilState } from 'recoil';
+import { postsState } from '@_recoil/atoms/posts';
 
 type CalendarProps = {
-  postState: PostDataType;
-  setPostState: React.Dispatch<React.SetStateAction<PostDataType>>;
+  updateEatTime?: string;
 };
 
-const Calendar = ({ postState, setPostState }: CalendarProps) => {
+const Calendar = ({ updateEatTime }: CalendarProps) => {
   const [startDate, setStartDate] = useState<Date | null>(setHours(setMinutes(new Date(), 0), 9));
+  const [postState, setPostState] = useRecoilState(postsState);
 
   const filterPassedTime = (time: any) => {
     const currentDate = new Date();
@@ -25,7 +27,6 @@ const Calendar = ({ postState, setPostState }: CalendarProps) => {
     const formattedDate = format(date || new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
     setPostState((prevData) => ({ ...prevData, eatTime: formattedDate }));
   };
-
   return (
     <>
       <S.StyledDatePicker
@@ -39,7 +40,11 @@ const Calendar = ({ postState, setPostState }: CalendarProps) => {
         dateFormat='yyyy/MM/dd   h:mm aa'
         closeOnScroll={true}
       />
-      {postState.eatTime && <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>}
+      {postState.eatTime ? (
+        <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>
+      ) : (
+        <S.SelectDate>{updateEatTime ? formatDate(updateEatTime) : ''}</S.SelectDate>
+      )}
     </>
   );
 };

@@ -16,7 +16,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);
-  const backArray = ['/createcontent', '/createPost', '/profile/reviews'];
+  const backArray = ['/createcontent', '/createboard', '/profile/reviews'];
 
   const onLogoClick = () => {
     navigate('/');
@@ -29,6 +29,7 @@ const Header = () => {
   return (
     <>
       <S.HeaderContainer>
+
         {backArray.includes(location.pathname) ? (
           <S.HeaderBackImg
             src={arrowLeft}

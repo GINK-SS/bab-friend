@@ -1,15 +1,16 @@
-import { PostDataType } from '@_types/createPost';
+import { PostDataType } from '@_types/createBoard';
 import { atom, selector } from 'recoil';
 
 export const postsState = atom<PostDataType>({
   key: 'postsState',
   default: {
-    categoryType: '',
+    categoryType: 'ALL',
     eatTime: '',
-    joinLimit: '',
-    alchol: false,
+    joinLimit: 0,
+    currentJoin: 1,
+    alcohol: false,
     fix: false,
-    gender: 'ALL',
+    genderType: 'ALL',
     priceRange: 0,
     ageGroupLimit: false,
     location: '',
@@ -36,8 +37,6 @@ export const locationStringSelector = selector<string>({
   get: ({ get }) => {
     const locationObject = get(locationData);
 
-    const location = JSON.stringify(locationObject.location);
-
-    return location;
+    return JSON.stringify(locationObject);
   },
 });

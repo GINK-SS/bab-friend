@@ -8,9 +8,10 @@ type InputProps = {
   required?: boolean;
   errorMessage?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  defaultValue?: string | number;
 };
 
-const Input = ({ type, label, placeholder, value, required, errorMessage, onChange }: InputProps) => {
+const Input = ({ type, label, placeholder, value, required, errorMessage, onChange, defaultValue }: InputProps) => {
   return (
     <S.InputWrap>
       <S.Label>{label}</S.Label>

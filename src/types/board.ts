@@ -17,20 +17,63 @@ export type BoardInfo = {
   fix: boolean;
 };
 
-export type BoardDetailInfo = BoardInfo & {
+export type BoardDetailInfo = {
+  id: number;
+  title: string;
+  content: string;
+  writerImageUrl: string;
+  writer: string;
+  eatTime: string;
+  categoryType: 'KOREAN' | 'JAPAN' | 'CHINA' | 'WEST' | 'ALL';
+  alcohol: boolean;
+  currentJoin: number;
+  joinLimit: number;
+  ageGroupLimit: boolean;
+  up: number;
+  down: number;
+  genderType: 'MALE' | 'FEMALE' | 'ALL';
+  fix: boolean;
   location: {
-    content: string;
-    position: {
-      lat: number;
-      lng: number;
+    location: {
+      content: string;
+      position: {
+        lat: number;
+        lng: number;
+      };
     };
+    address?: string;
   };
-  linkeUrl: string;
+  linkUrl: string;
   priceRange: number;
+  writerEmail: string;
+  lastModifiedAt: string;
+  changed: boolean;
 };
 
 export type boardDetailResponse = {
-  data: BoardDetailInfo;
+  data: {
+    id: number;
+    title: string;
+    content: string;
+    writerImageUrl: string;
+    writer: string;
+    eatTime: string;
+    categoryType: 'KOREAN' | 'JAPAN' | 'CHINA' | 'WEST' | 'ALL';
+    alcohol: boolean;
+    currentJoin: number;
+    joinLimit: number;
+    ageGroupLimit: boolean;
+    up: number;
+    down: number;
+    genderType: 'MALE' | 'FEMALE' | 'ALL';
+    fix: boolean;
+    location: string;
+    linkUrl: string;
+    priceRange: number;
+    writerEmail: string;
+    lastModifiedAt: string;
+    changed: boolean;
+  };
 };
 
 export type getBoardResponse = {

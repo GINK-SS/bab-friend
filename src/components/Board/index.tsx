@@ -24,7 +24,7 @@ const Board = forwardRef(({ boardData, isTarget = false }: BoardProps, ref: Forw
   };
 
   const onBoard = () => {
-    navigate(`/postdetail/${boardData.id}`);
+    navigate(`/boarddetail/${boardData.id}`);
   };
 
   const isLimitedByGender =

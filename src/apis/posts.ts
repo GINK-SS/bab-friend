@@ -1,4 +1,4 @@
-import { PostDataType } from '../types/createPost';
+import { PostDataType } from '../types/createBoard';
 import { request } from './axios';
 
 export const postsBoards = async (postData: PostDataType): Promise<PostDataType> => {
