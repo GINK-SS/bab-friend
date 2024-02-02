@@ -9,10 +9,9 @@ import { isLimit, isLimitedByAge, isLimitedByGender } from '@_utils/limit';
 
 type BoardProps = {
   boardData: BoardInfo;
-  isTarget?: boolean;
 };
 
-const Board = ({ boardData, isTarget = false }: BoardProps) => {
+const Board = ({ boardData }: BoardProps) => {
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
   const categoryTypeToKorean = {

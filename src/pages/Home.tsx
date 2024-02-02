@@ -73,7 +73,7 @@ const Home = () => {
       {boards.length ? (
         <>
           {boards.map((boardData, index) => (
-            <Board key={index} boardData={boardData} isTarget={index === boards.length - 5} />
+            <Board key={index} boardData={boardData} />
           ))}
 
           {isLoading && (
