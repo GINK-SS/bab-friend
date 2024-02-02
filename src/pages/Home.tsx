@@ -8,7 +8,6 @@ import { userState } from '@_recoil/atoms/user';
 import { BoardFilter, BoardInfo } from '@_types/board';
 import { isLimit } from '@_utils/limit';
 import { useEffect, useRef, useState } from 'react';
-import { IoAddCircle } from 'react-icons/io5';
 import { useSearchParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 

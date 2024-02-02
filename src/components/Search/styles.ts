@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   max-width: 400px;
-  margin: 40px auto 20px;
+  margin: 40px auto 10px;
 `;
 
 export const Wrapper = styled.form`
