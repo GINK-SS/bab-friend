@@ -12,7 +12,6 @@ import boardApi from '@_apis/board';
 import getComment from '@_apis/comment';
 import { userState } from '@_recoil/atoms/user';
 import { Comment } from '@_types/comment';
-import * as S from './styles';
 
 const BoardDetail = () => {
   let params = useParams();

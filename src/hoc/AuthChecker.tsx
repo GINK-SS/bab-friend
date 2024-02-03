@@ -12,11 +12,13 @@ const AuthChecker = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     (async () => {
       try {
-        await authApi.refresh();
+        const response = await authApi.refresh();
+        if (!response) return;
 
         const { data } = await authApi.requestUserInfo();
-        setUserInfo({ ...data });
 
+        setUserInfo({ ...data });
+        setAuthInfo({ authStatus: AuthStatus.authorized });
         authApi.silentRefresh();
       } catch (e) {
         setAuthInfo({ authStatus: AuthStatus.unauthorized });

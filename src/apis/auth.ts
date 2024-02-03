@@ -25,9 +25,8 @@ const refresh = async () => {
   }
 
   setAccessToken(accessToken);
-  setRecoil(authState, {
-    authStatus: AuthStatus.authorized,
-  });
+
+  return accessToken;
 };
 
 /**
@@ -37,7 +36,13 @@ const silentRefresh = () => {
   refreshTimer = setTimeout(
     async () => {
       try {
-        await refresh();
+        const accessToken = await refresh();
+        if (!accessToken) return;
+
+        setRecoil(authState, {
+          authStatus: AuthStatus.authorized,
+        });
+
         silentRefresh();
       } catch (e) {
         setTimeout(() => silentRefresh(), 10000);

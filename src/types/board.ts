@@ -86,3 +86,7 @@ export type getBoardResponse = {
     empty: boolean;
   };
 };
+
+export type BoardFilter = {
+  isJoinPossible: boolean;
+};
