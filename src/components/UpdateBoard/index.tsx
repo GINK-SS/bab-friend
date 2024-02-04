@@ -98,7 +98,6 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
           <S.PeopleNumSelectOption value='' disabled>
             예상 인원을 선택하세요.
           </S.PeopleNumSelectOption>
-          <S.PeopleNumSelectOption value={1}>1명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value={2}>2명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value={3}>3명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value={4}>4명</S.PeopleNumSelectOption>
