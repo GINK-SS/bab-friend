@@ -2,8 +2,7 @@ import { styled } from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  display: flex;
-  flex-direction: column;
+  padding: 10px 20px;
   border-top: 4px solid ${({ theme }) => `${theme.colors.mainColor}50`};
 `;
 
@@ -27,21 +26,11 @@ export const BlockContainer = styled.div`
     0px -1px rgb(0, 0, 0);
 `;
 
-export const Wrapper = styled.div<{ $isLimit: boolean }>`
-  padding: 20px;
-  filter: ${({ $isLimit }) => ($isLimit ? 'blur(2px) brightness(60%)' : 'none')};
-  transition: 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    transform: ${({ $isLimit }) => ($isLimit ? 'none' : 'scale(1.02)')};
-  }
-`;
-
 export const CategoryWrapper = styled.div`
   display: flex;
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 7px;
+  margin-bottom: 10px;
 `;
 
 export const Category = styled.div<{ $hasData?: boolean }>`
@@ -57,6 +46,28 @@ Category.defaultProps = {
   $hasData: true,
 };
 
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const ContentWrapper = styled.div<{ $isLimit: boolean }>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 150px;
+  flex: 1;
+  filter: ${({ $isLimit }) => ($isLimit ? 'blur(2px) brightness(60%)' : 'none')};
+  transition: 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: ${({ $isLimit }) => ($isLimit ? 'none' : 'scale(1.02)')};
+  }
+`;
+
 export const Title = styled.p`
   font-size: 1.3em;
   font-family: 'Pretendard-SemiBold';
@@ -64,7 +75,13 @@ export const Title = styled.p`
 `;
 
 export const Content = styled.p`
-  margin-bottom: 20px;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  word-break: break-all;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   color: rgba(0, 0, 0, 0.8);
 `;
 
