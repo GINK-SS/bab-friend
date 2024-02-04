@@ -22,6 +22,7 @@ type BoardDetailContentProps = {
   promiseTime: string;
   changed: boolean;
   lastModifiedAt: string;
+  isLimitJoin: boolean;
 };
 
 const BoardDetailContent = ({
@@ -33,6 +34,7 @@ const BoardDetailContent = ({
   promiseTime,
   changed,
   lastModifiedAt,
+  isLimitJoin,
 }: BoardDetailContentProps) => {
   let params = useParams();
   const navigate = useNavigate();
@@ -59,14 +61,25 @@ const BoardDetailContent = ({
       alert('게시글 삭제 실패');
     },
   });
+
+  const joinBoard = useMutation({
+    mutationFn: () => boardApi.joinBoard(Number(params.id)),
+    onSuccess(data) {
+      console.log(data);
+    },
+    onError(err) {
+      console.log(err);
+    },
+  });
+
   const clickDeleteBtn = () => {
     deleteBoard.mutate();
     navigate('/');
     alert('게시글이 삭제되었습니다.');
   };
-  console.log(promiseTime);
   return (
     <S.PostContentContainer>
+      {isLimitJoin && <S.LimitJoinText>!! 모집인원이 다 찼습니다.</S.LimitJoinText>}
       {changed && <S.ChangedBoardText>{formatDateToTimeAgo(lastModifiedAt)} 수정된 게시글 입니다.</S.ChangedBoardText>}
       <S.ContentHeader>
         <S.PromiseTime>약속 시간 : {formatDate(promiseTime)}</S.PromiseTime>
@@ -107,6 +120,23 @@ const BoardDetailContent = ({
           level={3} // 지도의 확대 레벨
         />
       )}
+
+      {
+        // 인원이 마감 && 작성자가 아닐 때 참여하기 버튼 보여주기
+        isLimitJoin === false && (
+          <>
+            {isWriter === false && (
+              <S.JoinBtnWrap
+                onClick={() => {
+                  joinBoard.mutate();
+                }}
+              >
+                <S.JoinBtn>참여하기</S.JoinBtn>
+              </S.JoinBtnWrap>
+            )}
+          </>
+        )
+      }
     </S.PostContentContainer>
   );
 };

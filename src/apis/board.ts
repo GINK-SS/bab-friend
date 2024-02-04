@@ -40,6 +40,12 @@ export const updateBoard = async (id: number, updateData: UpdatePostRequest) => 
 
   return data;
 };
-const boardApi = { getBoards, getBoardDetail, deleteBoard, fixBoard, updateBoard };
+
+export const joinBoard = async (id: number) => {
+  const { data } = await request.post(`/boards/${id}/join`);
+
+  return data;
+};
+const boardApi = { getBoards, getBoardDetail, deleteBoard, fixBoard, updateBoard, joinBoard };
 
 export default boardApi;

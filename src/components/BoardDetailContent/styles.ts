@@ -7,6 +7,14 @@ export const ContentHeader = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+export const LimitJoinText = styled.p`
+  color: crimson;
+  border: 1px solid red;
+  border-radius: 10px;
+  padding: 10px 40px;
+  text-align: center;
+  margin-bottom: 20px;
+`;
 export const ChangedBoardText = styled.p`
   font-size: 12px;
   text-align: right;
@@ -34,3 +42,13 @@ export const Content = styled.p`
 `;
 
 export const FixBtn = styled.button``;
+export const JoinBtnWrap = styled.div`
+  text-align: right;
+  margin: 10px 0;
+`;
+export const JoinBtn = styled.button`
+  background-color: ${({ theme }) => `${theme.colors.subColor}`};
+  color: white;
+  padding: 8px 18px;
+  border-radius: 10px;
+`;

@@ -28,6 +28,7 @@ const BoardDetail = () => {
       };
     },
   });
+
   useEffect(() => {
     if (userInfo.email === boardDetailInfo?.writerEmail) {
       setIsWriter(true);
@@ -42,6 +43,7 @@ const BoardDetail = () => {
       },
     });
   };
+  const isLimitJoin = boardDetailInfo?.joinLimit === boardDetailInfo?.currentJoin;
 
   return (
     <>
@@ -57,6 +59,7 @@ const BoardDetail = () => {
             promiseTime={boardDetailInfo.eatTime}
             changed={boardDetailInfo.changed}
             lastModifiedAt={boardDetailInfo.lastModifiedAt}
+            isLimitJoin={isLimitJoin}
           />
           <CommnetInput />
           {boardDetailInfo?.boardComments.map((item) => {
