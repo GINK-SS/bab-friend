@@ -4,7 +4,6 @@ import { useMutation } from '@tanstack/react-query';
 import boardApi from '@_apis/board';
 import * as S from './styles';
 import formatDate from '@_utils/formatDate';
-import formatDateToTimeAgo from '@_utils/formatDateToTimeAgo';
 
 type BoardDetailContentProps = {
   boardContent: string;
@@ -20,9 +19,8 @@ type BoardDetailContentProps = {
   boardUpdate: () => void;
   boardFix: boolean;
   promiseTime: string;
-  changed: boolean;
   lastModifiedAt: string;
-  isLimitJoin: boolean;
+  isLimitJoin?: boolean;
 };
 
 const BoardDetailContent = ({
@@ -32,8 +30,6 @@ const BoardDetailContent = ({
   boardUpdate,
   boardFix,
   promiseTime,
-  changed,
-  lastModifiedAt,
   isLimitJoin,
 }: BoardDetailContentProps) => {
   let params = useParams();
@@ -71,7 +67,14 @@ const BoardDetailContent = ({
       console.log(err);
     },
   });
-
+  const clickJoinBtn = () => {
+    if (isLimitJoin === false) {
+      joinBoard.mutate();
+      alert('게시글에 참여하였습니다.');
+    } else {
+      alert('모집인원이 다 찼습니다.');
+    }
+  };
   const clickDeleteBtn = () => {
     deleteBoard.mutate();
     navigate('/');
@@ -79,21 +82,21 @@ const BoardDetailContent = ({
   };
   return (
     <S.PostContentContainer>
-      {isLimitJoin && <S.LimitJoinText>!! 모집인원이 다 찼습니다.</S.LimitJoinText>}
-      {changed && <S.ChangedBoardText>{formatDateToTimeAgo(lastModifiedAt)} 수정된 게시글 입니다.</S.ChangedBoardText>}
+      {isWriter && (
+        <S.BtnWrap>
+          <S.PostEditBtn onClick={boardUpdate}>수정</S.PostEditBtn>
+          <S.PostDeleteBtn onClick={clickDeleteBtn}>삭제</S.PostDeleteBtn>
+          {boardFix ? (
+            <S.FixBtn onClick={() => fixPromise.mutate()}>마감해제</S.FixBtn>
+          ) : (
+            <S.FixBtn onClick={() => fixPromise.mutate()}>마감</S.FixBtn>
+          )}
+        </S.BtnWrap>
+      )}
+      {boardFix && <S.FixBoardText>!! 게시글이 마감되었습니다 !!</S.FixBoardText>}
+      {isLimitJoin && <S.LimitJoinText>!! 모집인원이 다 찼습니다 !!</S.LimitJoinText>}
       <S.ContentHeader>
         <S.PromiseTime>약속 시간 : {formatDate(promiseTime)}</S.PromiseTime>
-        {isWriter && (
-          <S.BtnWrap>
-            <S.PostEditBtn onClick={boardUpdate}>수정</S.PostEditBtn>
-            <S.PostDeleteBtn onClick={clickDeleteBtn}>삭제</S.PostDeleteBtn>
-            {boardFix ? (
-              <S.FixBtn onClick={() => fixPromise.mutate()}>마감해제</S.FixBtn>
-            ) : (
-              <S.FixBtn onClick={() => fixPromise.mutate()}>마감</S.FixBtn>
-            )}
-          </S.BtnWrap>
-        )}
       </S.ContentHeader>
       <S.Content>{boardContent}</S.Content>
       {boardLocation?.position.lat && boardLocation?.position.lng && (
@@ -122,20 +125,13 @@ const BoardDetailContent = ({
       )}
 
       {
-        // 인원이 마감 && 작성자가 아닐 때 참여하기 버튼 보여주기
-        isLimitJoin === false && (
-          <>
-            {isWriter === false && (
-              <S.JoinBtnWrap
-                onClick={() => {
-                  joinBoard.mutate();
-                }}
-              >
-                <S.JoinBtn>참여하기</S.JoinBtn>
-              </S.JoinBtnWrap>
-            )}
-          </>
-        )
+        <>
+          {isWriter === false && (
+            <S.JoinBtnWrap onClick={clickJoinBtn}>
+              <S.JoinBtn>참여하기</S.JoinBtn>
+            </S.JoinBtnWrap>
+          )}
+        </>
       }
     </S.PostContentContainer>
   );

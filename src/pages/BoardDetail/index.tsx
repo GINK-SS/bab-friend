@@ -43,8 +43,7 @@ const BoardDetail = () => {
       },
     });
   };
-  const isLimitJoin = boardDetailInfo?.joinLimit === boardDetailInfo?.currentJoin;
-
+  const isLimitJoin = boardDetailInfo && boardDetailInfo?.currentJoin >= boardDetailInfo?.joinLimit;
   return (
     <>
       {boardDetailInfo && (
@@ -57,7 +56,6 @@ const BoardDetail = () => {
             boardUpdate={boardUpdate}
             boardFix={boardDetailInfo.fix}
             promiseTime={boardDetailInfo.eatTime}
-            changed={boardDetailInfo.changed}
             lastModifiedAt={boardDetailInfo.lastModifiedAt}
             isLimitJoin={isLimitJoin}
           />

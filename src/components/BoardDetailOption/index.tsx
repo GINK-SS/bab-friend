@@ -30,7 +30,12 @@ const BoardDetailOption = ({ boardData }: BoardDetailOptionProps) => {
           <S.Nickname>{boardData.writer}</S.Nickname>
         </S.ProfileWrap>
         <S.TimeWrap>
-          <S.Time>{formatDateToTimeAgo(boardData.lastModifiedAt)} 작성된 글입니다.</S.Time>
+          <S.Time>{formatDate(boardData.lastModifiedAt)}</S.Time>
+          {boardData.changed ? (
+            <S.Time>{formatDateToTimeAgo(boardData.lastModifiedAt)} 수정된 글입니다.</S.Time>
+          ) : (
+            <S.Time>{formatDateToTimeAgo(boardData.lastModifiedAt)} 작성된 글입니다.</S.Time>
+          )}
         </S.TimeWrap>
       </S.PostHeaderWrap>
       <S.OptionContainer>
