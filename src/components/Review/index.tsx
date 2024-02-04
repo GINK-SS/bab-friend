@@ -19,7 +19,7 @@ const Review = forwardRef(
           <S.Nickname>{reviewInfo.writer}</S.Nickname>
           <S.Date>{formatDateToTimeAgo(reviewInfo.createdAt)}</S.Date>
 
-          <S.Content isFull={isFull}>{reviewInfo.content}</S.Content>
+          <S.Content $isFull={isFull}>{reviewInfo.content}</S.Content>
         </S.ContentWrapper>
       </S.Container>
     );

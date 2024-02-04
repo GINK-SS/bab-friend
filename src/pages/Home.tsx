@@ -38,12 +38,16 @@ const Home = () => {
     } = await getBoards({ page: pageNum, search: searchParams.get('search') ?? undefined });
     last ? setIsLoadActive(false) : setIsLoadActive(true);
 
+    const boardsInfo = boards.map((board) => ({ ...board, location: JSON.parse(board.location) }));
+
     if (pageNum === 0) {
-      filter.isJoinPossible ? setBoards(boards.filter((board) => !isLimit(userInfo, board))) : setBoards(boards);
+      filter.isJoinPossible
+        ? setBoards(boardsInfo.filter((board) => !isLimit(userInfo, board)))
+        : setBoards(boardsInfo);
     } else
       filter.isJoinPossible
-        ? setBoards((prev) => [...prev, ...boards.filter((board) => !isLimit(userInfo, board))])
-        : setBoards((prev) => [...prev, ...boards]);
+        ? setBoards((prev) => [...prev, ...boardsInfo.filter((board) => !isLimit(userInfo, board))])
+        : setBoards((prev) => [...prev, ...boardsInfo]);
 
     setIsLoading(false);
   };

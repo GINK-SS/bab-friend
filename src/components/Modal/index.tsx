@@ -37,7 +37,7 @@ const Modal = ({ children, name, fullScreen, contentPadding }: ModalProps) => {
           </S.CloseBtn>
         ) : null}
 
-        <S.Content $isFullScreen={fullScreen} contentPadding={contentPadding}>
+        <S.Content $isFullScreen={fullScreen} $contentPadding={contentPadding}>
           {children}
         </S.Content>
       </S.Container>
