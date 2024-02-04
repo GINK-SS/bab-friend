@@ -5,7 +5,16 @@ export type BoardInfo = {
   writerImageUrl: string;
   writer: string;
   eatTime: string;
-  shortenedLocation: string | null;
+  location: {
+    location: {
+      content: string;
+      position: {
+        lat: number;
+        lng: number;
+      };
+    };
+    address: string;
+  };
   categoryType: 'KOREAN' | 'JAPAN' | 'CHINA' | 'WEST' | 'ALL';
   alcohol: boolean;
   currentJoin: number;
@@ -76,10 +85,14 @@ export type boardDetailResponse = {
   };
 };
 
+export type BoardResponse = Omit<BoardInfo, 'location'> & {
+  location: string;
+};
+
 export type getBoardResponse = {
   statusCode: number;
   data: {
-    boards: BoardInfo[];
+    boards: BoardResponse[];
     first: boolean;
     last: boolean;
     totalElement: number;

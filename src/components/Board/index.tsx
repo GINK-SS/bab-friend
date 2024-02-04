@@ -42,7 +42,7 @@ const Board = ({ boardData }: BoardProps) => {
 
       <S.Wrapper $isLimit={isLimit(userInfo, boardData)} onClick={onBoard}>
         <S.CategoryWrapper>
-          <S.Category $hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
+          <S.Category>{boardData.location.address}</S.Category>
           <S.Category $hasData={!!categoryTypeToKorean[boardData.categoryType]}>
             {categoryTypeToKorean[boardData.categoryType]}
           </S.Category>
