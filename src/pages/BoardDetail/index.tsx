@@ -28,7 +28,6 @@ const BoardDetail = () => {
       };
     },
   });
-
   useEffect(() => {
     if (userInfo.email === boardDetailInfo?.writerEmail) {
       setIsWriter(true);
@@ -46,18 +45,25 @@ const BoardDetail = () => {
 
   return (
     <>
-      <PostOption boardData={boardDetailInfo} />
-      <PostContent
-        boardContent={boardDetailInfo?.content}
-        boardLocation={boardDetailInfo?.location.location}
-        isWriter={isWriter}
-        boardUpdate={boardUpdate}
-        boardFix={boardDetailInfo?.fix}
-      />
-      <CommnetInput />
-      {boardDetailInfo?.boardComments.map((item) => {
-        return <CommentDisplay key={item.id} commentData={item} />;
-      })}
+      {boardDetailInfo && (
+        <>
+          <PostOption boardData={boardDetailInfo} />
+          <PostContent
+            boardContent={boardDetailInfo.content}
+            boardLocation={boardDetailInfo?.location?.location}
+            isWriter={isWriter}
+            boardUpdate={boardUpdate}
+            boardFix={boardDetailInfo.fix}
+            promiseTime={boardDetailInfo.eatTime}
+            changed={boardDetailInfo.changed}
+            lastModifiedAt={boardDetailInfo.lastModifiedAt}
+          />
+          <CommnetInput />
+          {boardDetailInfo?.boardComments.map((item) => {
+            return <CommentDisplay key={item.id} commentData={item} />;
+          })}
+        </>
+      )}
     </>
   );
 };

@@ -3,10 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import boardApi from '@_apis/board';
 import * as S from './styles';
+import formatDate from '@_utils/formatDate';
+import formatDateToTimeAgo from '@_utils/formatDateToTimeAgo';
 
 type BoardDetailContentProps = {
-  boardContent?: string;
-  boardWriter?: string;
+  boardContent: string;
   boardLocation?: {
     content: string;
     position: {
@@ -17,7 +18,10 @@ type BoardDetailContentProps = {
   };
   isWriter: boolean;
   boardUpdate: () => void;
-  boardFix?: boolean;
+  boardFix: boolean;
+  promiseTime: string;
+  changed: boolean;
+  lastModifiedAt: string;
 };
 
 const BoardDetailContent = ({
@@ -26,6 +30,9 @@ const BoardDetailContent = ({
   isWriter,
   boardUpdate,
   boardFix,
+  promiseTime,
+  changed,
+  lastModifiedAt,
 }: BoardDetailContentProps) => {
   let params = useParams();
   const navigate = useNavigate();
@@ -57,19 +64,24 @@ const BoardDetailContent = ({
     navigate('/');
     alert('게시글이 삭제되었습니다.');
   };
+  console.log(promiseTime);
   return (
     <S.PostContentContainer>
-      {isWriter && (
-        <S.BtnWrap>
-          <S.PostEditBtn onClick={boardUpdate}>수정</S.PostEditBtn>
-          <S.PostDeleteBtn onClick={clickDeleteBtn}>삭제</S.PostDeleteBtn>
-          {boardFix ? (
-            <S.FixBtn onClick={() => fixPromise.mutate()}>마감해제</S.FixBtn>
-          ) : (
-            <S.FixBtn onClick={() => fixPromise.mutate()}>마감</S.FixBtn>
-          )}
-        </S.BtnWrap>
-      )}
+      {changed && <S.ChangedBoardText>{formatDateToTimeAgo(lastModifiedAt)} 수정된 게시글 입니다.</S.ChangedBoardText>}
+      <S.ContentHeader>
+        <S.PromiseTime>약속 시간 : {formatDate(promiseTime)}</S.PromiseTime>
+        {isWriter && (
+          <S.BtnWrap>
+            <S.PostEditBtn onClick={boardUpdate}>수정</S.PostEditBtn>
+            <S.PostDeleteBtn onClick={clickDeleteBtn}>삭제</S.PostDeleteBtn>
+            {boardFix ? (
+              <S.FixBtn onClick={() => fixPromise.mutate()}>마감해제</S.FixBtn>
+            ) : (
+              <S.FixBtn onClick={() => fixPromise.mutate()}>마감</S.FixBtn>
+            )}
+          </S.BtnWrap>
+        )}
+      </S.ContentHeader>
       <S.Content>{boardContent}</S.Content>
       {boardLocation?.position.lat && boardLocation?.position.lng && (
         <StaticMap

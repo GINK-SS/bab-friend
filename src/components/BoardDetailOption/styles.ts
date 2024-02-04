@@ -41,6 +41,7 @@ export const TimeWrap = styled.div`
 `;
 export const Time = styled.p`
   margin-left: 4px;
+  margin-top: 10px;
   font-size: 10px;
   font-family: 'Pretendard-Light';
 `;

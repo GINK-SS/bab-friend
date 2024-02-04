@@ -2,12 +2,13 @@ import { CiCalendar } from 'react-icons/ci';
 import * as S from './styles';
 import formatDate from '@_utils/formatDate';
 import { BoardDetailInfo } from '@_types/board';
+import formatDateToTimeAgo from '@_utils/formatDateToTimeAgo';
 
-export type BoardDetailOption = {
+export type BoardDetailOptionProps = {
   boardData?: BoardDetailInfo;
 };
 
-const BoardDetailOption = ({ boardData }: BoardDetailOption) => {
+const BoardDetailOption = ({ boardData }: BoardDetailOptionProps) => {
   const categoryTypeToKorean = {
     KOREAN: '한식',
     JAPAN: '일식',
@@ -29,8 +30,7 @@ const BoardDetailOption = ({ boardData }: BoardDetailOption) => {
           <S.Nickname>{boardData.writer}</S.Nickname>
         </S.ProfileWrap>
         <S.TimeWrap>
-          <CiCalendar />
-          <S.Time>{formatDate(boardData.eatTime)}</S.Time>
+          <S.Time>{formatDateToTimeAgo(boardData.lastModifiedAt)} 작성된 글입니다.</S.Time>
         </S.TimeWrap>
       </S.PostHeaderWrap>
       <S.OptionContainer>
