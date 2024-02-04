@@ -59,7 +59,7 @@ export type BoardDetailInfo = {
   changed: boolean;
 };
 
-export type boardDetailResponse = {
+export type BoardDetailResponse = {
   data: {
     id: number;
     title: string;
