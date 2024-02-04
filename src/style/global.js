@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
 
   html,
   body {
-    height: 100%;
+    min-height: 100%;
     background-color: ${({ theme }) => theme.colors.mainColor}90;
   }
 

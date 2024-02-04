@@ -11,10 +11,11 @@ export const BlockContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
+  z-index: 1;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.3);
   color: ${({ theme }) => theme.colors.mainColor};
   font-family: 'Pretendard-SemiBold';
@@ -59,6 +60,7 @@ export const ContentWrapper = styled.div<{ $isLimit: boolean }>`
   justify-content: space-between;
   height: 150px;
   flex: 1;
+  z-index: 1;
   filter: ${({ $isLimit }) => ($isLimit ? 'blur(2px) brightness(60%)' : 'none')};
   transition: 0.3s ease;
   cursor: pointer;

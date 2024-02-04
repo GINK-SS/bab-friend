@@ -81,7 +81,6 @@ const Board = ({ boardData }: BoardProps) => {
             width: '150px',
             height: '150px',
             border: '1px solid rgba(0,0,0,0.3)',
-            zIndex: isLimit(userInfo, boardData) ? -1 : 0,
           }}
           marker={[
             {
