@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const TextareaWrap = styled.div``;
-export const ElTextarea = styled.textarea`
+export const ElTextarea = styled.textarea<{ height: number }>`
   width: 100%;
-  height: 180px;
+  height: ${({ height }) => height}rem;
   border: 1px solid #d5d4dc;
 
   border-radius: 5px;

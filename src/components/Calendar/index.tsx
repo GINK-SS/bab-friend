@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { format, setHours, setMinutes } from 'date-fns';
+import { addDays, format, setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import { PostDataType, UpdatePost } from '@_types/createBoard';
 
@@ -45,11 +45,12 @@ const Calendar = ({ updateEatTime, setUpdatePostState, updating }: CalendarProps
         filterTime={filterPassedTime}
         dateFormat='yyyy/MM/dd   h:mm aa'
         closeOnScroll={true}
+        withPortal
       />
       {updating ? (
         <S.SelectDate>{updateEatTime ? formatDate(updateEatTime) : ''}</S.SelectDate>
       ) : (
-        <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>
+        <>{postState.eatTime && <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>}</>
       )}
     </>
   );

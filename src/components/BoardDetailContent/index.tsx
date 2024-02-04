@@ -109,7 +109,9 @@ const BoardDetailContent = ({
             width: '100%',
             height: '250px',
             marginTop: '50px',
-            borderRadius: '10px',
+            borderRadius: '20px',
+            border: '1px solid #e0e0e0',
+            boxShadow: '0px 0px 10px 0px #e0e0e0',
           }}
           marker={[
             {

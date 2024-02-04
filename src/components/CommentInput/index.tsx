@@ -27,7 +27,11 @@ const CommentInput = () => {
   });
 
   const submitComment = () => {
-    postComment.mutate();
+    if (!comment.content) {
+      alert('댓글을 입력해주세요.');
+    } else {
+      postComment.mutate();
+    }
   };
 
   return (
@@ -37,7 +41,12 @@ const CommentInput = () => {
         <S.CommentNickname>주트롱</S.CommentNickname>
       </S.CommentTextWrap>
       <S.InputWrap>
-        <Textarea placeholder='댓글을 입력해주세요.' value={comment.content} onChange={handleChangeComment} />
+        <Textarea
+          placeholder='댓글을 입력해주세요.'
+          value={comment.content}
+          onChange={handleChangeComment}
+          height={6}
+        />
         <S.SubmitButton onClick={submitComment}>댓글 등록</S.SubmitButton>
       </S.InputWrap>
     </S.CommentContainer>

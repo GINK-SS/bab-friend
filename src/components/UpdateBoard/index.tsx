@@ -289,6 +289,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
             label='내용'
             value={updatePostState.content}
             onChange={(e) => handleChange('content', e.target.value)}
+            height={2}
           />
         </S.Content>
         <S.Link>
