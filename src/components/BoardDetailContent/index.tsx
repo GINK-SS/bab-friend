@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import boardApi from '@_apis/board';
 import * as S from './styles';
 
-type BoardDetailContent = {
+type BoardDetailContentProps = {
   boardContent?: string;
   boardWriter?: string;
   boardLocation?: {
@@ -20,7 +20,13 @@ type BoardDetailContent = {
   boardFix?: boolean;
 };
 
-const BoardDetailContent = ({ boardContent, boardLocation, isWriter, boardUpdate, boardFix }: BoardDetailContent) => {
+const BoardDetailContent = ({
+  boardContent,
+  boardLocation,
+  isWriter,
+  boardUpdate,
+  boardFix,
+}: BoardDetailContentProps) => {
   let params = useParams();
   const navigate = useNavigate();
 

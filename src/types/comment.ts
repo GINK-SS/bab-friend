@@ -1,13 +1,9 @@
 export type Comment = {
   id: number;
-  feedId: number;
-  createdAt: string;
+  writer: string;
   content: string;
-  author: {
-    id: number;
-    profileImageUrl: string;
-    nickName: string;
-  };
+  createdAt: string;
+  profileImageUrl: string;
 };
 
 export type CommentResponse = {

@@ -9,15 +9,12 @@ import CommnetInput from '@_components/CommentInput';
 import CommentDisplay from '@_components/CommentDisplay';
 
 import boardApi from '@_apis/board';
-import getComment from '@_apis/comment';
 import { userState } from '@_recoil/atoms/user';
-import { Comment } from '@_types/comment';
 
 const BoardDetail = () => {
   let params = useParams();
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
-  const [comment, setComment] = useState<Comment[]>([]);
   const [isWriter, setIsWriter] = useState(false);
 
   // board detail get
@@ -31,6 +28,7 @@ const BoardDetail = () => {
       };
     },
   });
+
   useEffect(() => {
     if (userInfo.email === boardDetailInfo?.writerEmail) {
       setIsWriter(true);
@@ -45,11 +43,7 @@ const BoardDetail = () => {
       },
     });
   };
-  // const getCommentData = async () => {
-  //   const data = await getComment(Number(params.id));
 
-  //   setComment(data);
-  // };
   return (
     <>
       <PostOption boardData={boardDetailInfo} />
@@ -61,7 +55,7 @@ const BoardDetail = () => {
         boardFix={boardDetailInfo?.fix}
       />
       <CommnetInput />
-      {comment.map((item) => {
+      {boardDetailInfo?.boardComments.map((item) => {
         return <CommentDisplay key={item.id} commentData={item} />;
       })}
     </>

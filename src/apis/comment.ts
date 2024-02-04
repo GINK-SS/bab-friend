@@ -6,5 +6,12 @@ export const getComment = async (feedId: number) => {
 
   return response.data.data;
 };
+export const postComment = async (feedId: number, content: { content: string }) => {
+  const response = await request.post(`/boards/${feedId}/comment`, content);
 
-export default getComment;
+  return response.data;
+};
+
+const commentApi = { getComment, postComment };
+
+export default commentApi;

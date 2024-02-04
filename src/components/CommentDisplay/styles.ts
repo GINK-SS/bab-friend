@@ -18,6 +18,10 @@ export const ProfileImg = styled.img`
 export const Nickname = styled.p`
   font-family: 'Pretendard-Bold';
 `;
+export const TimeWrap = styled.div`
+  display: flex;
+  gap: 10px;
+`;
 export const Time = styled.p`
   margin-top: 4px;
   font-family: 'Pretendard-Light';

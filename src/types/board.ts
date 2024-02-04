@@ -82,6 +82,7 @@ export type BoardDetailResponse = {
     writerEmail: string;
     lastModifiedAt: string;
     changed: boolean;
+    boardComments: [{ id: number; writer: string; content: string; createdAt: string; profileImageUrl: string }];
   };
 };
 
