@@ -28,7 +28,20 @@ const AuthChecker = ({ children }: { children: ReactNode }) => {
 
   if (authInfo.authStatus === AuthStatus.pending) return null;
 
-  return <>{children}</>;
+  return (
+    <div
+      style={{
+        maxWidth: '500px',
+        minHeight: '100vh',
+        margin: '0 auto',
+        borderRight: '1px solid rgba(0,0,0,0.5)',
+        borderLeft: '1px solid rgba(0,0,0,0.5)',
+        backgroundColor: '#FFF',
+      }}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default AuthChecker;
