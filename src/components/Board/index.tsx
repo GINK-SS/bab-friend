@@ -40,10 +40,10 @@ const Board = ({ boardData }: BoardProps) => {
         </S.BlockContainer>
       ) : null}
 
-      <S.Wrapper isLimit={isLimit(userInfo, boardData)} onClick={onBoard}>
+      <S.Wrapper $isLimit={isLimit(userInfo, boardData)} onClick={onBoard}>
         <S.CategoryWrapper>
-          <S.Category hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
-          <S.Category hasData={!!categoryTypeToKorean[boardData.categoryType]}>
+          <S.Category $hasData={!!boardData.shortenedLocation}>{boardData.shortenedLocation}</S.Category>
+          <S.Category $hasData={!!categoryTypeToKorean[boardData.categoryType]}>
             {categoryTypeToKorean[boardData.categoryType]}
           </S.Category>
           <S.Category>{boardData.alcohol ? '술 가능' : '술 불가'}</S.Category>

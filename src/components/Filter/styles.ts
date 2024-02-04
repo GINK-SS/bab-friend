@@ -17,20 +17,20 @@ export const QuestionBtn = styled(IoHelpCircleOutline)`
   cursor: pointer;
 `;
 
-export const JoinPossibleBtn = styled.button<{ isActive: boolean }>`
+export const JoinPossibleBtn = styled.button<{ $isActive: boolean }>`
   padding: 5px 10px;
-  border: 1px solid ${({ theme, isActive }) => (isActive ? theme.colors.mainColor : 'rgba(0, 0, 0, 0.5)')};
+  border: 1px solid ${({ theme, $isActive }) => ($isActive ? theme.colors.mainColor : 'rgba(0, 0, 0, 0.5)')};
   border-radius: 30px;
-  color: ${({ theme, isActive }) => (isActive ? theme.colors.mainColor : '#000')};
+  color: ${({ theme, $isActive }) => ($isActive ? theme.colors.mainColor : '#000')};
 `;
 
-export const ExplainBox = styled.div<{ isShow: boolean }>`
+export const ExplainBox = styled.div<{ $isShow: boolean }>`
   max-width: 400px;
   margin: 0 auto 10px;
   padding: 5px 10px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 15px;
-  display: ${({ isShow }) => (isShow ? 'block' : 'none')};
+  display: ${({ $isShow }) => ($isShow ? 'block' : 'none')};
   text-align: center;
 `;
 

@@ -27,14 +27,14 @@ export const BlockContainer = styled.div`
     0px -1px rgb(0, 0, 0);
 `;
 
-export const Wrapper = styled.div<{ isLimit: boolean }>`
+export const Wrapper = styled.div<{ $isLimit: boolean }>`
   padding: 20px;
-  filter: ${({ isLimit }) => (isLimit ? 'blur(2px) brightness(60%)' : 'none')};
+  filter: ${({ $isLimit }) => ($isLimit ? 'blur(2px) brightness(60%)' : 'none')};
   transition: 0.3s ease;
   cursor: pointer;
 
   &:hover {
-    transform: ${({ isLimit }) => (isLimit ? 'none' : 'scale(1.02)')};
+    transform: ${({ $isLimit }) => ($isLimit ? 'none' : 'scale(1.02)')};
   }
 `;
 
@@ -44,8 +44,8 @@ export const CategoryWrapper = styled.div`
   margin-bottom: 7px;
 `;
 
-export const Category = styled.div<{ hasData?: boolean }>`
-  display: ${({ hasData }) => (hasData ? 'block' : 'none')};
+export const Category = styled.div<{ $hasData?: boolean }>`
+  display: ${({ $hasData }) => ($hasData ? 'block' : 'none')};
   padding: 1px 20px;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors.mainColor};
@@ -54,7 +54,7 @@ export const Category = styled.div<{ hasData?: boolean }>`
 `;
 
 Category.defaultProps = {
-  hasData: true,
+  $hasData: true,
 };
 
 export const Title = styled.p`

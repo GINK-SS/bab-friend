@@ -30,13 +30,13 @@ export const Container = styled.div<{ $isFullScreen?: boolean }>`
 
 export const Content = styled.div<{
   $isFullScreen?: boolean;
-  contentPadding?: string;
+  $contentPadding?: string;
 }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  padding: ${({ contentPadding }) => contentPadding ?? '1rem'};
+  padding: ${({ $contentPadding }) => $contentPadding ?? '1rem'};
   border: ${({ $isFullScreen }) => ($isFullScreen ? '0' : '1px solid rgba(0, 0, 0, 0.3)')};
   border-radius: 10px;
   background-color: #fff;
