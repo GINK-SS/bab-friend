@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { format, setHours, setMinutes } from 'date-fns';
+import { addDays, format, setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import { PostDataType } from '@_types/createBoard';
+import { PostDataType, UpdatePost } from '@_types/createBoard';
 
 import * as S from './styles';
 import formatDate from '@_utils/formatDate';
@@ -9,10 +9,12 @@ import { useRecoilState } from 'recoil';
 import { postsState } from '@_recoil/atoms/posts';
 
 type CalendarProps = {
+  updating?: boolean;
   updateEatTime?: string;
+  setUpdatePostState?: React.Dispatch<React.SetStateAction<UpdatePost>>;
 };
 
-const Calendar = ({ updateEatTime }: CalendarProps) => {
+const Calendar = ({ updateEatTime, setUpdatePostState, updating }: CalendarProps) => {
   const [startDate, setStartDate] = useState<Date | null>(setHours(setMinutes(new Date(), 0), 9));
   const [postState, setPostState] = useRecoilState(postsState);
 
@@ -25,7 +27,11 @@ const Calendar = ({ updateEatTime }: CalendarProps) => {
   const covertTimeType = (date: any) => {
     setStartDate(date);
     const formattedDate = format(date || new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
-    setPostState((prevData) => ({ ...prevData, eatTime: formattedDate }));
+    if (updating && setUpdatePostState) {
+      setUpdatePostState((prevData) => ({ ...prevData, eatTime: formattedDate }));
+    } else {
+      setPostState((prevData) => ({ ...prevData, eatTime: formattedDate }));
+    }
   };
   return (
     <>
@@ -39,11 +45,12 @@ const Calendar = ({ updateEatTime }: CalendarProps) => {
         filterTime={filterPassedTime}
         dateFormat='yyyy/MM/dd   h:mm aa'
         closeOnScroll={true}
+        withPortal
       />
-      {postState.eatTime ? (
-        <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>
-      ) : (
+      {updating ? (
         <S.SelectDate>{updateEatTime ? formatDate(updateEatTime) : ''}</S.SelectDate>
+      ) : (
+        <>{postState.eatTime && <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>}</>
       )}
     </>
   );

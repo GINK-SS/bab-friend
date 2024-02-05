@@ -1,4 +1,4 @@
-import { BoardDetailInfo, boardDetailResponse, getBoardResponse } from '@_types/board';
+import { BoardDetailInfo, BoardDetailResponse, getBoardResponse } from '@_types/board';
 import { request } from './axios';
 import { UpdatePostRequest } from '@_types/createBoard';
 
@@ -21,7 +21,7 @@ export const getBoards = async ({ page, size = 10, search }: { page: number; siz
 };
 
 export const getBoardDetail = async (id: number) => {
-  const { data } = await request.get<boardDetailResponse>(`/boards/${id}`);
+  const { data } = await request.get<BoardDetailResponse>(`/boards/${id}`);
 
   return data;
 };
@@ -40,6 +40,12 @@ export const updateBoard = async (id: number, updateData: UpdatePostRequest) => 
 
   return data;
 };
-const boardApi = { getBoards, getBoardDetail, deleteBoard, fixBoard, updateBoard };
+
+export const joinBoard = async (id: number) => {
+  const { data } = await request.post(`/boards/${id}/join`);
+
+  return data;
+};
+const boardApi = { getBoards, getBoardDetail, deleteBoard, fixBoard, updateBoard, joinBoard };
 
 export default boardApi;

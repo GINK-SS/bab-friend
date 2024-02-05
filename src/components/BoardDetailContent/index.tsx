@@ -3,10 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import boardApi from '@_apis/board';
 import * as S from './styles';
+import formatDate from '@_utils/formatDate';
 
-type BoardDetailContent = {
-  boardContent?: string;
-  boardWriter?: string;
+type BoardDetailContentProps = {
+  boardContent: string;
   boardLocation?: {
     content: string;
     position: {
@@ -17,10 +17,21 @@ type BoardDetailContent = {
   };
   isWriter: boolean;
   boardUpdate: () => void;
-  boardFix?: boolean;
+  boardFix: boolean;
+  promiseTime: string;
+  lastModifiedAt: string;
+  isLimitJoin?: boolean;
 };
 
-const BoardDetailContent = ({ boardContent, boardLocation, isWriter, boardUpdate, boardFix }: BoardDetailContent) => {
+const BoardDetailContent = ({
+  boardContent,
+  boardLocation,
+  isWriter,
+  boardUpdate,
+  boardFix,
+  promiseTime,
+  isLimitJoin,
+}: BoardDetailContentProps) => {
   let params = useParams();
   const navigate = useNavigate();
 
@@ -46,6 +57,24 @@ const BoardDetailContent = ({ boardContent, boardLocation, isWriter, boardUpdate
       alert('게시글 삭제 실패');
     },
   });
+
+  const joinBoard = useMutation({
+    mutationFn: () => boardApi.joinBoard(Number(params.id)),
+    onSuccess(data) {
+      console.log(data);
+    },
+    onError(err) {
+      console.log(err);
+    },
+  });
+  const clickJoinBtn = () => {
+    if (isLimitJoin === false) {
+      joinBoard.mutate();
+      alert('게시글에 참여하였습니다.');
+    } else {
+      alert('모집인원이 다 찼습니다.');
+    }
+  };
   const clickDeleteBtn = () => {
     deleteBoard.mutate();
     navigate('/');
@@ -64,6 +93,11 @@ const BoardDetailContent = ({ boardContent, boardLocation, isWriter, boardUpdate
           )}
         </S.BtnWrap>
       )}
+      {boardFix && <S.FixBoardText>!! 게시글이 마감되었습니다 !!</S.FixBoardText>}
+      {isLimitJoin && <S.LimitJoinText>!! 모집인원이 다 찼습니다 !!</S.LimitJoinText>}
+      <S.ContentHeader>
+        <S.PromiseTime>약속 시간 : {formatDate(promiseTime)}</S.PromiseTime>
+      </S.ContentHeader>
       <S.Content>{boardContent}</S.Content>
       {boardLocation?.position.lat && boardLocation?.position.lng && (
         <StaticMap
@@ -75,7 +109,9 @@ const BoardDetailContent = ({ boardContent, boardLocation, isWriter, boardUpdate
             width: '100%',
             height: '250px',
             marginTop: '50px',
-            borderRadius: '10px',
+            borderRadius: '20px',
+            border: '1px solid #e0e0e0',
+            boxShadow: '0px 0px 10px 0px #e0e0e0',
           }}
           marker={[
             {
@@ -89,6 +125,16 @@ const BoardDetailContent = ({ boardContent, boardLocation, isWriter, boardUpdate
           level={3} // 지도의 확대 레벨
         />
       )}
+
+      {
+        <>
+          {isWriter === false && (
+            <S.JoinBtnWrap onClick={clickJoinBtn}>
+              <S.JoinBtn>참여하기</S.JoinBtn>
+            </S.JoinBtnWrap>
+          )}
+        </>
+      }
     </S.PostContentContainer>
   );
 };

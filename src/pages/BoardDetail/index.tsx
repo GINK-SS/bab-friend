@@ -9,15 +9,12 @@ import CommnetInput from '@_components/CommentInput';
 import CommentDisplay from '@_components/CommentDisplay';
 
 import boardApi from '@_apis/board';
-import getComment from '@_apis/comment';
 import { userState } from '@_recoil/atoms/user';
-import { Comment } from '@_types/comment';
 
 const BoardDetail = () => {
   let params = useParams();
   const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
-  const [comment, setComment] = useState<Comment[]>([]);
   const [isWriter, setIsWriter] = useState(false);
 
   // board detail get
@@ -31,6 +28,7 @@ const BoardDetail = () => {
       };
     },
   });
+
   useEffect(() => {
     if (userInfo.email === boardDetailInfo?.writerEmail) {
       setIsWriter(true);
@@ -45,25 +43,28 @@ const BoardDetail = () => {
       },
     });
   };
-  // const getCommentData = async () => {
-  //   const data = await getComment(Number(params.id));
-
-  //   setComment(data);
-  // };
+  const isLimitJoin = boardDetailInfo && boardDetailInfo?.currentJoin >= boardDetailInfo?.joinLimit;
   return (
     <>
-      <PostOption boardData={boardDetailInfo} />
-      <PostContent
-        boardContent={boardDetailInfo?.content}
-        boardLocation={boardDetailInfo?.location.location}
-        isWriter={isWriter}
-        boardUpdate={boardUpdate}
-        boardFix={boardDetailInfo?.fix}
-      />
-      <CommnetInput />
-      {comment.map((item) => {
-        return <CommentDisplay key={item.id} commentData={item} />;
-      })}
+      {boardDetailInfo && (
+        <>
+          <PostOption boardData={boardDetailInfo} />
+          <PostContent
+            boardContent={boardDetailInfo.content}
+            boardLocation={boardDetailInfo?.location?.location}
+            isWriter={isWriter}
+            boardUpdate={boardUpdate}
+            boardFix={boardDetailInfo.fix}
+            promiseTime={boardDetailInfo.eatTime}
+            lastModifiedAt={boardDetailInfo.lastModifiedAt}
+            isLimitJoin={isLimitJoin}
+          />
+          <CommnetInput />
+          {boardDetailInfo?.boardComments.map((item) => {
+            return <CommentDisplay key={item.id} commentData={item} />;
+          })}
+        </>
+      )}
     </>
   );
 };

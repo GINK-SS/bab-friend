@@ -59,7 +59,7 @@ export type BoardDetailInfo = {
   changed: boolean;
 };
 
-export type boardDetailResponse = {
+export type BoardDetailResponse = {
   data: {
     id: number;
     title: string;
@@ -82,6 +82,7 @@ export type boardDetailResponse = {
     writerEmail: string;
     lastModifiedAt: string;
     changed: boolean;
+    boardComments: [{ id: number; writer: string; content: string; createdAt: string; profileImageUrl: string }];
   };
 };
 

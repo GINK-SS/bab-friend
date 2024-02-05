@@ -17,7 +17,7 @@ import * as S from './styles';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
 
-const UpdateBoard = ({ boardDetailInfo }: SelectOptionProps) => {
+const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
   const navigate = useNavigate();
   const [mapModalOpen, setMapModalOpen] = useState(false);
   const mapData = useRecoilValue(locationData);
@@ -41,7 +41,6 @@ const UpdateBoard = ({ boardDetailInfo }: SelectOptionProps) => {
     WEST: '양식',
     ALL: '상관없음',
   };
-
   const handleChange = (name: string, value: string | number | boolean) => {
     setUpdatePostState((prevData) => ({
       ...prevData,
@@ -99,7 +98,6 @@ const UpdateBoard = ({ boardDetailInfo }: SelectOptionProps) => {
           <S.PeopleNumSelectOption value='' disabled>
             예상 인원을 선택하세요.
           </S.PeopleNumSelectOption>
-          <S.PeopleNumSelectOption value={1}>1명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value={2}>2명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value={3}>3명</S.PeopleNumSelectOption>
           <S.PeopleNumSelectOption value={4}>4명</S.PeopleNumSelectOption>
@@ -108,7 +106,7 @@ const UpdateBoard = ({ boardDetailInfo }: SelectOptionProps) => {
       </S.PeopleNum>
       <S.Time>
         <S.TimeText>식사 시간</S.TimeText>
-        <Calendar updateEatTime={updatePostState.eatTime} />
+        <Calendar updateEatTime={updatePostState.eatTime} setUpdatePostState={setUpdatePostState} updating={updating} />
       </S.Time>
       <S.StoreNameWrap>
         <S.StoreNameLabel>가게명을 입력해주세요.</S.StoreNameLabel>
@@ -291,6 +289,7 @@ const UpdateBoard = ({ boardDetailInfo }: SelectOptionProps) => {
             label='내용'
             value={updatePostState.content}
             onChange={(e) => handleChange('content', e.target.value)}
+            height={2}
           />
         </S.Content>
         <S.Link>

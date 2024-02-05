@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const CommentContainer = styled.div`
   display: flex;
   gap: 20px;
-  padding: 40px 50px;
+  padding: 20px 50px;
 `;
 export const CommentTextWrap = styled.div`
   flex: 1;
