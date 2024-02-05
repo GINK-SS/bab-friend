@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-const KakaoMapModal = () => {
+const KakaoMap = () => {
   // 검색된 장소의 정보를 담을 상태
   const [mapData, setMapData] = useRecoilState(locationData);
   // 검색된 장소의 마커 정보를 담을 상태
@@ -187,4 +187,4 @@ const KakaoMapModal = () => {
   );
 };
 
-export default KakaoMapModal;
+export default KakaoMap;
