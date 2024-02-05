@@ -1,9 +1,12 @@
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import boardApi from '@_apis/board';
-import * as S from './styles';
+import { authState } from '@_recoil/atoms/auth';
 import formatDate from '@_utils/formatDate';
+import * as S from './styles';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 
 type BoardDetailContentProps = {
   boardContent: string;
@@ -34,6 +37,8 @@ const BoardDetailContent = ({
 }: BoardDetailContentProps) => {
   let params = useParams();
   const navigate = useNavigate();
+  const isauthenticated = useRecoilValue(authState);
+  const setModal = useSetRecoilState(modalState);
 
   const fixPromise = useMutation({
     mutationFn: () => boardApi.fixBoard(Number(params.id)),
@@ -68,11 +73,14 @@ const BoardDetailContent = ({
     },
   });
   const clickJoinBtn = () => {
-    if (isLimitJoin === false) {
-      joinBoard.mutate();
-      alert('게시글에 참여하였습니다.');
-    } else {
-      alert('모집인원이 다 찼습니다.');
+    if (isauthenticated.authStatus === 2) setModal({ name: ModalName.login, isActive: true });
+    if (isauthenticated.authStatus === 0) {
+      if (isLimitJoin === false) {
+        joinBoard.mutate();
+        alert('게시글에 참여하였습니다.');
+      } else {
+        alert('모집인원이 다 찼습니다.');
+      }
     }
   };
   const clickDeleteBtn = () => {
