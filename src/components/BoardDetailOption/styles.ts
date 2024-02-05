@@ -49,7 +49,6 @@ export const Time = styled.p`
 export const OptionContainer = styled.div`
   display: flex;
   width: 90%;
-  /* height: 180px; */
   margin: 12px 0;
   background-color: #fff;
   border: 0.1px solid gray;
@@ -59,7 +58,6 @@ export const OptionWrap = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  /* justify-content: center; */
   gap: 20px;
   padding: 14px 30px;
   > div {

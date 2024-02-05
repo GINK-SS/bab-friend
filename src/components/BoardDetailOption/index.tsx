@@ -4,7 +4,7 @@ import formatDate from '@_utils/formatDate';
 import { BoardDetailInfo } from '@_types/board';
 import formatDateToTimeAgo from '@_utils/formatDateToTimeAgo';
 
-export type BoardDetailOptionProps = {
+type BoardDetailOptionProps = {
   boardData?: BoardDetailInfo;
 };
 
