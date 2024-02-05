@@ -5,7 +5,7 @@ import Calendar from '../Calendar';
 import KakaoMapModal from '../KakaoMapModal';
 import Input from '@_components/common/Input';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { locationData, postsState } from '@_recoil/atoms/posts';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { errorMessageState } from '@_recoil/atoms/validationError';
@@ -13,6 +13,8 @@ import { BoardDetailInfo } from '@_types/board';
 
 import * as S from './styles';
 import UpdateBoard from '@_components/UpdateBoard';
+import Modal from '@_components/Modal';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 
 export type SelectOptionProps = {
   updating: boolean;
@@ -23,7 +25,7 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
   const navigate = useNavigate();
   const [postState, setPostState] = useRecoilState(postsState);
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-  const [mapModalOpen, setMapModalOpen] = useState(false);
+  const setModal = useSetRecoilState(modalState);
   const mapData = useRecoilValue(locationData);
 
   const handleChange = (name: string, value: string | number | boolean) => {
@@ -109,12 +111,11 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
             <S.StoreNameLabel>가게명을 입력해주세요.</S.StoreNameLabel>
             <S.StoreBtn
               onClick={() => {
-                setMapModalOpen(!mapModalOpen);
+                setModal({ name: ModalName.kakaoMap, isActive: true });
               }}
             >
               가게명 검색하기
             </S.StoreBtn>
-
             {mapData.location.content === '' ? (
               <></>
             ) : (
@@ -131,6 +132,9 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
                   style={{
                     width: '100%',
                     height: '200px',
+                    borderRadius: '20px',
+                    border: '1px solid #e0e0e0',
+                    boxShadow: '0px 0px 10px 0px #e0e0e0',
                   }}
                   marker={[
                     {
@@ -145,7 +149,9 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
                 />
               </>
             )}
-            {mapModalOpen && <KakaoMapModal setMapModalOpen={setMapModalOpen} />}
+            <Modal name={ModalName.kakaoMap}>
+              <KakaoMapModal />
+            </Modal>
           </S.StoreNameWrap>
           <S.Alchol>
             <S.AlcholText>술 여부</S.AlcholText>

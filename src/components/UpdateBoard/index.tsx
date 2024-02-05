@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { StaticMap } from 'react-kakao-maps-sdk';
 import { useMutation } from '@tanstack/react-query';
 
@@ -16,11 +16,13 @@ import { UpdatePost } from '@_types/createBoard';
 import * as S from './styles';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
+import Modal from '@_components/Modal';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 
 const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
   const navigate = useNavigate();
-  const [mapModalOpen, setMapModalOpen] = useState(false);
   const mapData = useRecoilValue(locationData);
+  const setModal = useSetRecoilState(modalState);
   const [updatePostState, setUpdatePostState] = useState<UpdatePost>({
     title: boardDetailInfo.title,
     content: boardDetailInfo.content,
@@ -78,7 +80,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
           <S.FoodTypeSelectOption value='WEST'>양식</S.FoodTypeSelectOption>
         </S.FoodTypeSelect>
       </S.FoodType>
-      <S.Menu>
+      <S.Price>
         <Input
           type='number'
           placeholder='예상가격을 입력해주세요..'
@@ -86,7 +88,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
           value={updatePostState?.priceRange}
           onChange={(e) => handleChange('priceRange', e.target.value)}
         />
-      </S.Menu>
+      </S.Price>
       <S.PeopleNum>
         <S.PeopleNumText>모집 인원</S.PeopleNumText>
         <S.PeopleNumSelect
@@ -112,7 +114,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
         <S.StoreNameLabel>가게명을 입력해주세요.</S.StoreNameLabel>
         <S.StoreBtn
           onClick={() => {
-            setMapModalOpen(true);
+            setModal({ name: ModalName.kakaoMap, isActive: true });
           }}
         >
           가게명 검색하기
@@ -131,6 +133,9 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
               style={{
                 width: '100%',
                 height: '200px',
+                borderRadius: '20px',
+                border: '1px solid #e0e0e0',
+                boxShadow: '0px 0px 10px 0px #e0e0e0',
               }}
               marker={[
                 {
@@ -158,6 +163,9 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
               style={{
                 width: '100%',
                 height: '200px',
+                borderRadius: '20px',
+                border: '1px solid #e0e0e0',
+                boxShadow: '0px 0px 10px 0px #e0e0e0',
               }}
               marker={[
                 {
@@ -172,7 +180,9 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
             />
           </>
         )}
-        {mapModalOpen && <KakaoMapModal setMapModalOpen={setMapModalOpen} />}
+        <Modal name={ModalName.kakaoMap}>
+          <KakaoMapModal />
+        </Modal>
       </S.StoreNameWrap>
       <S.Alchol>
         <S.AlcholText>술 여부</S.AlcholText>
@@ -289,7 +299,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
             label='내용'
             value={updatePostState.content}
             onChange={(e) => handleChange('content', e.target.value)}
-            height={2}
+            height={12}
           />
         </S.Content>
         <S.Link>

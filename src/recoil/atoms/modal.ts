@@ -3,6 +3,7 @@ import { atom, useSetRecoilState } from 'recoil';
 export enum ModalName {
   login,
   boardDelete,
+  kakaoMap,
 }
 
 export type ModalState = {

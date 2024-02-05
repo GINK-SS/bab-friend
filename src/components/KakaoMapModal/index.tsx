@@ -3,22 +3,20 @@ import { useEffect, useState } from 'react';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
 import { PostDataType } from '@_types/createBoard';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { locationData } from '@_recoil/atoms/posts';
 import Input from '@_components/common/Input';
 
 import closeBtn from '@_assets/images/svg/cancle.svg';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 
 declare global {
   interface Window {
     kakao: any;
   }
 }
-type KakaoMapModalProps = {
-  setMapModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
 
-const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
+const KakaoMapModal = () => {
   // 검색된 장소의 정보를 담을 상태
   const [mapData, setMapData] = useRecoilState(locationData);
   // 검색된 장소의 마커 정보를 담을 상태
@@ -34,6 +32,7 @@ const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
       lng: 126.570667,
     },
   });
+  const setModal = useSetRecoilState(modalState);
 
   // 컴포넌트가 처음 렌더링될 때와 map 상태가 업데이트될 때 검색 수행
   useEffect(() => {
@@ -122,22 +121,17 @@ const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
     if (mapData.location?.content === '') {
       alert('위치를 지정해주세요.');
     } else {
-      setMapModalOpen(false);
+      setModal({ name: ModalName.kakaoMap, isActive: false });
     }
   };
   return (
     <>
-      <S.Overlay
-        onClick={() => {
-          setMapModalOpen(false);
-        }}
-      />
       <S.ModalContainer>
         <S.CloseBtnWrap>
           <S.CloseBtn
             src={closeBtn}
             onClick={() => {
-              setMapModalOpen(false);
+              setModal({ name: ModalName.kakaoMap, isActive: false });
             }}
           />
         </S.CloseBtnWrap>
@@ -162,6 +156,9 @@ const KakaoMapModal = ({ setMapModalOpen }: KakaoMapModalProps) => {
           style={{
             width: '100%',
             height: '350px',
+            borderRadius: '20px',
+            border: '1px solid #e0e0e0',
+            boxShadow: '0px 0px 10px 0px #e0e0e0',
           }}
           level={3}
           onCreate={setMap}
