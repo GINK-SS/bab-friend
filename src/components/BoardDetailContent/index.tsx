@@ -5,8 +5,10 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import boardApi from '@_apis/board';
 import { authState } from '@_recoil/atoms/auth';
 import formatDate from '@_utils/formatDate';
-import * as S from './styles';
 import { ModalName, modalState } from '@_recoil/atoms/modal';
+import Modal from '@_components/Modal';
+import BoardDelete from '@_components/Modal/BoardDelete';
+import * as S from './styles';
 
 type BoardDetailContentProps = {
   boardContent: string;
@@ -55,14 +57,6 @@ const BoardDetailContent = ({
     },
   });
 
-  const deleteBoard = useMutation({
-    mutationFn: () => boardApi.deleteBoard(Number(params.id)),
-    onError(err) {
-      console.log(err);
-      alert('게시글 삭제 실패');
-    },
-  });
-
   const joinBoard = useMutation({
     mutationFn: () => boardApi.joinBoard(Number(params.id)),
     onSuccess(data) {
@@ -84,12 +78,13 @@ const BoardDetailContent = ({
     }
   };
   const clickDeleteBtn = () => {
-    deleteBoard.mutate();
-    navigate('/');
-    alert('게시글이 삭제되었습니다.');
+    setModal({ name: ModalName.boardDelete, isActive: true });
   };
   return (
     <S.PostContentContainer>
+      <Modal name={ModalName.boardDelete} contentPadding='4rem'>
+        <BoardDelete />
+      </Modal>
       {isWriter && (
         <S.BtnWrap>
           <S.PostEditBtn onClick={boardUpdate}>수정</S.PostEditBtn>

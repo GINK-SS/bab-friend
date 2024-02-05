@@ -2,6 +2,7 @@ import { atom, useSetRecoilState } from 'recoil';
 
 export enum ModalName {
   login,
+  boardDelete,
 }
 
 export type ModalState = {
