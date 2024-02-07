@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import { locationData, locationStringSelector, postsState } from '@_recoil/atoms/posts';
 import { errorMessageState } from '@_recoil/atoms/validationError';
@@ -17,15 +17,18 @@ const CreateBoardContent = () => {
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const locationStringData = useRecoilValue(locationStringSelector);
   const mapData = useRecoilValue(locationData);
+  const resetPostState = useResetRecoilState(postsState);
+  const resetMapData = useResetRecoilState(locationData);
 
   const createBoard = useMutation({
     mutationFn: () => postApi.postsBoards({ ...postState, location: locationStringData }),
     onSuccess: (data) => {
+      resetPostState();
+      resetMapData();
       navigate('/');
       console.log('게시글 등록 성공:', data);
     },
     onError: (error) => {
-      alert('게시글 작성 실패');
       console.error('게시글 등록 실패:', error);
     },
   });
@@ -95,6 +98,7 @@ const CreateBoardContent = () => {
           value={postState.title}
           errorMessage={errorMessage?.titleError}
           onChange={(e) => handleChange('title', e.target.value)}
+          maxLength={40}
         />
       </S.Title>
       <S.Content>
@@ -109,12 +113,13 @@ const CreateBoardContent = () => {
       </S.Content>
       <S.Link>
         <Input
-          type='text'
+          type='link'
           placeholder='링크(오픈채팅방)을 입력해주세요..'
           label='링크'
           value={postState.linkUrl}
           errorMessage={errorMessage?.linkUrlError}
           onChange={(e) => handleChange('linkUrl', e.target.value)}
+          required
         />
       </S.Link>
       <S.BtnWrap>
