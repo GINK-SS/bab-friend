@@ -49,7 +49,7 @@ const Calendar = ({ updateEatTime, setUpdatePostState, updating }: CalendarProps
       />
       <S.SelectDateWrap>
         {updating ? (
-          <S.SelectDate>약속시간 : {updateEatTime ? formatDate(updateEatTime) : ''}</S.SelectDate>
+          <>{updateEatTime && <S.SelectDate>약속시간 :{formatDate(updateEatTime)}</S.SelectDate>}</>
         ) : (
           <>{postState.eatTime && <S.SelectDate>약속시간 : {formatDate(postState.eatTime)}</S.SelectDate>}</>
         )}

@@ -45,7 +45,7 @@ export const SelectOptionContainer = styled.div`
 export const Region = styled.div``;
 export const RegionText = styled.p``;
 export const RegoinInput = styled.input``;
-export const Menu = styled.div``;
+export const Price = styled.div``;
 export const MenuText = styled.p``;
 export const MenuInput = styled.input``;
 export const FoodType = styled.div``;
@@ -76,6 +76,13 @@ export const StoreBtn = styled.button`
   border: 0.1px solid black;
   padding: 2px 8px;
   border-radius: 5px;
+  width: 100%;
+  border: 0.1px solid black;
+  padding: 12px 8px;
+  border-radius: 5px;
+  &:hover {
+    border: 1px solid black;
+  }
 `;
 export const PeopleNum = styled.div``;
 export const PeopleNumText = styled.p``;

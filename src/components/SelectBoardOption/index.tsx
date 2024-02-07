@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Calendar from '../Calendar';
-import KakaoMapModal from '../KakaoMapModal';
+import KakaoMap from '@_components/Modal/KakaoMap';
 import Input from '@_components/common/Input';
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
@@ -76,16 +76,16 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
               <S.FoodTypeSelectOption value='WEST'>양식</S.FoodTypeSelectOption>
             </S.FoodTypeSelect>
           </S.FoodType>
-          <S.Menu>
+          <S.Price>
             <Input
               type='number'
               placeholder='예상가격을 입력해주세요..'
               label='예상가격'
-              value={postState.priceRange}
               errorMessage={errorMessage?.priceRangeError}
               onChange={(e) => handleChange('priceRange', e.target.value)}
+              required
             />
-          </S.Menu>
+          </S.Price>
           <S.PeopleNum>
             <S.PeopleNumText>모집 인원</S.PeopleNumText>
             <S.PeopleNumSelect
@@ -150,7 +150,7 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
               </>
             )}
             <Modal name={ModalName.kakaoMap}>
-              <KakaoMapModal />
+              <KakaoMap />
             </Modal>
           </S.StoreNameWrap>
           <S.Alchol>

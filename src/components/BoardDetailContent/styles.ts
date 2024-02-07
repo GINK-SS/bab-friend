@@ -41,14 +41,23 @@ export const PromiseTime = styled.div`
 export const BtnWrap = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 18px;
   margin: 10px 0;
+  margin-bottom: 30px;
+  transition: 0.3s;
+  button {
+    &:hover {
+      font-weight: bold;
+    }
+  }
 `;
 export const PostEditBtn = styled.button``;
 export const PostDeleteBtn = styled.button``;
 
 export const Content = styled.p`
-  line-height: 3rem;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  line-height: 1.8rem;
   word-spacing: 1px;
 `;
 

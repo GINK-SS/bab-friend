@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useMutation } from '@tanstack/react-query';
 
 import { SelectOptionProps } from '@_components/SelectBoardOption';
@@ -20,6 +20,7 @@ import * as S from './styles';
 const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
   const navigate = useNavigate();
   const mapData = useRecoilValue(locationData);
+  const resetMapData = useResetRecoilState(locationData);
   const setModal = useSetRecoilState(modalState);
   const [updatePostState, setUpdatePostState] = useState<UpdatePost>({
     title: boardDetailInfo.title,
@@ -51,6 +52,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
     mutationFn: () =>
       boardApi.updateBoard(boardDetailInfo.id, { ...updatePostState, location: JSON.stringify(mapData) }),
     onSuccess: (data) => {
+      resetMapData();
       navigate(`/boarddetail/${boardDetailInfo.id}`, { replace: true });
       console.log('게시글 수정 완료', data);
     },
@@ -61,7 +63,8 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
 
   const clickEditBtn = () => {
     const isAnyFieldEmpty = Object.entries(updatePostState).some(([key, value]) => value === '');
-    if (isAnyFieldEmpty) alert('모든 항목을 입력해주세요.');
+    const isLocationDataEmpty = !mapData || !mapData.location || !mapData.location.content;
+    if (isAnyFieldEmpty || isLocationDataEmpty) alert('모든 항목을 입력해주세요.');
     else editBoard.mutate();
   };
   return (
@@ -124,18 +127,40 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
         >
           가게명 검색하기
         </S.StoreBtn>
-        <S.StoreInfo>
-          <S.StoreAddress>위치 : {boardDetailInfo.location.address}</S.StoreAddress>
-          <S.StoreName>가게명 : {boardDetailInfo.location?.location?.content}</S.StoreName>
-        </S.StoreInfo>
-        <KakaoStaticMap
-          center={{
-            lat: boardDetailInfo.location?.location?.position.lat,
-            lng: boardDetailInfo.location?.location?.position.lng,
-          }}
-          content={boardDetailInfo.location?.location?.content}
-          height={200}
-        />
+        {!mapData || mapData.address === '' ? (
+          <>
+            <S.StoreInfo>
+              <S.StoreAddress>위치 : {boardDetailInfo.location.address}</S.StoreAddress>
+              <S.StoreName>가게명 : {boardDetailInfo.location?.location?.content}</S.StoreName>
+            </S.StoreInfo>
+
+            <KakaoStaticMap
+              center={{
+                lat: boardDetailInfo.location?.location?.position.lat,
+                lng: boardDetailInfo.location?.location?.position.lng,
+              }}
+              content={boardDetailInfo.location?.location?.content}
+              height={200}
+            />
+          </>
+        ) : (
+          <>
+            <S.StoreInfo>
+              <S.StoreAddress>위치 : {mapData.address}</S.StoreAddress>
+              <S.StoreName>가게명 : {mapData.location.content}</S.StoreName>
+            </S.StoreInfo>
+
+            <KakaoStaticMap
+              center={{
+                lat: mapData.location.position.lat,
+                lng: mapData.location.position.lng,
+              }}
+              content={mapData.location.content}
+              height={200}
+            />
+          </>
+        )}
+
         <Modal name={ModalName.kakaoMap}>
           <KakaoMap />
         </Modal>

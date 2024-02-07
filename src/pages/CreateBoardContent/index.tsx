@@ -21,7 +21,7 @@ const CreateBoardContent = () => {
   const resetMapData = useResetRecoilState(locationData);
 
   const createBoard = useMutation({
-    mutationFn: () => postApi.postsBoards({ ...postState, location: locationStringData }),
+    mutationFn: () => postApi.postsBoards({ ...postState, location: JSON.stringify(mapData) }),
     onSuccess: (data) => {
       resetPostState();
       resetMapData();
