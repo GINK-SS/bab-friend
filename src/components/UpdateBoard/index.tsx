@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { StaticMap } from 'react-kakao-maps-sdk';
 import { useMutation } from '@tanstack/react-query';
 
 import { SelectOptionProps } from '@_components/SelectBoardOption';
@@ -9,14 +8,14 @@ import Input from '@_components/common/Input';
 import Calendar from '@_components/Calendar';
 import KakaoMap from '@_components/Modal/KakaoMap';
 import Textarea from '@_components/common/Textarea';
+import KakaoStaticMap from '@_components/KakaoStaticMap';
+import Modal from '@_components/Modal';
 import { locationData } from '@_recoil/atoms/posts';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 import boardApi from '@_apis/board';
 import { UpdatePost } from '@_types/createBoard';
 
 import * as S from './styles';
-
-import Modal from '@_components/Modal';
-import { ModalName, modalState } from '@_recoil/atoms/modal';
 
 const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
   const navigate = useNavigate();
@@ -119,67 +118,18 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
         >
           가게명 검색하기
         </S.StoreBtn>
-        {mapData.location.content === '' ? (
-          <>
-            <S.StoreInfo>
-              <S.StoreAddress>위치 : {boardDetailInfo.location.address}</S.StoreAddress>
-              <S.StoreName>가게명 : {boardDetailInfo.location?.location?.content}</S.StoreName>
-            </S.StoreInfo>
-            <StaticMap
-              center={{
-                lat: boardDetailInfo.location?.location?.position.lat,
-                lng: boardDetailInfo.location?.location?.position.lng,
-              }}
-              style={{
-                width: '100%',
-                height: '200px',
-                borderRadius: '20px',
-                border: '1px solid #e0e0e0',
-                boxShadow: '0px 0px 10px 0px #e0e0e0',
-              }}
-              marker={[
-                {
-                  position: {
-                    lat: boardDetailInfo.location?.location?.position.lat,
-                    lng: boardDetailInfo.location?.location?.position.lng,
-                  },
-                  text: boardDetailInfo.location?.location?.content,
-                },
-              ]}
-              level={3}
-            />
-          </>
-        ) : (
-          <>
-            <S.StoreInfo>
-              <S.StoreAddress>위치 : {mapData.address}</S.StoreAddress>
-              <S.StoreName>가게명 : {mapData.location.content}</S.StoreName>
-            </S.StoreInfo>
-            <StaticMap
-              center={{
-                lat: mapData.location.position.lat,
-                lng: mapData.location.position.lng,
-              }}
-              style={{
-                width: '100%',
-                height: '200px',
-                borderRadius: '20px',
-                border: '1px solid #e0e0e0',
-                boxShadow: '0px 0px 10px 0px #e0e0e0',
-              }}
-              marker={[
-                {
-                  position: {
-                    lat: mapData.location.position.lat,
-                    lng: mapData.location.position.lng,
-                  },
-                  text: mapData.location.content,
-                },
-              ]}
-              level={3}
-            />
-          </>
-        )}
+        <S.StoreInfo>
+          <S.StoreAddress>위치 : {boardDetailInfo.location.address}</S.StoreAddress>
+          <S.StoreName>가게명 : {boardDetailInfo.location?.location?.content}</S.StoreName>
+        </S.StoreInfo>
+        <KakaoStaticMap
+          center={{
+            lat: boardDetailInfo.location?.location?.position.lat,
+            lng: boardDetailInfo.location?.location?.position.lng,
+          }}
+          content={boardDetailInfo.location?.location?.content}
+          height={200}
+        />
         <Modal name={ModalName.kakaoMap}>
           <KakaoMap />
         </Modal>

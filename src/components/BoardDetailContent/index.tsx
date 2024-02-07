@@ -9,6 +9,7 @@ import { ModalName, modalState } from '@_recoil/atoms/modal';
 import Modal from '@_components/Modal';
 import BoardDelete from '@_components/Modal/BoardDelete';
 import * as S from './styles';
+import KakaoStaticMap from '@_components/KakaoStaticMap';
 
 type BoardDetailContentProps = {
   boardContent: string;
@@ -103,32 +104,15 @@ const BoardDetailContent = ({
       </S.ContentHeader>
       <S.Content>{boardContent}</S.Content>
       {boardLocation?.position.lat && boardLocation?.position.lng && (
-        <StaticMap
+        <KakaoStaticMap
           center={{
             lat: boardLocation.position.lat,
             lng: boardLocation.position.lng,
           }}
-          style={{
-            width: '100%',
-            height: '250px',
-            marginTop: '50px',
-            borderRadius: '20px',
-            border: '1px solid #e0e0e0',
-            boxShadow: '0px 0px 10px 0px #e0e0e0',
-          }}
-          marker={[
-            {
-              position: {
-                lat: boardLocation.position.lat,
-                lng: boardLocation.position.lng,
-              },
-              text: boardLocation.content,
-            },
-          ]}
-          level={3} // 지도의 확대 레벨
+          height={250}
+          content={boardLocation.content}
         />
       )}
-
       {
         <>
           {isWriter === false && (
