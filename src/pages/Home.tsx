@@ -1,15 +1,15 @@
+import authApi from '@_apis/auth';
 import { getBoards } from '@_apis/board';
 import Board from '@_components/Board';
 import EmptyData from '@_components/EmptyData';
 import Filter from '@_components/Filter';
 import Search from '@_components/Search';
 import Spinner from '@_components/common/Spinner';
-import { userState } from '@_recoil/atoms/user';
 import { BoardFilter, BoardInfo } from '@_types/board';
 import { isLimit } from '@_utils/limit';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 
 const Home = () => {
   const [boards, setBoards] = useState<BoardInfo[]>([]);
@@ -19,7 +19,7 @@ const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [filter, setFilter] = useState<BoardFilter>({ isJoinPossible: true });
   const loadTargetRef = useRef<HTMLDivElement>(null);
-  const userInfo = useRecoilValue(userState);
+  const { data: userInfo } = useQuery({ queryKey: ['userInfo'], queryFn: authApi.requestUserInfo });
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
