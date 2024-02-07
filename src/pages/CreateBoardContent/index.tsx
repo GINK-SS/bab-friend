@@ -42,8 +42,8 @@ const CreateBoardContent = () => {
       [name]: value,
     }));
   };
-  // postState의 값들이 비어있으면 alert창 띄우기
-  const validateValue = () => {
+
+  const handleClickRegistration = () => {
     // 값이 빈 문자열인 경우가 하나라도 있는지 확인
     const isAnyFieldEmpty = Object.entries(postState)
       .filter(([key]) => key !== 'location')
@@ -51,12 +51,6 @@ const CreateBoardContent = () => {
 
     const isLocationDataEmpty = !mapData || !mapData.location || !mapData.location.content;
 
-    if (isAnyFieldEmpty || isLocationDataEmpty) {
-      alert('모든 항목을 입력해주세요.');
-      return;
-    }
-  };
-  const handleClickRegistration = () => {
     if (!postState.title) {
       setErrorMessage((prev) => ({
         ...prev,
@@ -79,8 +73,11 @@ const CreateBoardContent = () => {
       }));
       return;
     }
-    validateValue();
-    createBoard.mutate();
+    if (isAnyFieldEmpty || isLocationDataEmpty) {
+      alert('모든 항목을 입력해주세요.');
+    } else {
+      createBoard.mutate();
+    }
   };
   return (
     <S.CreateContentContainer>

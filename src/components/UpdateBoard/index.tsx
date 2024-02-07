@@ -58,6 +58,12 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
       console.error('게시글 수정 실패:', error);
     },
   });
+
+  const clickEditBtn = () => {
+    const isAnyFieldEmpty = Object.entries(updatePostState).some(([key, value]) => value === '');
+    if (isAnyFieldEmpty) alert('모든 항목을 입력해주세요.');
+    else editBoard.mutate();
+  };
   return (
     <>
       <S.FoodType>
@@ -270,13 +276,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
           >
             취소하기
           </S.CancleBtn>
-          <S.editBtn
-            onClick={() => {
-              editBoard.mutate();
-            }}
-          >
-            수정하기
-          </S.editBtn>
+          <S.editBtn onClick={clickEditBtn}>수정하기</S.editBtn>
         </S.BtnWrap>
       </S.CreateContentContainer>
     </>
