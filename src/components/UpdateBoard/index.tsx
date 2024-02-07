@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { SelectOptionProps } from '@_components/SelectBoardOption';
 import Input from '@_components/common/Input';
 import Calendar from '@_components/Calendar';
-import KakaoMapModal from '@_components/KakaoMapModal';
+import KakaoMap from '@_components/Modal/KakaoMap';
 import Textarea from '@_components/common/Textarea';
 import { locationData } from '@_recoil/atoms/posts';
 import boardApi from '@_apis/board';
@@ -15,7 +15,6 @@ import { UpdatePost } from '@_types/createBoard';
 
 import * as S from './styles';
 
-import infoCircle from '@_assets/images/svg/alert-circle.svg';
 import Modal from '@_components/Modal';
 import { ModalName, modalState } from '@_recoil/atoms/modal';
 
@@ -53,7 +52,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
     mutationFn: () =>
       boardApi.updateBoard(boardDetailInfo.id, { ...updatePostState, location: JSON.stringify(mapData) }),
     onSuccess: (data) => {
-      navigate(`/boarddetail/${boardDetailInfo.id}`);
+      navigate(`/boarddetail/${boardDetailInfo.id}`, { replace: true });
       console.log('게시글 수정 완료', data);
     },
     onError: (error) => {
@@ -87,6 +86,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
           label='예상가격'
           value={updatePostState?.priceRange}
           onChange={(e) => handleChange('priceRange', e.target.value)}
+          required
         />
       </S.Price>
       <S.PeopleNum>
@@ -181,7 +181,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
           </>
         )}
         <Modal name={ModalName.kakaoMap}>
-          <KakaoMapModal />
+          <KakaoMap />
         </Modal>
       </S.StoreNameWrap>
       <S.Alchol>
@@ -304,11 +304,12 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
         </S.Content>
         <S.Link>
           <Input
-            type='text'
+            type='link'
             placeholder='링크(오픈채팅방)을 입력해주세요..'
             label='링크'
             value={updatePostState.linkUrl}
             onChange={(e) => handleChange('linkUrl', e.target.value)}
+            required
           />
         </S.Link>
         <S.BtnWrap>
