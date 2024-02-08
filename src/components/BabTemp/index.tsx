@@ -1,17 +1,15 @@
 import ProgressBar from '../common/ProgressBar';
-
-import { useRecoilValue } from 'recoil';
-import { userState } from '@_recoil/atoms/user';
-
-import * as S from './styles';
+import { useQuery } from '@tanstack/react-query';
 import group from '@_assets/images/svg/user-group.svg';
+import authApi from '@_apis/auth';
+import * as S from './styles';
 
 const BabTemp = () => {
-  const userInfo = useRecoilValue(userState);
+  const { data: userInfo } = useQuery({ queryKey: ['userInfo'], queryFn: authApi.requestUserInfo });
 
   return (
     <S.BabTempContainer>
-      <ProgressBar temp={userInfo.temperature} />
+      <ProgressBar temp={userInfo?.temperature} />
       <S.BabReviewWrap>
         <S.EachReviewWrap>
           <S.ImgWrap>
