@@ -3,17 +3,17 @@ import * as S from './styles';
 import { useNavigate } from 'react-router-dom';
 import formatDate from '@_utils/formatDate';
 import { IoTimeOutline } from 'react-icons/io5';
-import { useRecoilValue } from 'recoil';
-import { userState } from '@_recoil/atoms/user';
 import { isLimit, isLimitedByAge, isLimitedByGender } from '@_utils/limit';
 import { StaticMap } from 'react-kakao-maps-sdk';
+import { useQuery } from '@tanstack/react-query';
+import authApi from '@_apis/auth';
 
 type BoardProps = {
   boardData: BoardInfo;
 };
 
 const Board = ({ boardData }: BoardProps) => {
-  const userInfo = useRecoilValue(userState);
+  const { data: userInfo } = useQuery({ queryKey: ['userInfo'], queryFn: authApi.requestUserInfo });
   const navigate = useNavigate();
   const categoryTypeToKorean = {
     KOREAN: '한식',
