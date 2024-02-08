@@ -25,7 +25,7 @@ const Home = () => {
     isFetching,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ['boards', filter.isJoinPossible, searchKeyword],
+    queryKey: ['boards', filter.isJoinPossible, searchKeyword, userInfo?.email],
     queryFn: ({ pageParam }) => boardApi.getBoards(pageParam),
     initialPageParam: { page: 0, size: 5, search: searchKeyword ?? undefined },
     getNextPageParam: (lastPage, _, lastPageParam) => {

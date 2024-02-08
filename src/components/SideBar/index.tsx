@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { useQuery } from '@tanstack/react-query';
 import { authState } from '@_recoil/atoms/auth';
-import { userState } from '@_recoil/atoms/user';
 
 import SideBarContent from '@_components/SideBarContent';
 import ProgressBar from '@_components/common/ProgressBar';
@@ -16,7 +15,6 @@ import * as S from './styles';
 
 const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   const setAuthInfo = useSetRecoilState(authState);
-  const resetUserInfo = useResetRecoilState(userState);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,7 +41,6 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
   const logout = () => {
     // ToDo: refreshToken 삭제 요청 API
     authApi.stopRefresh();
-    resetUserInfo();
     deleteAccessToken();
     setAuthInfo({ authStatus: AuthStatus.unauthorized });
     setSidebarOpen(false);
