@@ -1,32 +1,47 @@
 import { ReactNode, useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import authApi from '@_apis/auth';
-import { userState } from '@_recoil/atoms/user';
 import { authState } from '@_recoil/atoms/auth';
 import { AuthStatus } from '@_types/auth';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 const AuthChecker = ({ children }: { children: ReactNode }) => {
   const [authInfo, setAuthInfo] = useRecoilState(authState);
-  const setUserInfo = useSetRecoilState(userState);
+  const queryClient = useQueryClient();
+  const { refetch: refetchUserInfo, data: userInfo } = useQuery({
+    queryKey: ['userInfo'],
+    queryFn: authApi.requestUserInfo,
+    enabled: false,
+  });
+
+  useEffect(() => {
+    if (authInfo.authStatus === AuthStatus.authorized) {
+      refetchUserInfo();
+    }
+
+    if (authInfo.authStatus === AuthStatus.unauthorized) {
+      queryClient.removeQueries({ queryKey: ['userInfo'], exact: true });
+    }
+  }, [authInfo, queryClient, refetchUserInfo]);
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await authApi.refresh();
-        if (!response) return;
+        const accessToken = await authApi.refresh();
 
-        const { data } = await authApi.requestUserInfo();
+        if (!accessToken) return;
 
-        setUserInfo({ ...data });
         setAuthInfo({ authStatus: AuthStatus.authorized });
         authApi.silentRefresh();
       } catch (e) {
         setAuthInfo({ authStatus: AuthStatus.unauthorized });
       }
     })();
-  }, [setAuthInfo, setUserInfo]);
+  }, [setAuthInfo]);
 
   if (authInfo.authStatus === AuthStatus.pending) return null;
+
+  if (authInfo.authStatus === AuthStatus.authorized && !userInfo) return null;
 
   return (
     <div

@@ -1,64 +1,55 @@
-import { getBoards } from '@_apis/board';
+import { useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import authApi from '@_apis/auth';
+import boardApi from '@_apis/board';
 import Board from '@_components/Board';
 import EmptyData from '@_components/EmptyData';
 import Filter from '@_components/Filter';
 import Search from '@_components/Search';
 import Spinner from '@_components/common/Spinner';
-import { userState } from '@_recoil/atoms/user';
-import { BoardFilter, BoardInfo } from '@_types/board';
+import { BoardFilter } from '@_types/board';
 import { isLimit } from '@_utils/limit';
-import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 
 const Home = () => {
-  const [boards, setBoards] = useState<BoardInfo[]>([]);
-  const [page, setPage] = useState(0);
-  const [isLoadActive, setIsLoadActive] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchKeyword = searchParams.get('search');
   const [filter, setFilter] = useState<BoardFilter>({ isJoinPossible: true });
   const loadTargetRef = useRef<HTMLDivElement>(null);
-  const userInfo = useRecoilValue(userState);
+  const { data: userInfo } = useQuery({ queryKey: ['userInfo'], queryFn: authApi.requestUserInfo });
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && !isLoading) {
-        getBoardData(page + 1);
-        setPage((prev) => prev + 1);
-      }
-    });
+  const {
+    data: boards,
+    hasNextPage,
+    isLoading,
+    isFetching,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ['boards', filter.isJoinPossible, searchKeyword, userInfo?.email],
+    queryFn: ({ pageParam }) => boardApi.getBoards(pageParam),
+    initialPageParam: { page: 0, size: 5, search: searchKeyword ?? undefined },
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      if (lastPage.data.last) return null;
+      return { page: lastPageParam.page + 1, size: lastPageParam.size, search: lastPageParam.search };
+    },
+    select: (data) =>
+      data.pages.flatMap((page) =>
+        page.data.boards
+          .map((board) => ({ ...board, location: JSON.parse(board.location) }))
+          .filter((board) => (filter.isJoinPossible ? !isLimit(userInfo, board) : board))
+      ),
   });
 
-  const getBoardData = async (pageNum: number) => {
-    setIsLoading(true);
-
-    const {
-      data: { boards, last },
-    } = await getBoards({ page: pageNum, search: searchParams.get('search') ?? undefined });
-    last ? setIsLoadActive(false) : setIsLoadActive(true);
-
-    const boardsInfo = boards.map((board) => ({ ...board, location: JSON.parse(board.location) }));
-
-    if (pageNum === 0) {
-      filter.isJoinPossible
-        ? setBoards(boardsInfo.filter((board) => !isLimit(userInfo, board)))
-        : setBoards(boardsInfo);
-    } else
-      filter.isJoinPossible
-        ? setBoards((prev) => [...prev, ...boardsInfo.filter((board) => !isLimit(userInfo, board))])
-        : setBoards((prev) => [...prev, ...boardsInfo]);
-
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    setPage(0);
-    getBoardData(0);
-  }, [searchParams, filter, userInfo]);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && hasNextPage && !isFetching) {
+          fetchNextPage();
+        }
+      });
+    });
 
-  useEffect(() => {
-    if (loadTargetRef.current && isLoadActive) {
+    if (loadTargetRef.current) {
       observer.observe(loadTargetRef.current);
     }
 
@@ -67,27 +58,31 @@ const Home = () => {
         observer.unobserve(loadTargetRef.current);
       }
     };
-  }, [observer]);
+  }, [fetchNextPage, hasNextPage, isFetching]);
 
   return (
     <>
       <Search searchParams={searchParams} setSearchParams={setSearchParams} />
       <Filter filter={filter} setFilter={setFilter} />
 
-      {boards.length ? (
+      {boards?.length ? (
         <>
           {boards.map((boardData, index) => (
             <Board key={index} boardData={boardData} />
           ))}
 
-          {isLoading && (
-            <div style={{ position: 'relative' }}>
+          {isFetching && (
+            <div style={{ position: 'relative', height: '50px' }}>
               <Spinner />
             </div>
           )}
 
           <div id='trigger' ref={loadTargetRef} style={{ height: '1px' }} />
         </>
+      ) : isLoading ? (
+        <div style={{ position: 'relative', marginTop: '100px' }}>
+          <Spinner />
+        </div>
       ) : (
         <EmptyData content='존재하는 게시물이 없습니다 :(' />
       )}

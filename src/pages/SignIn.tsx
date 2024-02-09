@@ -1,55 +1,54 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import authApi from '@_apis/auth';
-import { userState } from '@_recoil/atoms/user';
 import Spinner from '@_components/common/Spinner';
 import { setAccessToken } from '@_apis/axios';
 import { authState } from '@_recoil/atoms/auth';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 import { AuthStatus } from '@_types/auth';
 
 const SignIn = () => {
   const code = new URL(document.URL).searchParams.get('code') as string;
-  const setAuthInfo = useSetRecoilState(authState);
-  const setUserInfo = useSetRecoilState(userState);
+  const [authInfo, setAuthInfo] = useRecoilState(authState);
+  const setModal = useSetRecoilState(modalState);
   const navigate = useNavigate();
 
-  const getTokensAndUserInfo = async () => {
-    const {
-      data: { accessToken },
-    } = await authApi.kakaoLogin(code);
+  const getTokens = async () => {
+    // 로그인 되어 있는데 접근 시 거부
+    if (authInfo.authStatus === AuthStatus.authorized) {
+      window.alert('올바르지 못한 접근입니다.');
+      navigate('/', { replace: true });
 
-    if (!accessToken) {
-      // ToDo: 로그인 실패 시 구현
-      console.log('로그인 실패');
       return;
     }
 
-    setAccessToken(accessToken);
+    try {
+      const {
+        data: { accessToken },
+      } = await authApi.kakaoLogin(code);
 
-    const { data } = await authApi.requestUserInfo();
+      if (!accessToken) {
+        window.alert('로그인 실패하였습니다. 다시 로그인 해주세요.');
+        setModal({ name: ModalName.login, isActive: true });
+        navigate('/', { replace: true });
 
-    if (!data) {
-      // ToDo: 사용자 정보 불러오기 실패 시 구현
-      console.log('사용자 정보 불러오기 실패');
-      return;
+        return;
+      }
+
+      setAccessToken(accessToken);
+      setAuthInfo({ authStatus: AuthStatus.authorized });
+      authApi.silentRefresh();
+    } catch {
+      window.alert('로그인 실패하였습니다. 다시 로그인 해주세요.');
+      setModal({ name: ModalName.login, isActive: true });
+      navigate('/', { replace: true });
     }
-
-    setUserInfo({ ...data });
-    setAuthInfo({ authStatus: AuthStatus.authorized });
   };
 
   useEffect(() => {
-    try {
-      getTokensAndUserInfo();
-      authApi.silentRefresh();
-    } catch (err) {
-      console.log(err);
-      window.alert('다시 로그인해주세요.');
-    } finally {
-      navigate('/');
-    }
-  }, [code, navigate, setAuthInfo, setUserInfo]);
+    getTokens();
+  }, []);
 
   return <Spinner />;
 };

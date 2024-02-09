@@ -1,4 +1,4 @@
-import { BoardDetailInfo, BoardDetailResponse, getBoardResponse } from '@_types/board';
+import { BoardDetailResponse, getBoardResponse } from '@_types/board';
 import { request } from './axios';
 import { UpdatePostRequest } from '@_types/createBoard';
 
@@ -6,13 +6,14 @@ import { UpdatePostRequest } from '@_types/createBoard';
  * @description 게시물 가져오는 API
  * @param page 현재 페이지
  * @param size 한번에 가져올 페이지의 크기
- * @returns page에 맞는 size개의 게시물들 정보
+ * @param search 검색할 내용
+ * @returns page에 맞는 size개의 search 관련(없다면 모든) 게시물들 정보
  */
-export const getBoards = async ({ page, size = 10, search }: { page: number; size?: number; search?: string }) => {
+export const getBoards = async ({ page, size, search }: { page: number; size?: number; search?: string }) => {
   const { data } = await request.get<getBoardResponse>('/boards', {
     params: {
       page,
-      size,
+      size: size ?? 10,
       search,
     },
   });

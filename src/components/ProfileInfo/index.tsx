@@ -7,8 +7,6 @@ import { UserEditType } from '@_types/userEdit';
 import Input from '@_components/common/Input';
 
 import * as S from './styles';
-import { userState } from '@_recoil/atoms/user';
-import { useRecoilValue } from 'recoil';
 
 // ToDo : 닉네임을 빈 값으로 전송하면 기존 닉네임으로 유지 (현재는 빈 값으로 입력하면 기존 닉네임이 삭제됨)
 

@@ -37,11 +37,8 @@ const silentRefresh = () => {
     async () => {
       try {
         const accessToken = await refresh();
-        if (!accessToken) return;
 
-        setRecoil(authState, {
-          authStatus: AuthStatus.authorized,
-        });
+        if (!accessToken) return;
 
         silentRefresh();
       } catch (e) {
@@ -81,9 +78,11 @@ const kakaoLogin = async (code: string) => {
  * @returns 유저 정보
  */
 const requestUserInfo = async () => {
-  const { data } = await request.get<UserInfoResponse>('/users/info');
+  const {
+    data: { data: userInfo },
+  } = await request.get<UserInfoResponse>('/users/info');
 
-  return data;
+  return userInfo;
 };
 
 const fetchUserInfoDetail = async () => {

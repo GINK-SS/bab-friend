@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import { useQuery } from '@tanstack/react-query';
 
 import PostOption from '@_components/BoardDetailOption';
@@ -9,11 +8,11 @@ import CommnetInput from '@_components/CommentInput';
 import CommentDisplay from '@_components/CommentDisplay';
 
 import boardApi from '@_apis/board';
-import { userState } from '@_recoil/atoms/user';
+import authApi from '@_apis/auth';
 
 const BoardDetail = () => {
   let params = useParams();
-  const userInfo = useRecoilValue(userState);
+  const { data: userInfo } = useQuery({ queryKey: ['userInfo'], queryFn: authApi.requestUserInfo });
   const navigate = useNavigate();
   const [isWriter, setIsWriter] = useState(false);
 
@@ -30,7 +29,7 @@ const BoardDetail = () => {
   });
 
   useEffect(() => {
-    if (userInfo.email === boardDetailInfo?.writerEmail) {
+    if (userInfo?.email === boardDetailInfo?.writerEmail) {
       setIsWriter(true);
     }
   }, [boardDetailInfo]);
