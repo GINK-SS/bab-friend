@@ -10,7 +10,7 @@ import KakaoMap from '@_components/Modal/KakaoMap';
 import Textarea from '@_components/common/Textarea';
 import KakaoStaticMap from '@_components/KakaoStaticMap';
 import Modal from '@_components/Modal';
-import { locationData } from '@_recoil/atoms/posts';
+import { locationData } from '@_recoil/atoms/mapData';
 import { ModalName, modalState } from '@_recoil/atoms/modal';
 import boardApi from '@_apis/board';
 import { UpdatePost } from '@_types/createBoard';
@@ -49,8 +49,13 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
     }));
   };
   const editBoard = useMutation({
-    mutationFn: () =>
-      boardApi.updateBoard(boardDetailInfo.id, { ...updatePostState, location: JSON.stringify(mapData) }),
+    mutationFn: async () => {
+      const requestData = {
+        ...updatePostState,
+        location: mapData ? JSON.stringify(mapData) : JSON.stringify(updatePostState.location)
+      };
+      await boardApi.updateBoard(boardDetailInfo.id, requestData);
+    },
     onSuccess: (data) => {
       resetMapData();
       navigate(`/boarddetail/${boardDetailInfo.id}`, { replace: true });
@@ -63,8 +68,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
 
   const clickEditBtn = () => {
     const isAnyFieldEmpty = Object.entries(updatePostState).some(([key, value]) => value === '');
-    const isLocationDataEmpty = !mapData || !mapData.location || !mapData.location.content;
-    if (isAnyFieldEmpty || isLocationDataEmpty) alert('모든 항목을 입력해주세요.');
+    if (isAnyFieldEmpty) alert('모든 항목을 입력해주세요.');
     else editBoard.mutate();
   };
   return (
@@ -101,7 +105,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
         <S.PeopleNumText>모집 인원</S.PeopleNumText>
         <S.PeopleNumSelect
           name='joinLimit'
-          onChange={(e) => handleChange('joinLimit', e.target.value)}
+          onChange={(e) => handleChange('joinLimit', parseInt(e.target.value))}
           value={updatePostState.joinLimit}
           required
         >

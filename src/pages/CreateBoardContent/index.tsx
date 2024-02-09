@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
-import { locationData, locationStringSelector, postsState } from '@_recoil/atoms/posts';
+import { postsState } from '@_recoil/atoms/posts';
 import { errorMessageState } from '@_recoil/atoms/validationError';
 import postApi from '@_apis/posts';
 import Input from '@_components/common/Input';
@@ -10,12 +10,12 @@ import Textarea from '@_components/common/Textarea';
 import * as S from './styles';
 
 import infoCircle from '@_assets/images/svg/alert-circle.svg';
+import { locationData } from '@_recoil/atoms/mapData';
 
 const CreateBoardContent = () => {
   const navigate = useNavigate();
   const [postState, setPostState] = useRecoilState(postsState);
   const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
-  const locationStringData = useRecoilValue(locationStringSelector);
   const mapData = useRecoilValue(locationData);
   const resetPostState = useResetRecoilState(postsState);
   const resetMapData = useResetRecoilState(locationData);

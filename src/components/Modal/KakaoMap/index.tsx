@@ -4,11 +4,11 @@ import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sd
 import { PostDataType } from '@_types/createBoard';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { locationData } from '@_recoil/atoms/posts';
 import Input from '@_components/common/Input';
 
 import closeBtn from '@_assets/images/svg/cancle.svg';
 import { ModalName, modalState } from '@_recoil/atoms/modal';
+import { locationData } from '@_recoil/atoms/mapData';
 
 declare global {
   interface Window {
