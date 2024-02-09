@@ -106,6 +106,7 @@ const CreateBoardContent = () => {
           errorMessage={errorMessage?.contentError}
           onChange={(e) => handleChange('content', e.target.value)}
           height={16}
+          maxLength={500}
         />
       </S.Content>
       <S.Link>

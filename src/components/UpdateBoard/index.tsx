@@ -52,7 +52,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
     mutationFn: async () => {
       const requestData = {
         ...updatePostState,
-        location: mapData ? JSON.stringify(mapData) : JSON.stringify(updatePostState.location)
+        location: mapData.address === '' ? JSON.stringify(updatePostState.location) : JSON.stringify(mapData)
       };
       await boardApi.updateBoard(boardDetailInfo.id, requestData);
     },
@@ -65,7 +65,6 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
       console.error('게시글 수정 실패:', error);
     },
   });
-
   const clickEditBtn = () => {
     const isAnyFieldEmpty = Object.entries(updatePostState).some(([key, value]) => value === '');
     if (isAnyFieldEmpty) alert('모든 항목을 입력해주세요.');
@@ -276,6 +275,8 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
             label='제목'
             value={updatePostState.title}
             onChange={(e) => handleChange('title', e.target.value)}
+            maxLength={40}
+            required
           />
         </S.Title>
         <S.Content>
@@ -285,6 +286,7 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
             value={updatePostState.content}
             onChange={(e) => handleChange('content', e.target.value)}
             height={12}
+            maxLength={500}
           />
         </S.Content>
         <S.Link>

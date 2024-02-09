@@ -52,6 +52,7 @@ const CommentInput = () => {
           value={comment.content}
           onChange={handleChangeComment}
           height={6}
+          maxLength={200}
         />
         <S.SubmitButton onClick={submitComment}>댓글 등록</S.SubmitButton>
       </S.InputWrap>
