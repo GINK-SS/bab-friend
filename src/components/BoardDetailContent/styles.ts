@@ -65,6 +65,18 @@ export const FixBtn = styled.button``;
 export const JoinBtnWrap = styled.div`
   margin: 10px 0;
 `;
+export const JoinDisableBtn = styled.button`
+  width: 100%;
+  background-color: ${({ theme }) => `${theme.colors.subColor}`};
+  color: white;
+  padding: 8px 18px;
+  margin-top: 30px;
+  border-radius: 10px;
+  transition: 0.5s;
+  &:hover {
+    background-color: crimson;
+  }
+`;
 export const JoinBtn = styled.button`
   width: 100%;
   background-color: ${({ theme }) => `${theme.colors.subColor}`};

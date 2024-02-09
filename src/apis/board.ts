@@ -47,6 +47,12 @@ export const joinBoard = async (id: number) => {
 
   return data;
 };
-const boardApi = { getBoards, getBoardDetail, deleteBoard, fixBoard, updateBoard, joinBoard };
+
+export const checkJoin = async (id: number) => {
+  const { data } = await request.get(`/boards/${id}/possibility`);
+
+  return data;
+};
+const boardApi = { getBoards, getBoardDetail, deleteBoard, fixBoard, updateBoard, joinBoard, checkJoin };
 
 export default boardApi;

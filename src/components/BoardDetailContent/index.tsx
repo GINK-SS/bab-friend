@@ -1,6 +1,5 @@
-import { StaticMap } from 'react-kakao-maps-sdk';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import boardApi from '@_apis/board';
 import { authState } from '@_recoil/atoms/auth';
@@ -10,6 +9,7 @@ import Modal from '@_components/Modal';
 import BoardDelete from '@_components/Modal/BoardDelete';
 import * as S from './styles';
 import KakaoStaticMap from '@_components/KakaoStaticMap';
+import { AuthStatus } from '@_types/auth';
 
 type BoardDetailContentProps = {
   boardContent: string;
@@ -27,6 +27,8 @@ type BoardDetailContentProps = {
   promiseTime: string;
   lastModifiedAt: string;
   isLimitJoin?: boolean;
+  isLimitAge: boolean;
+  isLimitGender: boolean;
 };
 
 const BoardDetailContent = ({
@@ -37,11 +39,19 @@ const BoardDetailContent = ({
   boardFix,
   promiseTime,
   isLimitJoin,
+  isLimitAge,
+  isLimitGender
 }: BoardDetailContentProps) => {
   let params = useParams();
   const navigate = useNavigate();
-  const isauthenticated = useRecoilValue(authState);
   const setModal = useSetRecoilState(modalState);
+  const { authStatus } = useRecoilValue(authState);
+  const queryClient = useQueryClient();
+
+  const { data: isJoin } = useQuery({
+    queryKey: ['checkJoin', params.id],
+    queryFn: () => boardApi.checkJoin(Number(params.id)),
+  });
 
   const fixPromise = useMutation({
     mutationFn: () => boardApi.fixBoard(Number(params.id)),
@@ -61,6 +71,7 @@ const BoardDetailContent = ({
   const joinBoard = useMutation({
     mutationFn: () => boardApi.joinBoard(Number(params.id)),
     onSuccess(data) {
+      queryClient.invalidateQueries({ queryKey: ['checkJoin'] });
       console.log(data);
     },
     onError(err) {
@@ -68,11 +79,12 @@ const BoardDetailContent = ({
     },
   });
   const clickJoinBtn = () => {
-    if (isauthenticated.authStatus === 2) setModal({ name: ModalName.login, isActive: true });
-    if (isauthenticated.authStatus === 0) {
+    if (authStatus === AuthStatus.unauthorized) setModal({ name: ModalName.login, isActive: true });
+    if (authStatus === AuthStatus.authorized) {
       if (isLimitJoin === false) {
         joinBoard.mutate();
-        alert('게시글에 참여하였습니다.');
+        if (isJoin?.data.joinPossible) alert('게시글에 참여하였습니다.');
+        else alert('게시글 참여를 취소하였습니다.');
       } else {
         alert('모집인원이 다 찼습니다.');
       }
@@ -113,16 +125,20 @@ const BoardDetailContent = ({
           content={boardLocation.content}
         />
       )}
-      {
-        <>
-          {isWriter === false && (
-            <S.JoinBtnWrap onClick={clickJoinBtn}>
-              <S.JoinBtn>참여하기</S.JoinBtn>
-            </S.JoinBtnWrap>
-          )}
-        </>
-      }
-    </S.PostContentContainer>
+      <>
+        {isWriter === false && (
+          <S.JoinBtnWrap onClick={clickJoinBtn}>
+            {isLimitAge || isLimitGender ? (
+              <S.JoinDisableBtn disabled>참여 불가</S.JoinDisableBtn>
+            ) : (
+              <>
+                {isJoin?.data.joinPossible ? <S.JoinBtn>참여하기</S.JoinBtn> : <S.JoinBtn>참여하기 취소</S.JoinBtn>}
+              </>
+            )}
+          </S.JoinBtnWrap>
+        )}
+      </>
+    </S.PostContentContainer >
   );
 };
 
