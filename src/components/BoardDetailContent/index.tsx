@@ -85,9 +85,9 @@ const BoardDetailContent = ({
         joinBoard.mutate();
         if (isJoin?.data.joinPossible) alert('게시글에 참여하였습니다.');
         else alert('게시글 참여를 취소하였습니다.');
-      } else {
-        alert('모집인원이 다 찼습니다.');
       }
+      if (isJoinOver && isJoin?.data.alreadyJoin) alert('게시글 참여를 취소하였습니다.');
+      if (isJoinOver) alert('모집인원이 다 찼습니다.');
     }
   };
   const clickDeleteBtn = () => {
