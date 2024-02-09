@@ -26,7 +26,7 @@ type BoardDetailContentProps = {
   boardFix: boolean;
   promiseTime: string;
   lastModifiedAt: string;
-  isLimitJoin?: boolean;
+  isJoinOver?: boolean;
   isLimitAge: boolean;
   isLimitGender: boolean;
 };
@@ -38,7 +38,7 @@ const BoardDetailContent = ({
   boardUpdate,
   boardFix,
   promiseTime,
-  isLimitJoin,
+  isJoinOver,
   isLimitAge,
   isLimitGender
 }: BoardDetailContentProps) => {
@@ -81,7 +81,7 @@ const BoardDetailContent = ({
   const clickJoinBtn = () => {
     if (authStatus === AuthStatus.unauthorized) setModal({ name: ModalName.login, isActive: true });
     if (authStatus === AuthStatus.authorized) {
-      if (isLimitJoin === false) {
+      if (isJoinOver === false) {
         joinBoard.mutate();
         if (isJoin?.data.joinPossible) alert('게시글에 참여하였습니다.');
         else alert('게시글 참여를 취소하였습니다.');
@@ -110,7 +110,7 @@ const BoardDetailContent = ({
         </S.BtnWrap>
       )}
       {boardFix && <S.FixBoardText>!! 게시글이 마감되었습니다 !!</S.FixBoardText>}
-      {isLimitJoin && <S.LimitJoinText>!! 모집인원이 다 찼습니다 !!</S.LimitJoinText>}
+      {isJoinOver && <S.LimitJoinText>!! 모집인원이 다 찼습니다 !!</S.LimitJoinText>}
       <S.ContentHeader>
         <S.PromiseTime>약속 시간 : {formatDate(promiseTime)}</S.PromiseTime>
       </S.ContentHeader>

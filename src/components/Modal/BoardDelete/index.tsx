@@ -14,6 +14,10 @@ const BoardDelete = () => {
 
   const deleteBoard = useMutation({
     mutationFn: () => boardApi.deleteBoard(Number(params.id)),
+    onSuccess(data) {
+      setModal({ name: ModalName.boardDelete, isActive: false });
+      navigate('/');
+    },
     onError(err) {
       console.log(err);
       alert('게시글 삭제 실패');
@@ -21,7 +25,6 @@ const BoardDelete = () => {
   });
   const clickDeleteBtn = () => {
     deleteBoard.mutate();
-    navigate('/');
   };
   return (
     <>
