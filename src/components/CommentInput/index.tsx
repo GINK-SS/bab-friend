@@ -8,12 +8,13 @@ import Textarea from '@_components/common/Textarea';
 import { authState } from '@_recoil/atoms/auth';
 import { ModalName, modalState } from '@_recoil/atoms/modal';
 import * as S from './styles';
+import { AuthStatus } from '@_types/auth';
 
 const CommentInput = () => {
   const queryClient = useQueryClient();
   let params = useParams();
   const [comment, setComment] = useState({ content: '' });
-  const isauthenticated = useRecoilValue(authState);
+  const { authStatus } = useRecoilValue(authState);
   const setModal = useSetRecoilState(modalState);
 
   const handleChangeComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,7 +33,7 @@ const CommentInput = () => {
   });
 
   const submitComment = () => {
-    if (isauthenticated.authStatus === 2) setModal({ name: ModalName.login, isActive: true });
+    if (authStatus === AuthStatus.unauthorized) setModal({ name: ModalName.login, isActive: true });
     if (!comment.content) {
       alert('댓글을 입력해주세요.');
     } else {
