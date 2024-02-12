@@ -10,9 +10,12 @@ import authApi from '@_apis/auth';
 
 type BoardProps = {
   boardData: BoardInfo;
+  isShowLimit?: boolean;
+  hasReviewBtn?: boolean;
+  reviewStatus?: 'ENABLED' | 'DISABLED' | 'DONE';
 };
 
-const Board = ({ boardData }: BoardProps) => {
+const Board = ({ boardData, isShowLimit = true, hasReviewBtn = false, reviewStatus }: BoardProps) => {
   const { data: userInfo } = useQuery({ queryKey: ['userInfo'], queryFn: authApi.requestUserInfo });
   const navigate = useNavigate();
   const categoryTypeToKorean = {
@@ -29,7 +32,7 @@ const Board = ({ boardData }: BoardProps) => {
 
   return (
     <S.Container>
-      {isLimit(userInfo, boardData) ? (
+      {isShowLimit && isLimit(userInfo, boardData) ? (
         <S.BlockContainer>
           {boardData.fix
             ? '확정 완료'
@@ -94,6 +97,18 @@ const Board = ({ boardData }: BoardProps) => {
           level={2}
         />
       </S.Wrapper>
+
+      {hasReviewBtn ? (
+        <S.Footer>
+          <S.Review $reviewStatus={reviewStatus} disabled={reviewStatus !== 'ENABLED'}>
+            {reviewStatus === 'ENABLED'
+              ? '리뷰 작성'
+              : reviewStatus === 'DISABLED'
+                ? '리뷰 작성 불가'
+                : '리뷰 작성 완료'}
+          </S.Review>
+        </S.Footer>
+      ) : null}
     </S.Container>
   );
 };
