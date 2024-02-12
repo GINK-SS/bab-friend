@@ -346,7 +346,7 @@ export const PrevBtn = styled.button`
   color: black;
   border: 0.1px solid black;
 `;
-export const CancleBtn = styled.button`
+export const CancelBtn = styled.button`
   border: 1px solid black;
 `;
 export const editBtn = styled.button`

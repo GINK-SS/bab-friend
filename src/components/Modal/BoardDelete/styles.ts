@@ -22,6 +22,6 @@ export const DeleteBtn = styled.button`
   background-color: crimson;
   color: white;
 `;
-export const CancleBtn = styled.button`
+export const CancelBtn = styled.button`
   border: 1px solid ${({ theme }) => `${theme.colors.subColor}`};
 `;

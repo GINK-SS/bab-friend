@@ -6,7 +6,7 @@ import { PostDataType } from '@_types/createBoard';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import Input from '@_components/common/Input';
 
-import closeBtn from '@_assets/images/svg/cancle.svg';
+import closeBtn from '@_assets/images/svg/cancel.svg';
 import { ModalName, modalState, useCloseModal } from '@_recoil/atoms/modal';
 import { locationData } from '@_recoil/atoms/mapData';
 

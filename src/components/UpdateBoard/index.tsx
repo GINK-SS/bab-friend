@@ -300,13 +300,13 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
           />
         </S.Link>
         <S.BtnWrap>
-          <S.CancleBtn
+          <S.CancelBtn
             onClick={() => {
               navigate(-1);
             }}
           >
             취소하기
-          </S.CancleBtn>
+          </S.CancelBtn>
           <S.editBtn onClick={clickEditBtn}>수정하기</S.editBtn>
         </S.BtnWrap>
       </S.CreateContentContainer>

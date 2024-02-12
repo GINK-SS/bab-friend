@@ -48,7 +48,7 @@ export const UserEmail = styled.p`
   font-family: 'Pretendard-ExtraLight';
   opacity: 0.8;
 `;
-export const CancleWrap = styled.div`
+export const CancelWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,7 +60,7 @@ export const CancleWrap = styled.div`
   border-radius: 8px;
   cursor: pointer;
 `;
-export const CancleText = styled.p`
+export const CancelText = styled.p`
   font-size: 12px;
   color: ${({ theme }) => theme.colors.blackColor};
 `;

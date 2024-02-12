@@ -32,13 +32,13 @@ const BoardDelete = () => {
         <S.DeleteConfirm>게시물을 정말 삭제하시겠습니까</S.DeleteConfirm>
         <S.ConfirmBtnWrap>
           <S.DeleteBtn onClick={clickDeleteBtn}>삭제하기</S.DeleteBtn>
-          <S.CancleBtn
+          <S.CancelBtn
             onClick={() => {
               closeModal()
             }}
           >
             취소하기
-          </S.CancleBtn>
+          </S.CancelBtn>
         </S.ConfirmBtnWrap>
       </S.DeleteBoxWrap>
     </>
