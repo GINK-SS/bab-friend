@@ -99,7 +99,7 @@ const BoardDetailContent = ({
       <Modal name={ModalName.boardDelete} contentPadding='4rem'>
         <BoardDelete />
       </Modal>
-      {isWriter && (
+      {isWriter && authStatus === AuthStatus.authorized && (
         <S.BtnWrap>
           <S.PostEditBtn onClick={boardUpdate}>수정</S.PostEditBtn>
           <S.PostDeleteBtn onClick={clickDeleteBtn}>삭제</S.PostDeleteBtn>
