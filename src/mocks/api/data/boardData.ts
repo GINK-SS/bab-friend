@@ -109,5 +109,10 @@ export const getBoardLast = ({ page, size = 10, search }: { page: number; size?:
 };
 
 export const getJoinedData = () => {
-  return data.filter((value, index) => index % 4 === 0);
+  return data
+    .filter((_, index) => index % 4 === 0)
+    .map((value, index) => ({
+      ...value,
+      reviewStatus: index % 3 === 0 ? 'DONE' : index % 3 === 1 ? 'ENABLED' : 'DISABLED',
+    }));
 };
