@@ -105,3 +105,8 @@ export type getBoardResponse = {
 export type BoardFilter = {
   isJoinPossible: boolean;
 };
+
+export type JoinedMeetingsResponse = {
+  statusCode: number;
+  data: BoardResponse[];
+};

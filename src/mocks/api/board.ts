@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { getBoardData, getBoardLast } from './data/boardData';
+import { getBoardData, getBoardLast, getJoinedData } from './data/boardData';
 
 const handlers = [
   http.get(`${process.env.REACT_APP_BASE_URL}/boards`, ({ request }) => {
@@ -16,6 +16,12 @@ const handlers = [
         totalElement: 53,
         empty: false,
       },
+    });
+  }),
+
+  http.get(`${process.env.REACT_APP_BASE_URL}/users/meetings`, () => {
+    return HttpResponse.json({
+      data: getJoinedData(),
     });
   }),
 ];

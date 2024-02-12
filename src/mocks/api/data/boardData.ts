@@ -107,3 +107,7 @@ export const getBoardLast = ({ page, size = 10, search }: { page: number; size?:
 
   return Math.floor(data.length / size) === page;
 };
+
+export const getJoinedData = () => {
+  return data.filter((value, index) => index % 4 === 0);
+};
