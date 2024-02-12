@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useMutation } from '@tanstack/react-query';
 import { authState } from '@_recoil/atoms/auth';
-import { ModalName, modalState } from '@_recoil/atoms/modal';
+import { ModalName, modalState, useCloseModal } from '@_recoil/atoms/modal';
 import boardApi from '@_apis/board';
 
 import * as S from './styles';
@@ -10,12 +10,12 @@ import * as S from './styles';
 const BoardDelete = () => {
   let params = useParams();
   const navigate = useNavigate();
-  const setModal = useSetRecoilState(modalState);
+  const closeModal = useCloseModal()
 
   const deleteBoard = useMutation({
     mutationFn: () => boardApi.deleteBoard(Number(params.id)),
     onSuccess(data) {
-      setModal({ name: ModalName.boardDelete, isActive: false });
+      closeModal()
       navigate('/');
     },
     onError(err) {
@@ -34,7 +34,7 @@ const BoardDelete = () => {
           <S.DeleteBtn onClick={clickDeleteBtn}>삭제하기</S.DeleteBtn>
           <S.CancleBtn
             onClick={() => {
-              setModal({ name: ModalName.boardDelete, isActive: false });
+              closeModal()
             }}
           >
             취소하기

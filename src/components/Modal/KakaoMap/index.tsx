@@ -7,7 +7,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import Input from '@_components/common/Input';
 
 import closeBtn from '@_assets/images/svg/cancle.svg';
-import { ModalName, modalState } from '@_recoil/atoms/modal';
+import { ModalName, modalState, useCloseModal } from '@_recoil/atoms/modal';
 import { locationData } from '@_recoil/atoms/mapData';
 
 declare global {
@@ -32,8 +32,7 @@ const KakaoMap = () => {
       lng: 126.570667,
     },
   });
-  const setModal = useSetRecoilState(modalState);
-
+  const closeModal = useCloseModal()
   // 컴포넌트가 처음 렌더링될 때와 map 상태가 업데이트될 때 검색 수행
   useEffect(() => {
     handleSearch();
@@ -121,7 +120,7 @@ const KakaoMap = () => {
     if (mapData.location?.content === '') {
       alert('위치를 지정해주세요.');
     } else {
-      setModal({ name: ModalName.kakaoMap, isActive: false });
+      closeModal()
     }
   };
   return (
@@ -131,7 +130,7 @@ const KakaoMap = () => {
           <S.CloseBtn
             src={closeBtn}
             onClick={() => {
-              setModal({ name: ModalName.kakaoMap, isActive: false });
+              closeModal()
             }}
           />
         </S.CloseBtnWrap>

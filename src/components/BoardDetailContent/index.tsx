@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import boardApi from '@_apis/board';
 import { authState } from '@_recoil/atoms/auth';
 import formatDate from '@_utils/formatDate';
-import { ModalName, modalState } from '@_recoil/atoms/modal';
+import { ModalName, modalState, useCloseModal } from '@_recoil/atoms/modal';
 import Modal from '@_components/Modal';
 import BoardDelete from '@_components/Modal/BoardDelete';
 import * as S from './styles';
@@ -45,6 +45,7 @@ const BoardDetailContent = ({
   let params = useParams();
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);
+  const closeModal = useCloseModal()
   const { authStatus } = useRecoilValue(authState);
   const queryClient = useQueryClient();
 
@@ -79,7 +80,7 @@ const BoardDetailContent = ({
     },
   });
   const clickJoinBtn = () => {
-    if (authStatus === AuthStatus.unauthorized) setModal({ name: ModalName.login, isActive: true });
+    if (authStatus === AuthStatus.unauthorized) closeModal()
     if (authStatus === AuthStatus.authorized) {
       if (isJoinOver === false) {
         joinBoard.mutate();
