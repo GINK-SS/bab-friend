@@ -1,9 +1,15 @@
-import { StaticMap } from 'react-kakao-maps-sdk';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import boardApi from '@_apis/board';
-import * as S from './styles';
+import { authState } from '@_recoil/atoms/auth';
 import formatDate from '@_utils/formatDate';
+import { ModalName, modalState, useCloseModal } from '@_recoil/atoms/modal';
+import Modal from '@_components/Modal';
+import BoardDelete from '@_components/Modal/BoardDelete';
+import * as S from './styles';
+import KakaoStaticMap from '@_components/KakaoStaticMap';
+import { AuthStatus } from '@_types/auth';
 
 type BoardDetailContentProps = {
   boardContent: string;
@@ -20,7 +26,9 @@ type BoardDetailContentProps = {
   boardFix: boolean;
   promiseTime: string;
   lastModifiedAt: string;
-  isLimitJoin?: boolean;
+  isJoinOver?: boolean;
+  isLimitAge: boolean;
+  isLimitGender: boolean;
 };
 
 const BoardDetailContent = ({
@@ -30,10 +38,21 @@ const BoardDetailContent = ({
   boardUpdate,
   boardFix,
   promiseTime,
-  isLimitJoin,
+  isJoinOver,
+  isLimitAge,
+  isLimitGender
 }: BoardDetailContentProps) => {
   let params = useParams();
   const navigate = useNavigate();
+  const setModal = useSetRecoilState(modalState);
+  const closeModal = useCloseModal()
+  const { authStatus } = useRecoilValue(authState);
+  const queryClient = useQueryClient();
+
+  const { data: isJoin } = useQuery({
+    queryKey: ['checkJoin', params.id],
+    queryFn: () => boardApi.checkJoin(Number(params.id)),
+  });
 
   const fixPromise = useMutation({
     mutationFn: () => boardApi.fixBoard(Number(params.id)),
@@ -50,17 +69,10 @@ const BoardDetailContent = ({
     },
   });
 
-  const deleteBoard = useMutation({
-    mutationFn: () => boardApi.deleteBoard(Number(params.id)),
-    onError(err) {
-      console.log(err);
-      alert('게시글 삭제 실패');
-    },
-  });
-
   const joinBoard = useMutation({
     mutationFn: () => boardApi.joinBoard(Number(params.id)),
     onSuccess(data) {
+      queryClient.invalidateQueries({ queryKey: ['checkJoin'] });
       console.log(data);
     },
     onError(err) {
@@ -68,21 +80,26 @@ const BoardDetailContent = ({
     },
   });
   const clickJoinBtn = () => {
-    if (isLimitJoin === false) {
-      joinBoard.mutate();
-      alert('게시글에 참여하였습니다.');
-    } else {
-      alert('모집인원이 다 찼습니다.');
+    if (authStatus === AuthStatus.unauthorized) closeModal()
+    if (authStatus === AuthStatus.authorized) {
+      if (isJoinOver === false) {
+        joinBoard.mutate();
+        if (isJoin?.data.joinPossible) alert('게시글에 참여하였습니다.');
+        else alert('게시글 참여를 취소하였습니다.');
+      }
+      if (isJoinOver && isJoin?.data.alreadyJoin) alert('게시글 참여를 취소하였습니다.');
+      if (isJoinOver) alert('모집인원이 다 찼습니다.');
     }
   };
   const clickDeleteBtn = () => {
-    deleteBoard.mutate();
-    navigate('/');
-    alert('게시글이 삭제되었습니다.');
+    setModal({ name: ModalName.boardDelete, isActive: true });
   };
   return (
     <S.PostContentContainer>
-      {isWriter && (
+      <Modal name={ModalName.boardDelete} contentPadding='4rem'>
+        <BoardDelete />
+      </Modal>
+      {isWriter && authStatus === AuthStatus.authorized && (
         <S.BtnWrap>
           <S.PostEditBtn onClick={boardUpdate}>수정</S.PostEditBtn>
           <S.PostDeleteBtn onClick={clickDeleteBtn}>삭제</S.PostDeleteBtn>
@@ -94,48 +111,35 @@ const BoardDetailContent = ({
         </S.BtnWrap>
       )}
       {boardFix && <S.FixBoardText>!! 게시글이 마감되었습니다 !!</S.FixBoardText>}
-      {isLimitJoin && <S.LimitJoinText>!! 모집인원이 다 찼습니다 !!</S.LimitJoinText>}
+      {isJoinOver && <S.LimitJoinText>!! 모집인원이 다 찼습니다 !!</S.LimitJoinText>}
       <S.ContentHeader>
         <S.PromiseTime>약속 시간 : {formatDate(promiseTime)}</S.PromiseTime>
       </S.ContentHeader>
       <S.Content>{boardContent}</S.Content>
       {boardLocation?.position.lat && boardLocation?.position.lng && (
-        <StaticMap
+        <KakaoStaticMap
           center={{
             lat: boardLocation.position.lat,
             lng: boardLocation.position.lng,
           }}
-          style={{
-            width: '100%',
-            height: '250px',
-            marginTop: '50px',
-            borderRadius: '20px',
-            border: '1px solid #e0e0e0',
-            boxShadow: '0px 0px 10px 0px #e0e0e0',
-          }}
-          marker={[
-            {
-              position: {
-                lat: boardLocation.position.lat,
-                lng: boardLocation.position.lng,
-              },
-              text: boardLocation.content,
-            },
-          ]}
-          level={3} // 지도의 확대 레벨
+          height={250}
+          content={boardLocation.content}
         />
       )}
-
-      {
-        <>
-          {isWriter === false && (
-            <S.JoinBtnWrap onClick={clickJoinBtn}>
-              <S.JoinBtn>참여하기</S.JoinBtn>
-            </S.JoinBtnWrap>
-          )}
-        </>
-      }
-    </S.PostContentContainer>
+      <>
+        {isWriter === false && (
+          <S.JoinBtnWrap onClick={clickJoinBtn}>
+            {isLimitAge || isLimitGender ? (
+              <S.JoinDisableBtn disabled>참여 불가</S.JoinDisableBtn>
+            ) : (
+              <>
+                {isJoin?.data.joinPossible ? <S.JoinBtn>참여하기</S.JoinBtn> : <S.JoinBtn>참여하기 취소</S.JoinBtn>}
+              </>
+            )}
+          </S.JoinBtnWrap>
+        )}
+      </>
+    </S.PostContentContainer >
   );
 };
 

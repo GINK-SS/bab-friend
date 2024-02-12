@@ -1,25 +1,7 @@
 import styled from 'styled-components';
 
 export const CreateContentContainer = styled.div`
-  p {
-    color: ${({ theme }) => theme.colors.blackColor};
-  }
-  input {
-    width: 100%;
-    border: 1px solid #d5d4dc;
-    border-radius: 5px;
-    padding: 5px 10px;
-    background: none;
-    outline: none;
-    &::placeholder {
-      font-size: 12px;
-      opacity: 0.7;
-      font-family: 'Pretendard-ExtraLight';
-    }
-    &:focus {
-      border: 1px solid ${({ theme }) => theme.colors.mainColor};
-    }
-  }
+  border: 1px solid transparent;
 `;
 
 export const TextBox = styled.div`
@@ -61,25 +43,6 @@ export const ContentText = styled.p`
   margin-bottom: 15px;
   font-size: 16px;
   font-family: 'Pretendard-SemiBold';
-`;
-export const ContentInput = styled.textarea`
-  width: 100%;
-  height: 180px;
-  border: 1px solid #d5d4dc;
-
-  border-radius: 5px;
-  padding: 20px 10px;
-  background: none;
-  outline: none;
-  resize: none;
-  &::placeholder {
-    font-size: 12px;
-    opacity: 0.7;
-    font-family: 'Pretendard-ExtraLight';
-  }
-  &:focus {
-    border: 1px solid ${({ theme }) => theme.colors.mainColor};
-  }
 `;
 export const Link = styled.div`
   padding: 0 30px;

@@ -111,13 +111,13 @@ const ProfileInfo = () => {
         <S.EditText>{editSet ? '완료' : '수정'}</S.EditText>
       </S.EditWrap>
       {editSet && (
-        <S.CancleWrap
+        <S.CancelWrap
           onClick={() => {
             setEditSet(false);
           }}
         >
-          <S.CancleText>취소</S.CancleText>
-        </S.CancleWrap>
+          <S.CancelText>취소</S.CancelText>
+        </S.CancelWrap>
       )}
     </S.ProfileInfoContainer>
   );

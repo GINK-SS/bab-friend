@@ -41,20 +41,41 @@ export const PromiseTime = styled.div`
 export const BtnWrap = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 20px;
+  gap: 18px;
   margin: 10px 0;
+  margin-bottom: 30px;
+  transition: 0.3s;
+  button {
+    &:hover {
+      font-weight: bold;
+    }
+  }
 `;
 export const PostEditBtn = styled.button``;
 export const PostDeleteBtn = styled.button``;
 
 export const Content = styled.p`
-  line-height: 3rem;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  line-height: 1.8rem;
   word-spacing: 1px;
 `;
 
 export const FixBtn = styled.button``;
 export const JoinBtnWrap = styled.div`
   margin: 10px 0;
+`;
+export const JoinDisableBtn = styled.button`
+  width: 100%;
+  background-color: ${({ theme }) => `${theme.colors.subColor}`};
+  color: white;
+  padding: 8px 18px;
+  margin-top: 30px;
+  border-radius: 10px;
+  transition: 0.5s;
+  &:hover {
+    background-color: crimson;
+  }
 `;
 export const JoinBtn = styled.button`
   width: 100%;

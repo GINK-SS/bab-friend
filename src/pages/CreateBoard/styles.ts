@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const CreatePostContainer = styled.div`
-  position: relative;
-`;
+export const CreatePostContainer = styled.div``;
 export const CreatePostHeaderText = styled.div`
   width: 100%;
   height: 86px;

@@ -9,6 +9,7 @@ import CommentDisplay from '@_components/CommentDisplay';
 
 import boardApi from '@_apis/board';
 import authApi from '@_apis/auth';
+import { isLimitedByAge, isLimitedByGender } from '@_utils/limit';
 
 const BoardDetail = () => {
   let params = useParams();
@@ -42,7 +43,10 @@ const BoardDetail = () => {
       },
     });
   };
-  const isLimitJoin = boardDetailInfo && boardDetailInfo?.currentJoin >= boardDetailInfo?.joinLimit;
+
+  const isLimitGender = isLimitedByGender(userInfo, boardDetailInfo)
+  const isLimitAge = isLimitedByAge(userInfo, boardDetailInfo)
+  const isJoinOver = boardDetailInfo && boardDetailInfo?.currentJoin >= boardDetailInfo?.joinLimit
   return (
     <>
       {boardDetailInfo && (
@@ -56,7 +60,9 @@ const BoardDetail = () => {
             boardFix={boardDetailInfo.fix}
             promiseTime={boardDetailInfo.eatTime}
             lastModifiedAt={boardDetailInfo.lastModifiedAt}
-            isLimitJoin={isLimitJoin}
+            isJoinOver={isJoinOver}
+            isLimitAge={isLimitAge}
+            isLimitGender={isLimitGender}
           />
           <CommnetInput />
           {boardDetailInfo?.boardComments.map((item) => {

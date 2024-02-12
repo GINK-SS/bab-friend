@@ -1,26 +1,27 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { StaticMap } from 'react-kakao-maps-sdk';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { useMutation } from '@tanstack/react-query';
 
 import { SelectOptionProps } from '@_components/SelectBoardOption';
 import Input from '@_components/common/Input';
 import Calendar from '@_components/Calendar';
-import KakaoMapModal from '@_components/KakaoMapModal';
+import KakaoMap from '@_components/Modal/KakaoMap';
 import Textarea from '@_components/common/Textarea';
-import { locationData } from '@_recoil/atoms/posts';
+import KakaoStaticMap from '@_components/KakaoStaticMap';
+import Modal from '@_components/Modal';
+import { locationData } from '@_recoil/atoms/mapData';
+import { ModalName, modalState } from '@_recoil/atoms/modal';
 import boardApi from '@_apis/board';
 import { UpdatePost } from '@_types/createBoard';
 
 import * as S from './styles';
 
-import infoCircle from '@_assets/images/svg/alert-circle.svg';
-
 const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
   const navigate = useNavigate();
-  const [mapModalOpen, setMapModalOpen] = useState(false);
   const mapData = useRecoilValue(locationData);
+  const resetMapData = useResetRecoilState(locationData);
+  const setModal = useSetRecoilState(modalState);
   const [updatePostState, setUpdatePostState] = useState<UpdatePost>({
     title: boardDetailInfo.title,
     content: boardDetailInfo.content,
@@ -48,16 +49,27 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
     }));
   };
   const editBoard = useMutation({
-    mutationFn: () =>
-      boardApi.updateBoard(boardDetailInfo.id, { ...updatePostState, location: JSON.stringify(mapData) }),
+    mutationFn: async () => {
+      const requestData = {
+        ...updatePostState,
+        location: mapData.address === '' ? JSON.stringify(updatePostState.location) : JSON.stringify(mapData)
+      };
+      await boardApi.updateBoard(boardDetailInfo.id, requestData);
+    },
     onSuccess: (data) => {
-      navigate(`/boarddetail/${boardDetailInfo.id}`);
+      resetMapData();
+      navigate(`/boarddetail/${boardDetailInfo.id}`, { replace: true });
       console.log('게시글 수정 완료', data);
     },
     onError: (error) => {
       console.error('게시글 수정 실패:', error);
     },
   });
+  const clickEditBtn = () => {
+    const isAnyFieldEmpty = Object.entries(updatePostState).some(([key, value]) => value === '');
+    if (isAnyFieldEmpty) alert('모든 항목을 입력해주세요.');
+    else editBoard.mutate();
+  };
   return (
     <>
       <S.FoodType>
@@ -78,20 +90,21 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
           <S.FoodTypeSelectOption value='WEST'>양식</S.FoodTypeSelectOption>
         </S.FoodTypeSelect>
       </S.FoodType>
-      <S.Menu>
+      <S.Price>
         <Input
           type='number'
           placeholder='예상가격을 입력해주세요..'
           label='예상가격'
           value={updatePostState?.priceRange}
           onChange={(e) => handleChange('priceRange', e.target.value)}
+          required
         />
-      </S.Menu>
+      </S.Price>
       <S.PeopleNum>
         <S.PeopleNumText>모집 인원</S.PeopleNumText>
         <S.PeopleNumSelect
           name='joinLimit'
-          onChange={(e) => handleChange('joinLimit', e.target.value)}
+          onChange={(e) => handleChange('joinLimit', parseInt(e.target.value))}
           value={updatePostState.joinLimit}
           required
         >
@@ -112,36 +125,25 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
         <S.StoreNameLabel>가게명을 입력해주세요.</S.StoreNameLabel>
         <S.StoreBtn
           onClick={() => {
-            setMapModalOpen(true);
+            setModal({ name: ModalName.kakaoMap, isActive: true });
           }}
         >
           가게명 검색하기
         </S.StoreBtn>
-        {mapData.location.content === '' ? (
+        {!mapData || mapData.address === '' ? (
           <>
             <S.StoreInfo>
               <S.StoreAddress>위치 : {boardDetailInfo.location.address}</S.StoreAddress>
               <S.StoreName>가게명 : {boardDetailInfo.location?.location?.content}</S.StoreName>
             </S.StoreInfo>
-            <StaticMap
+
+            <KakaoStaticMap
               center={{
                 lat: boardDetailInfo.location?.location?.position.lat,
                 lng: boardDetailInfo.location?.location?.position.lng,
               }}
-              style={{
-                width: '100%',
-                height: '200px',
-              }}
-              marker={[
-                {
-                  position: {
-                    lat: boardDetailInfo.location?.location?.position.lat,
-                    lng: boardDetailInfo.location?.location?.position.lng,
-                  },
-                  text: boardDetailInfo.location?.location?.content,
-                },
-              ]}
-              level={3}
+              content={boardDetailInfo.location?.location?.content}
+              height={200}
             />
           </>
         ) : (
@@ -150,29 +152,21 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
               <S.StoreAddress>위치 : {mapData.address}</S.StoreAddress>
               <S.StoreName>가게명 : {mapData.location.content}</S.StoreName>
             </S.StoreInfo>
-            <StaticMap
+
+            <KakaoStaticMap
               center={{
                 lat: mapData.location.position.lat,
                 lng: mapData.location.position.lng,
               }}
-              style={{
-                width: '100%',
-                height: '200px',
-              }}
-              marker={[
-                {
-                  position: {
-                    lat: mapData.location.position.lat,
-                    lng: mapData.location.position.lng,
-                  },
-                  text: mapData.location.content,
-                },
-              ]}
-              level={3}
+              content={mapData.location.content}
+              height={200}
             />
           </>
         )}
-        {mapModalOpen && <KakaoMapModal setMapModalOpen={setMapModalOpen} />}
+
+        <Modal name={ModalName.kakaoMap}>
+          <KakaoMap />
+        </Modal>
       </S.StoreNameWrap>
       <S.Alchol>
         <S.AlcholText>술 여부</S.AlcholText>
@@ -281,6 +275,8 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
             label='제목'
             value={updatePostState.title}
             onChange={(e) => handleChange('title', e.target.value)}
+            maxLength={40}
+            required
           />
         </S.Title>
         <S.Content>
@@ -289,33 +285,29 @@ const UpdateBoard = ({ boardDetailInfo, updating }: SelectOptionProps) => {
             label='내용'
             value={updatePostState.content}
             onChange={(e) => handleChange('content', e.target.value)}
-            height={2}
+            height={12}
+            maxLength={500}
           />
         </S.Content>
         <S.Link>
           <Input
-            type='text'
+            type='link'
             placeholder='링크(오픈채팅방)을 입력해주세요..'
             label='링크'
             value={updatePostState.linkUrl}
             onChange={(e) => handleChange('linkUrl', e.target.value)}
+            required
           />
         </S.Link>
         <S.BtnWrap>
-          <S.CancleBtn
+          <S.CancelBtn
             onClick={() => {
               navigate(-1);
             }}
           >
             취소하기
-          </S.CancleBtn>
-          <S.editBtn
-            onClick={() => {
-              editBoard.mutate();
-            }}
-          >
-            수정하기
-          </S.editBtn>
+          </S.CancelBtn>
+          <S.editBtn onClick={clickEditBtn}>수정하기</S.editBtn>
         </S.BtnWrap>
       </S.CreateContentContainer>
     </>

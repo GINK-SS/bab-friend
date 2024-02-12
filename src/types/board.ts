@@ -50,13 +50,14 @@ export type BoardDetailInfo = {
         lng: number;
       };
     };
-    address?: string;
+    address: string;
   };
   linkUrl: string;
   priceRange: number;
   writerEmail: string;
   lastModifiedAt: string;
   changed: boolean;
+  boardComments?: [{ id: number; writer: string; content: string; createdAt: string; profileImageUrl: string }];
 };
 
 export type BoardDetailResponse = {

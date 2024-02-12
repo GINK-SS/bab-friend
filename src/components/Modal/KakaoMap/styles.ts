@@ -1,23 +1,13 @@
 import styled from 'styled-components';
 
-export const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: black;
-  opacity: 0.7;
-`;
 export const ModalContainer = styled.div`
   position: absolute;
-  top: 10%;
+  top: 3%;
   left: 50%;
   transform: translateX(-50%);
   background-color: #fff;
   padding: 0 30px;
-  width: 70%;
+  width: 85%;
   box-shadow: 0 0 10px black;
   border-radius: 10px;
   padding-bottom: 30px;

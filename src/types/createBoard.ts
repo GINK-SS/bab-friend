@@ -13,10 +13,7 @@ export type PostDataType = {
   content: string;
   linkUrl: string;
 };
-export type MapInfoType = {
-  content: string;
-  position: { lat: number; lng: number };
-};
+
 export type UpdatePost = {
   title: string;
   content: string;

@@ -47,11 +47,13 @@ const Calendar = ({ updateEatTime, setUpdatePostState, updating }: CalendarProps
         closeOnScroll={true}
         withPortal
       />
-      {updating ? (
-        <S.SelectDate>{updateEatTime ? formatDate(updateEatTime) : ''}</S.SelectDate>
-      ) : (
-        <>{postState.eatTime && <S.SelectDate>{formatDate(postState.eatTime)}</S.SelectDate>}</>
-      )}
+      <S.SelectDateWrap>
+        {updating ? (
+          <>{updateEatTime && <S.SelectDate>약속시간 :{formatDate(updateEatTime)}</S.SelectDate>}</>
+        ) : (
+          <>{postState.eatTime && <S.SelectDate>약속시간 : {formatDate(postState.eatTime)}</S.SelectDate>}</>
+        )}
+      </S.SelectDateWrap>
     </>
   );
 };
