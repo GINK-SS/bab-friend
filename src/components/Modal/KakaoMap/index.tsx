@@ -1,13 +1,12 @@
 import * as S from './styles';
 import { useEffect, useState } from 'react';
 import { Map, MapMarker, MapTypeControl, ZoomControl } from 'react-kakao-maps-sdk';
-import { PostDataType } from '@_types/createBoard';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import Input from '@_components/common/Input';
 
 import closeBtn from '@_assets/images/svg/cancel.svg';
-import { ModalName, modalState, useCloseModal } from '@_recoil/atoms/modal';
+import { useCloseModal } from '@_recoil/atoms/modal';
 import { locationData } from '@_recoil/atoms/mapData';
 
 declare global {
