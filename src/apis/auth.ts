@@ -63,10 +63,11 @@ const stopRefresh = () => {
  * @param code 카카오 인가코드
  * @returns statusCode, 유저 accessToken와 refreshToken
  */
-const kakaoLogin = async (code: string) => {
+const kakaoLogin = async (code: string, domain: string) => {
   const { data } = await request.get<TokenResponse>('/kakao/callback', {
     params: {
       code,
+      domain,
     },
   });
 
