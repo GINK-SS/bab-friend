@@ -44,8 +44,6 @@ const BoardDetail = () => {
     });
   };
 
-  const isLimitGender = isLimitedByGender(userInfo, boardDetailInfo)
-  const isLimitAge = isLimitedByAge(userInfo, boardDetailInfo)
   const isJoinOver = boardDetailInfo && boardDetailInfo?.currentJoin >= boardDetailInfo?.joinLimit
   return (
     <>
@@ -61,8 +59,6 @@ const BoardDetail = () => {
             promiseTime={boardDetailInfo.eatTime}
             lastModifiedAt={boardDetailInfo.lastModifiedAt}
             isJoinOver={isJoinOver}
-            isLimitAge={isLimitAge}
-            isLimitGender={isLimitGender}
           />
           <CommnetInput />
           {boardDetailInfo?.boardComments.map((item) => {

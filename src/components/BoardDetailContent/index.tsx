@@ -10,6 +10,7 @@ import BoardDelete from '@_components/Modal/BoardDelete';
 import * as S from './styles';
 import KakaoStaticMap from '@_components/KakaoStaticMap';
 import { AuthStatus } from '@_types/auth';
+import { useEffect, useState } from 'react';
 
 type BoardDetailContentProps = {
   boardContent: string;
@@ -27,8 +28,6 @@ type BoardDetailContentProps = {
   promiseTime: string;
   lastModifiedAt: string;
   isJoinOver?: boolean;
-  isLimitAge: boolean;
-  isLimitGender: boolean;
 };
 
 const BoardDetailContent = ({
@@ -39,21 +38,26 @@ const BoardDetailContent = ({
   boardFix,
   promiseTime,
   isJoinOver,
-  isLimitAge,
-  isLimitGender
 }: BoardDetailContentProps) => {
   let params = useParams();
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);
-  const closeModal = useCloseModal()
   const { authStatus } = useRecoilValue(authState);
   const queryClient = useQueryClient();
+  const [limitJoinMsg, setLimitJoinMsg] = useState<string>('');
 
   const { data: isJoin } = useQuery({
     queryKey: ['checkJoin', params.id],
     queryFn: () => boardApi.checkJoin(Number(params.id)),
   });
 
+  useEffect(() => {
+    const cantJoinMsg = (() => {
+      if (!isJoin?.data.joinPossible) { return setLimitJoinMsg(isJoin?.data.msg) }
+    })();
+  }, [isJoin]);
+
+  console.log(isJoin?.data)
   const fixPromise = useMutation({
     mutationFn: () => boardApi.fixBoard(Number(params.id)),
     onSuccess(data) {
@@ -80,15 +84,10 @@ const BoardDetailContent = ({
     },
   });
   const clickJoinBtn = () => {
-    if (authStatus === AuthStatus.unauthorized) closeModal()
     if (authStatus === AuthStatus.authorized) {
-      if (isJoinOver === false) {
-        joinBoard.mutate();
-        if (isJoin?.data.joinPossible) alert('게시글에 참여하였습니다.');
-        else alert('게시글 참여를 취소하였습니다.');
-      }
-      if (isJoinOver && isJoin?.data.alreadyJoin) alert('게시글 참여를 취소하였습니다.');
-      if (isJoinOver) alert('모집인원이 다 찼습니다.');
+      joinBoard.mutate();
+      if (isJoin?.data.joinPossible) alert('게시글에 참여하였습니다.');
+      if (isJoin?.data.alreadyJoin) alert('게시글 참여를 취소하였습니다.');
     }
   };
   const clickDeleteBtn = () => {
@@ -127,15 +126,12 @@ const BoardDetailContent = ({
         />
       )}
       <>
-        {isWriter === false && (
-          <S.JoinBtnWrap onClick={clickJoinBtn}>
-            {isLimitAge || isLimitGender ? (
-              <S.JoinDisableBtn disabled>참여 불가</S.JoinDisableBtn>
-            ) : (
-              <>
-                {isJoin?.data.joinPossible ? <S.JoinBtn>참여하기</S.JoinBtn> : <S.JoinBtn>참여하기 취소</S.JoinBtn>}
-              </>
-            )}
+        {isWriter === false && authStatus === AuthStatus.authorized && (
+          <S.JoinBtnWrap >
+            {isJoin?.data.joinPossible ? (<S.JoinBtn onClick={clickJoinBtn}>참여하기</S.JoinBtn>) :
+              isJoin?.data.alreadyJoin
+                ? (<S.JoinBtn onClick={clickJoinBtn}>참여하기 취소</S.JoinBtn>) :
+                (<S.JoinDisableBtn disabled>{limitJoinMsg}</S.JoinDisableBtn>)}
           </S.JoinBtnWrap>
         )}
       </>
