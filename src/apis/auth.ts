@@ -92,6 +92,11 @@ const fetchUserInfoDetail = async () => {
   return response.data;
 };
 
-const authApi = { refresh, silentRefresh, stopRefresh, kakaoLogin, requestUserInfo, fetchUserInfoDetail };
+const logout = async () => {
+  const res = await request.get('/auth/logout');
+  console.log(res);
+};
+
+const authApi = { refresh, silentRefresh, stopRefresh, kakaoLogin, requestUserInfo, fetchUserInfoDetail, logout };
 
 export default authApi;
