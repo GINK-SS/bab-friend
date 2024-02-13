@@ -13,9 +13,10 @@ type BoardProps = {
   isShowLimit?: boolean;
   hasReviewBtn?: boolean;
   reviewStatus?: 'ENABLED' | 'DISABLED' | 'DONE';
+  onReviewClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const Board = ({ boardData, isShowLimit = true, hasReviewBtn = false, reviewStatus }: BoardProps) => {
+const Board = ({ boardData, isShowLimit = true, hasReviewBtn = false, reviewStatus, onReviewClick }: BoardProps) => {
   const { data: userInfo } = useQuery({ queryKey: ['userInfo'], queryFn: authApi.requestUserInfo });
   const navigate = useNavigate();
   const categoryTypeToKorean = {
@@ -100,7 +101,7 @@ const Board = ({ boardData, isShowLimit = true, hasReviewBtn = false, reviewStat
 
       {hasReviewBtn ? (
         <S.Footer>
-          <S.Review $reviewStatus={reviewStatus} disabled={reviewStatus !== 'ENABLED'}>
+          <S.Review $reviewStatus={reviewStatus} disabled={reviewStatus !== 'ENABLED'} onClick={onReviewClick}>
             {reviewStatus === 'ENABLED'
               ? '리뷰 작성'
               : reviewStatus === 'DISABLED'
