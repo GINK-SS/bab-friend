@@ -57,7 +57,6 @@ const BoardDetailContent = ({
     })();
   }, [isJoin]);
 
-  console.log(isJoin?.data)
   const fixPromise = useMutation({
     mutationFn: () => boardApi.fixBoard(Number(params.id)),
     onSuccess(data) {
