@@ -38,8 +38,8 @@ const SideBar = ({ sidebarOpen, setSidebarOpen }: SideBarPropsType) => {
     setSidebarOpen(false);
   };
 
-  const logout = () => {
-    // ToDo: refreshToken 삭제 요청 API
+  const logout = async () => {
+    await authApi.logout();
     authApi.stopRefresh();
     deleteAccessToken();
     setAuthInfo({ authStatus: AuthStatus.unauthorized });

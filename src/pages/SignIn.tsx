@@ -26,7 +26,7 @@ const SignIn = () => {
     try {
       const {
         data: { accessToken },
-      } = await authApi.kakaoLogin(code);
+      } = await authApi.kakaoLogin(code, new URL(document.URL).origin);
 
       if (!accessToken) {
         window.alert('로그인 실패하였습니다. 다시 로그인 해주세요.');
