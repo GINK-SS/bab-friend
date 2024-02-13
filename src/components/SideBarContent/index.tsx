@@ -1,29 +1,34 @@
 import { useNavigate } from 'react-router-dom';
 
-import * as S from './styles';
 import { CommonPropsType } from '@_types/sideBar';
-
-import square from '@_assets/images/svg/square.svg';
-import page from '@_assets/images/svg/page.svg';
+import { IoAddCircleOutline, IoReaderOutline } from 'react-icons/io5';
+import * as S from './styles';
 
 const SideBarContent = ({ setSidebarOpen }: CommonPropsType) => {
   const navigate = useNavigate();
+
+  const onCreate = () => {
+    navigate('/createboard');
+    setSidebarOpen(false);
+  };
+
+  const onJoined = () => {
+    navigate('/profile/joined');
+    setSidebarOpen(false);
+  };
+
   return (
-    <S.SideBarCotentContainer>
-      <S.WritePost
-        onClick={() => {
-          navigate('./createboard');
-          setSidebarOpen(false);
-        }}
-      >
-        <S.WritePostImg src={square}></S.WritePostImg>
-        <S.WritePostText>새 글 작성하기</S.WritePostText>
-      </S.WritePost>
-      <S.MyPost>
-        <S.MyPostImg src={page}></S.MyPostImg>
-        <S.MyPostText>내가 만든 식사</S.MyPostText>
-      </S.MyPost>
-    </S.SideBarCotentContainer>
+    <S.Container>
+      <S.Wrapper onClick={onCreate}>
+        <IoAddCircleOutline size={20} />
+        <S.Title>새 글 작성하기</S.Title>
+      </S.Wrapper>
+
+      <S.Wrapper onClick={onJoined}>
+        <IoReaderOutline size={20} />
+        <S.Title>참여한 식사 확인하기</S.Title>
+      </S.Wrapper>
+    </S.Container>
   );
 };
 

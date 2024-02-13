@@ -1,4 +1,4 @@
-import { BoardDetailResponse, getBoardResponse } from '@_types/board';
+import { BoardDetailResponse, JoinedMeetingsResponse, getBoardResponse } from '@_types/board';
 import { request } from './axios';
 import { UpdatePostRequest } from '@_types/createBoard';
 
@@ -53,6 +53,22 @@ export const checkJoin = async (id: number) => {
 
   return data;
 };
-const boardApi = { getBoards, getBoardDetail, deleteBoard, fixBoard, updateBoard, joinBoard, checkJoin };
+
+export const getjoinedMettings = async () => {
+  const { data } = await request.get<JoinedMeetingsResponse>('/users/meetings');
+
+  return data;
+};
+
+const boardApi = {
+  getBoards,
+  getBoardDetail,
+  deleteBoard,
+  fixBoard,
+  updateBoard,
+  joinBoard,
+  checkJoin,
+  getjoinedMettings,
+};
 
 export default boardApi;

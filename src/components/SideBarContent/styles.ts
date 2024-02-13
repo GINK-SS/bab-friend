@@ -1,26 +1,27 @@
 import styled from 'styled-components';
 
-export const SideBarCotentContainer = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
+  gap: 20px;
+  width: 200px;
+  margin: 50px auto;
+`;
 
-  div {
-    width: 200px;
-    display: flex;
-    gap: 14px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  img {
-    width: 20px;
+export const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+
+  &:hover {
+    > p {
+      color: ${({ theme }) => theme.colors.mainColor};
+    }
   }
 `;
-export const WritePost = styled.div``;
-export const WritePostImg = styled.img``;
-export const WritePostText = styled.p``;
-export const MyPost = styled.div``;
-export const MyPostImg = styled.img``;
-export const MyPostText = styled.p``;
+
+export const Title = styled.p`
+  font-size: 17px;
+  transition: 0.1s;
+`;

@@ -10,7 +10,7 @@ const BabTemp = () => {
   return (
     <S.BabTempContainer>
       <ProgressBar temp={userInfo?.temperature} />
-      <S.BabReviewWrap>
+      {/* <S.BabReviewWrap>
         <S.EachReviewWrap>
           <S.ImgWrap>
             <S.ReviewImg src={group} />
@@ -38,7 +38,7 @@ const BabTemp = () => {
             <S.ReviewText>친절하고 매너가 좋아요</S.ReviewText>
           </S.ReviewTextBox>
         </S.EachReviewWrap>
-      </S.BabReviewWrap>
+      </S.BabReviewWrap> */}
     </S.BabTempContainer>
   );
 };

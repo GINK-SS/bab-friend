@@ -91,6 +91,10 @@ export type BoardResponse = Omit<BoardInfo, 'location'> & {
   location: string;
 };
 
+export type JoinedBoardResponse = BoardResponse & {
+  reviewStatus: 'ENABLED' | 'DISABLED' | 'DONE';
+};
+
 export type getBoardResponse = {
   statusCode: number;
   data: {
@@ -104,4 +108,9 @@ export type getBoardResponse = {
 
 export type BoardFilter = {
   isJoinPossible: boolean;
+};
+
+export type JoinedMeetingsResponse = {
+  statusCode: number;
+  data: JoinedBoardResponse[];
 };

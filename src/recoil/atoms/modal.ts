@@ -4,6 +4,7 @@ export enum ModalName {
   login,
   boardDelete,
   kakaoMap,
+  review,
 }
 
 export type ModalState = {

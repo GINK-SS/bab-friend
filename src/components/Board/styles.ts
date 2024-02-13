@@ -51,14 +51,14 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 5px;
+  gap: 15px;
 `;
 
 export const ContentWrapper = styled.div<{ $isLimit: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 150px;
+  min-height: 150px;
   flex: 1;
   z-index: 1;
   filter: ${({ $isLimit }) => ($isLimit ? 'blur(2px) brightness(60%)' : 'none')};
@@ -71,9 +71,14 @@ export const ContentWrapper = styled.div<{ $isLimit: boolean }>`
 `;
 
 export const Title = styled.p`
-  font-size: 1.3em;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  margin-bottom: 10px;
   font-family: 'Pretendard-SemiBold';
-  margin-bottom: 5px;
+  font-size: 1.3em;
 `;
 
 export const Content = styled.p`
@@ -82,7 +87,7 @@ export const Content = styled.p`
   text-overflow: ellipsis;
   line-height: 1.3;
   word-break: break-all;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   color: rgba(0, 0, 0, 0.8);
 `;
@@ -114,4 +119,36 @@ export const WriterImage = styled.img`
   border: 1px solid black;
   border-radius: 50%;
   object-fit: cover;
+`;
+
+export const Footer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+`;
+
+export const Review = styled.button<{ $reviewStatus?: 'ENABLED' | 'DISABLED' | 'DONE' }>`
+  width: 150px;
+  padding: 5px;
+  border: 2px solid ${({ theme }) => theme.colors.mainColor};
+  border-radius: 5px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  &:hover {
+    color: #fff;
+    background-color: ${({ theme }) => theme.colors.mainColor};
+  }
+
+  &:disabled {
+    color: rgba(0, 0, 0, 0.5);
+    border: 2px solid ${({ theme }) => theme.colors.mainColor}80;
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: default;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
 `;
