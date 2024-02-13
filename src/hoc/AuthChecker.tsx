@@ -21,6 +21,7 @@ const AuthChecker = ({ children }: { children: ReactNode }) => {
 
     if (authInfo.authStatus === AuthStatus.unauthorized) {
       queryClient.removeQueries({ queryKey: ['userInfo'], exact: true });
+      queryClient.removeQueries({ queryKey: ['users'], exact: true });
     }
   }, [authInfo, queryClient, refetchUserInfo]);
 
