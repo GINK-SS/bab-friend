@@ -29,9 +29,9 @@ export type UpdatePost = {
   };
   categoryType: string;
   eatTime: string;
-  alcohol: boolean;
+  alcohol: boolean | string;
   joinLimit: number;
-  ageGroupLimit: boolean;
+  ageGroupLimit: boolean | string;
   genderType: string;
   linkUrl: string;
   priceRange: number;
@@ -48,4 +48,8 @@ export type UpdatePostRequest = {
   genderType: string;
   linkUrl: string;
   priceRange: number;
+};
+
+export type EatTimeType = {
+  eatTime: string;
 };
