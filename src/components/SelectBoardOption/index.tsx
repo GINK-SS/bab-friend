@@ -17,7 +17,14 @@ export type SelectOptionProps = {
   updating: boolean;
   boardDetailInfo: BoardDetailInfo;
 };
-
+type SelectOptionFormType = {
+  categoryType: string;
+  joinLimit: string;
+  priceRange: string;
+  alcohol: string;
+  ageGroupLimit: string;
+  genderType: string;
+}
 const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => {
   const navigate = useNavigate();
   const setModal = useSetRecoilState(modalState);
@@ -26,7 +33,7 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({
+  } = useForm<SelectOptionFormType>({
     defaultValues: {
       categoryType: '',
       joinLimit: '',
@@ -36,8 +43,8 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
       genderType: 'ALL'
     }
   })
-  const onSubmit = (data: any) => {
-    const AlcoholBoolean = data.alchol === 'true' ? true : false
+  const onSubmit = (data: SelectOptionFormType) => {
+    const AlcoholBoolean = data.alcohol === 'true' ? true : false
     const AgeLimitBoolean = data.ageGroupLimit === 'true' ? true : false
     navigate('/createcontent', { state: { ...data, alchol: AlcoholBoolean, ageGroupLimit: AgeLimitBoolean } })
   }
