@@ -28,6 +28,7 @@ export const SelectOptionContainer = styled.div`
       border: 1px solid ${({ theme }) => theme.colors.mainColor};
     }
   }
+
   select {
     width: 100%;
     outline: none;
@@ -45,7 +46,14 @@ export const SelectOptionContainer = styled.div`
 export const Region = styled.div``;
 export const RegionText = styled.p``;
 export const RegoinInput = styled.input``;
-export const Price = styled.div``;
+export const Price = styled.div`
+  label {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-family: 'Pretendard-SemiBold';
+  }
+`;
 export const MenuText = styled.p``;
 export const MenuInput = styled.input``;
 export const FoodType = styled.div``;
@@ -242,4 +250,8 @@ export const NextBtn = styled.button`
   color: white;
   width: 100%;
   cursor: pointer;
+`;
+export const ErrorMessage = styled.span`
+  color: red;
+  font-size: 10px;
 `;

@@ -1,22 +1,17 @@
 import { useState } from 'react';
 import { addDays, format, setHours, setMinutes } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import { PostDataType, UpdatePost } from '@_types/createBoard';
+import { UpdatePost } from '@_types/createBoard';
 
 import * as S from './styles';
 import formatDate from '@_utils/formatDate';
 import { useRecoilState } from 'recoil';
-import { postsState } from '@_recoil/atoms/posts';
+import { eatTimeState } from '@_recoil/atoms/eatTimeState';
 
-type CalendarProps = {
-  updating?: boolean;
-  updateEatTime?: string;
-  setUpdatePostState?: React.Dispatch<React.SetStateAction<UpdatePost>>;
-};
 
-const Calendar = ({ updateEatTime, setUpdatePostState, updating }: CalendarProps) => {
+const Calendar = () => {
   const [startDate, setStartDate] = useState<Date | null>(setHours(setMinutes(new Date(), 0), 9));
-  const [postState, setPostState] = useRecoilState(postsState);
+  const [promisetTime, setPromiseTime] = useRecoilState(eatTimeState);
 
   const filterPassedTime = (time: any) => {
     const currentDate = new Date();
@@ -27,11 +22,8 @@ const Calendar = ({ updateEatTime, setUpdatePostState, updating }: CalendarProps
   const covertTimeType = (date: any) => {
     setStartDate(date);
     const formattedDate = format(date || new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSS");
-    if (updating && setUpdatePostState) {
-      setUpdatePostState((prevData) => ({ ...prevData, eatTime: formattedDate }));
-    } else {
-      setPostState((prevData) => ({ ...prevData, eatTime: formattedDate }));
-    }
+
+    setPromiseTime((prevData) => ({ ...prevData, eatTime: formattedDate }));
   };
   return (
     <>
@@ -48,11 +40,7 @@ const Calendar = ({ updateEatTime, setUpdatePostState, updating }: CalendarProps
         withPortal
       />
       <S.SelectDateWrap>
-        {updating ? (
-          <>{updateEatTime && <S.SelectDate>약속시간 :{formatDate(updateEatTime)}</S.SelectDate>}</>
-        ) : (
-          <>{postState.eatTime && <S.SelectDate>약속시간 : {formatDate(postState.eatTime)}</S.SelectDate>}</>
-        )}
+        <>{promisetTime.eatTime && <S.SelectDate>약속시간 : {formatDate(promisetTime.eatTime)}</S.SelectDate>}</>
       </S.SelectDateWrap>
     </>
   );

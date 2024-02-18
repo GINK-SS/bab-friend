@@ -95,12 +95,12 @@ export const AlcholRadio = styled.div`
   gap: 14px;
   padding-left: -20px;
 `;
-export const AlcholRadioLabel = styled.label`
+export const AlcoholRadioLabel = styled.label`
   cursor: pointer;
   position: relative;
   padding-left: 30px;
 `;
-export const AlcholInput = styled.input`
+export const AlcoholInput = styled.input`
   position: absolute;
   opacity: 0;
   height: 0;
@@ -112,7 +112,7 @@ export const AlcholInput = styled.input`
     display: block;
   }
 `;
-export const AlcholCustomRadio = styled.span`
+export const AlcoholCustomRadio = styled.span`
   position: absolute;
   top: 0;
   left: 0;
@@ -261,6 +261,32 @@ export const CreateContentContainer = styled.div`
       border: 1px solid ${({ theme }) => theme.colors.mainColor};
     }
   }
+  textarea {
+    width: 100%;
+    height: 200px;
+    border: 1px solid #d5d4dc;
+
+    border-radius: 5px;
+    padding: 20px 10px;
+    background: none;
+    outline: none;
+    resize: none;
+    &::placeholder {
+      top: 10%;
+      font-size: 12px;
+      opacity: 0.7;
+      font-family: 'Pretendard-ExtraLight';
+    }
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.colors.mainColor};
+    }
+  }
+  label {
+    display: block;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-family: 'Pretendard-SemiBold';
+  }
 `;
 
 export const TextBox = styled.div`
@@ -352,4 +378,8 @@ export const CancelBtn = styled.button`
 export const editBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.subColor};
   color: white;
+`;
+export const ErrorMessage = styled.span`
+  color: red;
+  font-size: 10px;
 `;

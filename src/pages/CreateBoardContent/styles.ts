@@ -1,9 +1,55 @@
 import styled from 'styled-components';
 
-export const CreateContentContainer = styled.div`
+export const CreateContentContainer = styled.form`
   border: 1px solid transparent;
-`;
+  input {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #d5d4dc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background: none;
+    outline: none;
+    &::placeholder {
+      font-size: 12px;
+      opacity: 0.7;
+      font-family: 'Pretendard-ExtraLight';
+    }
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.colors.mainColor};
+    }
+  }
+  label {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-family: 'Pretendard-SemiBold';
+  }
+  textarea {
+    width: 100%;
+    height: 250px;
+    border: 1px solid #d5d4dc;
 
+    border-radius: 5px;
+    padding: 20px 10px;
+    background: none;
+    outline: none;
+    resize: none;
+    &::placeholder {
+      top: 10%;
+      font-size: 12px;
+      opacity: 0.7;
+      font-family: 'Pretendard-ExtraLight';
+    }
+    &:focus {
+      border: 1px solid ${({ theme }) => theme.colors.mainColor};
+    }
+  }
+`;
+export const ErrorMessage = styled.span`
+  color: red;
+  font-size: 10px;
+`;
 export const TextBox = styled.div`
   width: 100%;
   height: 86px;
