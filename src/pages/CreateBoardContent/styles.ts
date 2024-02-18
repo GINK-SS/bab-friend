@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IoIosInformationCircleOutline } from 'react-icons/io';
 
 export const CreateContentContainer = styled.form`
   border: 1px solid transparent;
@@ -66,10 +67,8 @@ export const InfoText = styled.p`
   height: inherit;
   font-family: 'Pretendard-Ligt';
 `;
-export const InfoImg = styled.img`
-  width: 18px;
-  height: 18px;
-  margin-right: 5px;
+export const InfoImg = styled(IoIosInformationCircleOutline)`
+  margin-right: 10px;
 `;
 export const Title = styled.div`
   padding: 0 30px;

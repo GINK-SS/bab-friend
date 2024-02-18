@@ -2,9 +2,7 @@ import * as S from './styles';
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import bell from '@_assets/images/svg/bell.svg';
 import menu from '@_assets/images/svg/menu.svg';
-import arrowLeft from '@_assets/images/svg/arrow-left.svg';
 import { ModalName, modalState } from '@_recoil/atoms/modal';
 import SideBar from '@_components/SideBar';
 import { authState } from '@_recoil/atoms/auth';
@@ -32,8 +30,6 @@ const Header = () => {
 
         {backArray.includes(location.pathname) ? (
           <S.HeaderBackImg
-            src={arrowLeft}
-            alt='backBtn'
             onClick={() => {
               navigate(-1);
             }}
@@ -43,10 +39,7 @@ const Header = () => {
         )}
         {authStatus === AuthStatus.authorized ? (
           <S.HeaderContentBox>
-            <S.HeaderAlert src={bell} alt='bellimage' />
             <S.HeaderMenu
-              src={menu}
-              alt='menuimage'
               onClick={() => {
                 setSidebarOpen(true);
               }}
