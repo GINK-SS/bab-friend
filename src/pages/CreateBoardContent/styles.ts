@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 
-export const CreateContentContainer = styled.form`
+export const CreateContentContainer = styled.div`
   border: 1px solid transparent;
   input {
     width: 100%;
