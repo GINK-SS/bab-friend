@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { IoIosInformationCircleOutline } from 'react-icons/io';
 
 export const CreatePostContainer = styled.div``;
 export const CreatePostHeaderText = styled.div`
@@ -15,7 +16,7 @@ export const CreatePostText = styled.p`
   font-size: 13px;
   height: inherit;
 `;
-export const CreatePostTextImg = styled.img`
+export const CreatePostTextImg = styled(IoIosInformationCircleOutline)`
   width: 18px;
   height: 18px;
   margin-right: 5px;

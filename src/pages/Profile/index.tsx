@@ -5,7 +5,7 @@ import MannerTemp from '@_components/BabTemp';
 import Review from '@_components/Review';
 import EmptyData from '@_components/EmptyData';
 import reviewApi from '@_apis/review';
-import arrow from '@_assets/images/svg/arrow.svg';
+import { IoIosArrowRoundForward } from "react-icons/io";
 import * as S from './styles';
 
 const Profile = () => {
@@ -29,7 +29,7 @@ const Profile = () => {
           받은 밥 후기
           <S.ReviewNum>{`(${reviewsData?.totalElement ?? 0})`}</S.ReviewNum>
         </S.ReviewHeader>
-        <S.ArrowBtn src={arrow} />
+        <IoIosArrowRoundForward size={24} />
       </S.ReviewHeaderWrap>
 
       {reviewsData?.reviews.length ? (

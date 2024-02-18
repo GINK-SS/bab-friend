@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import postApi from '@_apis/posts';
 import * as S from './styles';
 
-import infoCircle from '@_assets/images/svg/alert-circle.svg';
 import { locationData } from '@_recoil/atoms/mapData';
 import { eatTimeState } from '@_recoil/atoms/eatTimeState';
 import { PostDataType } from '@_types/createBoard';
@@ -64,7 +63,7 @@ const CreateBoardContent = () => {
     <S.CreateContentContainer>
       <S.TextBox>
         <S.InfoText>
-          <S.InfoImg src={infoCircle} />
+          <S.InfoImg size={18} />
           게시글 내용을 입력해주세요.
         </S.InfoText>
       </S.TextBox>
@@ -117,7 +116,7 @@ const CreateBoardContent = () => {
         </S.PrevBtn>
         <S.registrationBtn onClick={handleSubmit(onSubmit)}>등록</S.registrationBtn>
       </S.BtnWrap>
-    </S.CreateContentContainer>
+    </S.CreateContentContainer >
   );
 };
 
