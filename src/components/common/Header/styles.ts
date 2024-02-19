@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { IoIosArrowRoundBack } from 'react-icons/io';
+import { CiMenuFries } from 'react-icons/ci';
 
 export const HeaderContainer = styled.div`
   width: 100%;
@@ -24,7 +26,8 @@ export const HeaderContentBox = styled.div`
   width: 78px;
   height: 32px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  align-items: center;
 `;
 export const HeaderLogin = styled.div`
   width: 72px;
@@ -38,17 +41,13 @@ export const HeaderLogin = styled.div`
   color: white;
   border-radius: 10px;
 `;
-export const HeaderAlert = styled.img`
-  width: 30px;
-  height: 30px;
+
+export const HeaderMenu = styled(CiMenuFries)`
+  width: 20px;
+  height: 20px;
   cursor: pointer;
 `;
-export const HeaderMenu = styled.img`
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-`;
-export const HeaderBackImg = styled.img`
+export const HeaderBackImg = styled(IoIosArrowRoundBack)`
   width: 30px;
   height: 30px;
   cursor: pointer;

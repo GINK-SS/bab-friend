@@ -1,13 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useForm } from 'react-hook-form';
 import Calendar from '../Calendar';
 import KakaoMap from '@_components/Modal/KakaoMap';
-import Input from '@_components/common/Input';
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { postsState } from '@_recoil/atoms/posts';
-import { StaticMap } from 'react-kakao-maps-sdk';
-import { errorMessageState } from '@_recoil/atoms/validationError';
 import { BoardDetailInfo } from '@_types/board';
 
 import * as S from './styles';
@@ -15,42 +11,45 @@ import UpdateBoard from '@_components/UpdateBoard';
 import Modal from '@_components/Modal';
 import { ModalName, modalState } from '@_recoil/atoms/modal';
 import { locationData } from '@_recoil/atoms/mapData';
+import KakaoStaticMap from '@_components/KakaoStaticMap';
 
 export type SelectOptionProps = {
   updating: boolean;
   boardDetailInfo: BoardDetailInfo;
 };
-
+type SelectOptionFormType = {
+  categoryType: string;
+  joinLimit: string;
+  priceRange: string;
+  alcohol: string;
+  ageGroupLimit: string;
+  genderType: string;
+}
 const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => {
   const navigate = useNavigate();
-  const [postState, setPostState] = useRecoilState(postsState);
-  const [errorMessage, setErrorMessage] = useRecoilState(errorMessageState);
   const setModal = useSetRecoilState(modalState);
   const mapData = useRecoilValue(locationData);
-
-  const handleChange = (name: string, value: string | number | boolean) => {
-    setErrorMessage((prev) => ({
-      ...prev,
-      [`${name}Error`]: '',
-    }));
-    setPostState((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleClickNextBtn = () => {
-    if (postState.priceRange === 0) {
-      setErrorMessage((prev) => ({
-        ...prev,
-        priceRangeError: '예상가격을 입력해주세요.',
-      }));
-      return;
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<SelectOptionFormType>({
+    defaultValues: {
+      categoryType: '',
+      joinLimit: '',
+      priceRange: '',
+      alcohol: 'false',
+      ageGroupLimit: 'false',
+      genderType: 'ALL'
     }
-    navigate('/createcontent');
-  };
+  })
+  const onSubmit = (data: SelectOptionFormType) => {
+    const AlcoholBoolean = data.alcohol === 'true' ? true : false
+    const AgeLimitBoolean = data.ageGroupLimit === 'true' ? true : false
+    navigate('/createcontent', { state: { ...data, alchol: AlcoholBoolean, ageGroupLimit: AgeLimitBoolean } })
+  }
   return (
-    <S.SelectOptionContainer>
+    <S.SelectOptionContainer >
       {updating ? (
         <>
           <UpdateBoard updating={updating} boardDetailInfo={boardDetailInfo} />
@@ -59,45 +58,51 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
         <>
           <S.FoodType>
             <S.FoodTypeText>음식 종류</S.FoodTypeText>
-            <S.FoodTypeSelect
-              name='categoryType'
-              onChange={(e) => handleChange('categoryType', e.target.value)}
-              value={postState.categoryType}
-              required
-            >
-              <S.FoodTypeSelectOption value='' disabled>
-                음식 카테고리
-              </S.FoodTypeSelectOption>
-              <S.FoodTypeSelectOption value='ALL'>상관없음</S.FoodTypeSelectOption>
-              <S.FoodTypeSelectOption value='KOREAN'>한식</S.FoodTypeSelectOption>
-              <S.FoodTypeSelectOption value='JAPAN'>일식</S.FoodTypeSelectOption>
-              <S.FoodTypeSelectOption value='CHINA'>중식</S.FoodTypeSelectOption>
-              <S.FoodTypeSelectOption value='WEST'>양식</S.FoodTypeSelectOption>
-            </S.FoodTypeSelect>
+            <select {...register("categoryType", { required: true })} >
+              <option value="">음식 종류 선택</option>
+              <option value="ALL">상관 없음</option>
+              <option value="KOREAN">한식</option>
+              <option value="WEST">양식</option>
+              <option value="CHINA">중식</option>
+              <option value="JAPAN">일식</option>
+            </select>
+            {errors.categoryType?.type === "required" && (
+              <S.ErrorMessage>음식 종류를 선택해주세요.</S.ErrorMessage>
+            )}
           </S.FoodType>
           <S.Price>
-            <Input
-              type='number'
-              placeholder='예상가격을 입력해주세요..'
-              label='예상가격'
-              errorMessage={errorMessage?.priceRangeError}
-              onChange={(e) => handleChange('priceRange', e.target.value)}
-              required
+            <label htmlFor='priceRange'>예상 가격</label>
+            <input type='number' id='priceRange' {...register("priceRange", {
+              required: true, maxLength: 6,
+              validate: {
+                notNegative: value => parseInt(value) > 0
+              },
+              valueAsNumber: true
+            })}
+              placeholder='예상 가격을 입력해주세요.'
             />
+            {errors.priceRange?.type === "required" && (
+              <S.ErrorMessage> * 예상 가격을 입력해주세요.</S.ErrorMessage>
+            )}
+            {errors.priceRange && errors.priceRange.type === "maxLength" && (
+              <S.ErrorMessage> * 예상 가격은 100만원 이상은 불가합니다.</S.ErrorMessage>
+            )}
+            {errors.priceRange && errors.priceRange.type === "notNegative" && (
+              <S.ErrorMessage> * 음수는 입력할 수 없습니다.</S.ErrorMessage>
+            )}
           </S.Price>
           <S.PeopleNum>
             <S.PeopleNumText>모집 인원</S.PeopleNumText>
-            <S.PeopleNumSelect
-              name='joinLimit'
-              onChange={(e) => handleChange('joinLimit', parseInt(e.target.value))}
-              required
-            >
-              예상 인원을 선택하세요.
-              <S.PeopleNumSelectOption value={2}>2명</S.PeopleNumSelectOption>
-              <S.PeopleNumSelectOption value={3}>3명</S.PeopleNumSelectOption>
-              <S.PeopleNumSelectOption value={4}>4명</S.PeopleNumSelectOption>
-              <S.PeopleNumSelectOption value={5}>5명</S.PeopleNumSelectOption>
-            </S.PeopleNumSelect>
+            <select {...register("joinLimit", { required: true, valueAsNumber: true })} >
+              <option value="">모집 인원 선택</option>
+              <option value={2}>2명</option>
+              <option value={3}>3명</option>
+              <option value={4}>4명</option>
+              <option value={5}>5명</option>
+            </select>
+            {errors.categoryType?.type === "required" && (
+              <S.ErrorMessage> * 모집 인원을 선택해주세요.</S.ErrorMessage>
+            )}
           </S.PeopleNum>
           <S.Time>
             <S.TimeText>식사 시간</S.TimeText>
@@ -120,28 +125,13 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
                   <S.StoreAddress>위치 : {mapData.address}</S.StoreAddress>
                   <S.StoreName>가게명 : {mapData.location.content}</S.StoreName>
                 </S.StoreInfo>
-                <StaticMap
+                <KakaoStaticMap
                   center={{
                     lat: mapData.location.position.lat,
                     lng: mapData.location.position.lng,
                   }}
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                    borderRadius: '20px',
-                    border: '1px solid #e0e0e0',
-                    boxShadow: '0px 0px 10px 0px #e0e0e0',
-                  }}
-                  marker={[
-                    {
-                      position: {
-                        lat: mapData.location.position.lat,
-                        lng: mapData.location.position.lng,
-                      },
-                      text: mapData.location.content,
-                    },
-                  ]}
-                  level={3}
+                  height={200}
+                  content={mapData.location.content}
                 />
               </>
             )}
@@ -152,28 +142,24 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
           <S.Alchol>
             <S.AlcholText>술 여부</S.AlcholText>
             <S.AlcholRadio>
-              <S.AlcholRadioLabel htmlFor='alcoholOk'>
+              <S.AlcholRadioLabel htmlFor='alcohol'>
                 음주 가능
                 <S.AlcholInput
+                  {...register("alcohol")}
+                  id='alcohol'
                   type='radio'
-                  id='alcoholOk'
-                  name='alcohol'
-                  onChange={() => handleChange('alcohol', true)}
-                  checked={postState.alcohol === true}
-                  required
-                ></S.AlcholInput>
+                  value="true"
+                />
                 <S.AlcholCustomRadio></S.AlcholCustomRadio>
               </S.AlcholRadioLabel>
-              <S.AlcholRadioLabel htmlFor='alcoholNo'>
+              <S.AlcholRadioLabel htmlFor='no-alcohol'>
                 음주 불가능
                 <S.AlcholInput
+                  {...register("alcohol")}
+                  id='no-alcohol'
                   type='radio'
-                  id='alcoholNo'
-                  name='alcohol'
-                  onChange={() => handleChange('alcohol', false)}
-                  checked={postState.alcohol === false}
-                  required
-                ></S.AlcholInput>
+                  value="false"
+                />
                 <S.AlcholCustomRadio></S.AlcholCustomRadio>
               </S.AlcholRadioLabel>
             </S.AlcholRadio>
@@ -184,24 +170,20 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
               <S.AgeLimitRadioLabel htmlFor='AgeLimit'>
                 O
                 <S.AgeLimitInput
+                  {...register("ageGroupLimit")}
                   type='radio'
                   id='AgeLimit'
-                  name='ageGroupLimit'
-                  onChange={() => handleChange('ageGroupLimit', true)}
-                  checked={postState.ageGroupLimit === true}
-                  required
+                  value="true"
                 ></S.AgeLimitInput>
                 <S.AgeLimitCustomRadio></S.AgeLimitCustomRadio>
               </S.AgeLimitRadioLabel>
               <S.AgeLimitRadioLabel htmlFor='NotAgeLimit'>
                 X
                 <S.AgeLimitInput
+                  {...register("ageGroupLimit")}
                   type='radio'
                   id='NotAgeLimit'
-                  name='ageGroupLimit'
-                  onChange={() => handleChange('ageGroupLimit', false)}
-                  checked={postState.ageGroupLimit === false}
-                  required
+                  value="false"
                 ></S.AgeLimitInput>
                 <S.AgeLimitCustomRadio></S.AgeLimitCustomRadio>
               </S.AgeLimitRadioLabel>
@@ -210,46 +192,40 @@ const SelectBoardOption = ({ updating, boardDetailInfo }: SelectOptionProps) => 
           <S.Gender>
             <S.GenderText>성별</S.GenderText>
             <S.GenderRadio>
-              <S.GenderRadioLabel htmlFor='male'>
+              <S.GenderRadioLabel htmlFor='MALE'>
                 남자만
                 <S.GenderInput
+                  {...register("genderType")}
                   type='radio'
-                  id='male'
-                  name='genderType'
-                  onChange={() => handleChange('genderType', 'MALE')}
-                  checked={postState.genderType === 'MALE'}
-                  required
+                  id='MALE'
+                  value="MALE"
                 ></S.GenderInput>
                 <S.GenderCustomRadio></S.GenderCustomRadio>
               </S.GenderRadioLabel>
               <S.GenderRadioLabel htmlFor='FEMALE'>
                 여자만
                 <S.GenderInput
+                  {...register("genderType")}
                   type='radio'
                   id='FEMALE'
-                  name='genderType'
-                  onChange={() => handleChange('genderType', 'FEMALE')}
-                  checked={postState.genderType === 'FEMALE'}
-                  required
+                  value="FEMALE"
                 ></S.GenderInput>
                 <S.GenderCustomRadio></S.GenderCustomRadio>
               </S.GenderRadioLabel>
               <S.GenderRadioLabel htmlFor='ALL'>
                 상관없음
                 <S.GenderInput
+                  {...register("genderType")}
                   type='radio'
                   id='ALL'
-                  name='genderType'
-                  onChange={() => handleChange('genderType', 'ALL')}
-                  checked={postState.genderType === 'ALL'}
-                  required
+                  value="ALL"
                 ></S.GenderInput>
                 <S.GenderCustomRadio></S.GenderCustomRadio>
               </S.GenderRadioLabel>
             </S.GenderRadio>
           </S.Gender>
           <S.NextBtnWrap>
-            <S.NextBtn onClick={handleClickNextBtn}>다음</S.NextBtn>
+            <S.NextBtn onClick={handleSubmit(onSubmit)}>다음</S.NextBtn>
           </S.NextBtnWrap>
         </>
       )}
